@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class FileData {
     protected final String electionType;
@@ -37,30 +36,52 @@ public class FileData {
         this.candidateVotes = candidateVotes;
     }
 
+    /**
+     * @return the electionType of the election
+     */
     public String getElectionType(){
         return electionType;
     }
 
+    /**
+     * @return the number of seats available
+     */
     public int getNumberSeats(){
         return numberSeats;
     }
 
+    /**
+     * @return the number of ballots that were on the file
+     */
     public int getNumberBallots(){
         return numberBallots;
     }
 
+    /**
+     * @return In a CPL election, the number of parties running
+     *         In an OPL election, the number of candidates running
+     */
     public int getNumberParties(){
         return numberParties;
     }
 
+    /**
+     * @return a mapping of the party name to its list of candidates
+     */
     public HashMap<String, ArrayList<String>> getPartyCandidates(){
         return partyCandidates;
     }
 
+    /**
+     * @return a mapping of the party name and the number of votes it has
+     */
     public ArrayList<ArrayList<Object>> getPartyVotes(){
         return partyVotes;
     }
 
+    /**
+     * @return a mapping of the candidate name and the number of votes they have, not utilized in a CPL election
+     */
     public ArrayList<ArrayList<Object>> getCandidateVotes(){
         return candidateVotes;
     }
