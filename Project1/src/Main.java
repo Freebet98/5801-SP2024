@@ -1,5 +1,7 @@
-import java.io.*;
-import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -49,17 +51,17 @@ public class Main{
 
         //finish creating election depending on which election needs to run
         if(header.equals("OPL")){
-            election = OPL(fileData);
+            election = new OPL(fileData);
         }
         else{
-            election = CPL(fileData);
+            election = new CPL(fileData);
         }
 
         results = election.runElection();
 
         //Finish creating the AuditFile object and print the formatted results to an audit file
-        fileCreation = AuditFile(results);
-        fileCreation.PrintToFile();
+        fileCreation = new AuditFile(results);
+        fileCreation.printToFile();
 
         //Display the results to the user
     }
