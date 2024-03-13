@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -33,12 +34,13 @@ abstract public class ExtractData {
         verifyLineIsDigit(line);
         int numParties = Integer.parseInt(line);
 
-        HashMap<String, ArrayList<String>> partyCandidates = formatPartyInformation(numParties);
-
-        //Create two new ArrayList<ArrayList<Object>> to store partyVotes and candidateVotes,
-        //Values for these get set in formatBallotInformation
+        //Create two new ArrayList<ArrayList<Object>> to store partyVotes and candidateVotes
+        //Initialize partyCandidates with formatPartyInformation
         ArrayList<ArrayList<Object>> partyVotes = new ArrayList<>();
         ArrayList<ArrayList<Object>> candidateVotes = new ArrayList<>();
+        HashMap<String, ArrayList<String>> partyCandidates = formatPartyInformation(numParties);
+
+        //Values for these get set in formatBallotInformation
         formatBallotInformation(partyVotes, candidateVotes);
 
         fileData = new FileData(header, numSeats, numBallots, numParties, partyCandidates, partyVotes, candidateVotes);
@@ -46,21 +48,53 @@ abstract public class ExtractData {
     }
 
     /**
-     * TODO
-     * @param line
+     * This will look through the given string, if it finds a character that is not a digit a message will
+     * be given to the user and the program will close with a system.exit()
+     * @param line represents a string of the line from the file. This line should only be digits
      */
     protected void verifyLineIsDigit(String line){
-
+        //Goes through every character in line, looks to see if it's a digit
+        for(int i = 0; i < line.length(); i++){
+            if(!Character.isDigit(line.charAt(i))){
+                System.out.println("Election File is invalid, the program will close now.");
+                System.exit(0);
+            }
+        }
     }
 
     /**
-     * TODO
-     * @param numParties
-     * @return
+     * This method will read as many lines as there are number of parties in the file, the first word
+     * in the line will be used as the key in the HashMap and the rest beyond the first , will be
+     * added to the Arraylist of string, which represents the list of candidates for a party
+     * @param numParties this represents the number of parties that are listed in the given file
+     * @return HashMap<String, ArrayList<String>> that represents a key value of a party name
+     *          to a list of candidate names
+     * @throws IOException if there is an error while reading the validFile
      */
-    protected HashMap<String, ArrayList<String>> formatPartyInformation(int numParties){
+    protected HashMap<String, ArrayList<String>> formatPartyInformation(int numParties) throws IOException {
+        HashMap<String, ArrayList<String>> partyCandidates = new HashMap<>();
+        String line;
+        String[] splitLine;
 
-        return null;
+        //Reads a new line for the number of parties there are
+        for(int i = 0; i < numParties; i++){
+            //reads a file and splits the words into a string[] and also trims the whitespace
+            line = validFile.readLine();
+            splitLine = line.trim().split(",");
+
+            //Create new arraylist to act as an inner arrayList for partyVotes
+            //adds the party name and the number 0 to the Arraylist partyVotes
+            ArrayList<Object> partyInner = new ArrayList<>();
+            partyInner.add(splitLine[0]);
+            partyInner.add(0);
+
+            //Create new arraylist for list of candidates in a party
+            ArrayList<String> candidates = new ArrayList<>();
+
+
+        }
+
+        return partyCandidates;
     }
 
     /**
