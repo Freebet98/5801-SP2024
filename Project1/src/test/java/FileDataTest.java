@@ -17,12 +17,22 @@ public class FileDataTest{
         FileData oplInput06;
 
         //create partyCandidate lists for both CPL and OPL files
-        HashMap<String, ArrayList<String>> partyCandidates01 = setUpPartyCandidates(["Dem", "Rep", "Green", "Lib"], [["Sarah", "Bob", "Jon"], ["Craig", "Klein"], ["Rain", "Water", "Grass"], ["Ash", "Matt"]]);
-        HashMap<String, ArrayList<String>> partyCandidates02 = setUpPartyCandidates(["Dem", "Rep"], [["Sarah", "Bob", "Jon"], ["Craig", "Klein"]]);
+        HashMap<String, ArrayList<String>> partyCandidates01 = setUpPartyCandidates(["Dem", "Rep", "Green", "Lib"],
+        [["Sarah", "Bob", "Jon"], ["Craig", "Klein"], ["Rain", "Water", "Grass"], ["Ash", "Matt"]]);
+
+        HashMap<String, ArrayList<String>> partyCandidates02 = setUpPartyCandidates(["Dem", "Rep"],
+        [["Sarah", "Bob", "Jon"], ["Craig", "Klein"]]);
+
         HashMap<String, ArrayList<String>> partyCandidates03 = setUpPartyCandidates(["Dem"], [["Sarah", "Bob", "Jon"]]);
-        HashMap<String, ArrayList<String>> partyCandidates04 = setUpPartyCandidates(["Dem", "Dem", "Rep"], [["Sarah"], ["Bob"], ["Craig"]]);
-        HashMap<String, ArrayList<String>> partyCandidates05 = setUpPartyCandidates(["Dem", "Grass"], [["Sarah"], ["Rain"]]);
-        HashMap<String, ArrayList<String>> partyCandidates06 = setUpPartyCandidates(["Dem", "Grass"], [["Sarah"], ["Rain"]]);
+
+        HashMap<String, ArrayList<String>> partyCandidates04 = setUpPartyCandidates(["Dem", "Dem", "Rep"],
+        [["Sarah"], ["Bob"], ["Craig"]]);
+
+        HashMap<String, ArrayList<String>> partyCandidates05 = setUpPartyCandidates(["Dem", "Grass"],
+        [["Sarah"], ["Rain"]]);
+
+        HashMap<String, ArrayList<String>> partyCandidates06 = setUpPartyCandidates(["Dem", "Grass"],
+        [["Sarah"], ["Rain"]]);
 
         //create partyVotes lists for both CPL and OPL file
         ArrayList<ArrayList<Object>> partyVotes01 = setUpVotes(["Dem", "Rep", "Green", "Lib"], [2500, 3000, 2100, 2400]);
@@ -33,7 +43,8 @@ public class FileDataTest{
         ArrayList<ArrayList<Object>> partyVotes06 = setUpVotes(["Dem", "Grass"], [1900, 100]);
 
         //create candidateVotes list for both CPL and OPL
-        ArrayList<ArrayList<Object>> candidateVotes01 = setUpVotes(["Sarah", "Bob", "Jon", "Craig", "Klein", "Rain", "Water", "Grass", "Ash", "Matt"], [0,0,0,0,0,0,0,0,0,0]);
+        ArrayList<ArrayList<Object>> candidateVotes01 = setUpVotes(["Sarah", "Bob", "Jon", "Craig", "Klein",
+                "Rain", "Water", "Grass", "Ash", "Matt"], [0,0,0,0,0,0,0,0,0,0]);
         ArrayList<ArrayList<Object>> candidateVotes02 = setUpVotes(["Sarah", "Bob", "Jon", "Craig", "Klein"], [0,0,0,0,0]);
         ArrayList<ArrayList<Object>> candidateVotes03 = setUpVotes(["Sarah", "Bob", "Jon"], [0,0,0]);
         ArrayList<ArrayList<Object>> candidateVotes04 = setUpVotes(["Sarah", "Bob", "Jon"], [4500, 2000, 3500]);
@@ -143,6 +154,110 @@ public class FileDataTest{
 
         //Test 3.f
         assertEquals(2000, oplInput06.getNumberBallots(), "Number Ballots is wrong for OPL Input file 06 - Test 3.f");
+    }
+
+    @Test
+    public void testCheckNumParties(){
+        //Test 4.a
+        assertEquals(4, cplInput01.getNumberParties(), "Number of Parties is wrong for CPL Input file 01 - Test 4.a");
+
+        //Test 4.b
+        assertEquals(2, cplInput02.getNumberParties(), "Number of Parties is wrong for CPL Input file 02 - Test 4.b");
+
+        //Test 4.c
+        assertEquals(1, cplInput03.getNumberParties(), "Number of Parties is wrong for CPL Input file 03 - Test 4.c");
+
+        //Test 4.d
+        assertEquals(3, oplInput04.getNumberParties(), "Number of Parties is wrong for OPL Input file 04 - Test 4.d");
+
+        //Test 4.e
+        assertEquals(2, oplInput05.getNumberParties(), "Number of Parties is wrong for OPL Input file 05 - Test 4.e");
+
+        //Test 4.f
+        assertEquals(2, oplInput06.getNumberParties(), "Number of Parties is wrong for OPL Input file 06 - Test 4.f");
+    }
+
+    @Test
+    public void testCheckPartyCandidates(){
+        //Test 5.a
+        assertEquals("{Dem=[Sarah,Bob,Jon], Rep=[Craig,Klein], Green=[Rain,Water,Grass], Lib=[Ash,Matt]}",
+                cplInput01.getPartyCandidates().toString(), "Something went wrong when creating the partyCandidates for" +
+                        " CPL Input file 01 - Test 5.a");
+
+        //Test 5.b
+        assertEquals("{Dem=[Sarah,Bob,Jon], Rep=[Craig,Klein]}", cplInput02.getPartyCandidates().toString(),
+                "Something went wrong when creating the partyCandidates for CPL Input file 02 - Test 5.b");
+
+        //Test 5.c
+        assertEquals("{Dem=[Sarah,Bob,Jon]}", cplInput03.getPartyCandidates().toString(),
+                "Something went wrong when creating the partyCandidates for CPL Input file 03 - Test 5.c");
+
+        //Test 5.d
+        assertEquals("{Dem=[Sarah,Bob], Rep=[Craig]}", oplInput04.getPartyCandidates().toString(),
+                "Something went wrong when creating the partyCandidates for OPL Input file 04 - Test 5.d");
+
+        //Test 5.e
+        assertEquals("{Dem=[Sarah], Grass=[Rain]}", oplInput05.getPartyCandidates().toString(),
+                "Something went wrong when creating the partyCandidates for OPL Input file 05 - Test 5.e");
+
+        //Test 5.f
+        assertEquals("{Dem=[Sarah], Grass=[Rain]}", oplInput06.getPartyCandidates().toString(),
+                "Something went wrong when creating the partyCandidates for OPL Input file 06 - Test 5.f");
+    }
+
+    @Test
+    public void testCheckPartyVotes(){
+        //Test 6.a
+        assertEquals("[[Dem, 750], [Rep, 250]]", cplInput01.getPartyVotes().toString(),
+                "Something went wrong when creating the partyVotes for CPL Input file 01 - Test 6.a");
+
+        //Test 6.b
+        assertEquals("[[Dem, 2500], [Rep, 3000], [Green, 2100], [Lib, 2400]]", cplInput02.getPartyVotes().toString(),
+                "Something went wrong when creating the partyVotes for CPL Input file 02 - Test 6.b");
+
+        //Test 6.c
+        assertEquals("[[Dem, 2000]]", cplInput03.getPartyVotes().toString(),
+                "Something went wrong when creating the partyVotes for CPL Input file 03 - Test 6.c");
+
+        //Test 6.d
+        assertEquals("[[Dem, 2500], [Rep, 3000]]", oplInput04.getPartyVotes().toString(),
+                "Something went wrong when creating the partyVotes for OPL Input file 04 - Test 6.d");
+
+        //Test 6.e
+        assertEquals("[[Dem, 1500], [Grass, 500]]", oplInput05.getPartyVotes().toString(),
+                "Something went wrong when creating the partyVotes for OPL Input file 05 - Test 6.e");
+
+        //Test 6.f
+        assertEquals("[[Dem, 1900], [Grass, 100]]", oplInput06.getPartyVotes().toString(),
+                "Something went wrong when creating the partyVotes for OPL Input file 06 - Test 6.f");
+    }
+
+    @Test
+    public void testCheckCandidateVotes(){
+        //Test 7.a
+        assertEquals("[[Sarah, 0], [Bob, 0], [Jon, 0], [Craig, 0], [Klein, 0], [Rain,0], [Water, 0], [Grass, 0], " +
+                        "[Ash, 0], [Matt, 0]]", cplInput01.getCandidateVotes().toString(),
+                        "Something went wrong when creating the candidateVotes for CPL Input file 01 - Test 7.a");
+
+        //Test 7.b
+        assertEquals("[[Sarah, 0], [Bob, 0], [Jon, 0], [Craig, 0], [Klein, 0]]", cplInput02.getCandidateVotes().toString(),
+                "Something went wrong when creating the candidateVotes for CPL Input file 02 - Test 7.b");
+
+        //Test 7.c
+        assertEquals("[[Sarah, 0], [Bob, 0], [Jon, 0]]", cplInput03.getCandidateVotes().toString(),
+                "Something went wrong when creating the candidateVotes for CPL Input file 03 - Test 7.c");
+
+        //Test 7.d
+        assertEquals("[[Sarah, 4500], [Bob, 2000], [Jon, 3500]]", oplInput04.getCandidateVotes().toString(),
+                "Something went wrong when creating the candidateVotes for OPL Input file 04 - Test 7.d");
+
+        //Test 7.e
+        assertEquals("[[Sarah, 1500], [Rain, 500]]", oplInput05.getCandidateVotes().toString(),
+                "Something went wrong when creating the candidateVotes for OPL Input file 05 - Test 7.e");
+
+        //Test 7.f
+        assertEquals("[[Sarah, 1900], [Rain, 100]]", oplInput06.getCandidateVotes().toString(),
+                "Something went wrong when creating the candidateVotes for OPL Input file 06 - Test 7.f");
     }
 
     
