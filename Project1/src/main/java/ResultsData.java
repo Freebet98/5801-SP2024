@@ -32,23 +32,38 @@ abstract public class ResultsData extends FileData{
         computeWinOrder();
     }
 
+	/**
+	* TODO
+	*/
     public ArrayList<ArrayList<Object>> getSeatAllocation(){
         return seatAllocation;
     }
 
+	/**
+	* TODO
+	*/
     public ArrayList<ArrayList<Object>> getRemainingVotes(){
         return remainingVotes;
     }
 
+	/**
+	* TODO
+	*/
     public ArrayList<ArrayList<Object>> getFinalWinOrder(){
         return finalWinOrder;
     }
 
+	/**
+	* TODO
+	*/
     public ArrayList<String> getPartyWinOrder(){
         return partyWinOrder;
     }
 
     //Will be used to override the Object toString()
+	/**
+	* TODO
+	*/
     abstract public String toString();
 
     /**
