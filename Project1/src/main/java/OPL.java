@@ -38,7 +38,7 @@ public class OPL extends Election{
      * TODO
      * @param candidateVotes
      */
-    private void sortCandidates(ArrayList<String>, ArrayList<ArrayList<Object>> candidateVotes){
+    private void sortCandidates(ArrayList<String> candidates, ArrayList<ArrayList<Object>> candidateVotes){
 
     }
 

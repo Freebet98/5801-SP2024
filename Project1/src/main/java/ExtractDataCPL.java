@@ -29,10 +29,11 @@ public class ExtractDataCPL extends ExtractData {
      * @param candidateVotes this is an ArrayList<ArrayList<Object>> whih contains
      *                       inner mappings of a candidate name and the number of
      *                       corresponding votes
+     * @throws IOException 
      */
     @Override
     protected void formatBallotInformation(ArrayList<ArrayList<Object>> partyVotes,
-                                           ArrayList<ArrayList<Object>> candidateVotes) {
+                                           ArrayList<ArrayList<Object>> candidateVotes) throws IOException {
         String line = validFile.readLine();
         char[] splitLine;
         int index = -1;
@@ -43,12 +44,12 @@ public class ExtractDataCPL extends ExtractData {
             line.trim();
             splitLine = line.toCharArray();
 
-            for (int i = 0; i < splitLine.length(); i++) {
+            for (int i = 0; i < splitLine.length; i++) {
                 if (splitLine[i] == '1') {
                     index = i;
                 }
 
-                count = partyVotes.get(index).get(1);
+                count = (int) partyVotes.get(index).get(1);
                 count += 1;
                 partyVotes.get(index).set(1, count);
             }

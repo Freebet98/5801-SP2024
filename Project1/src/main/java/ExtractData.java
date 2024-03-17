@@ -1,6 +1,5 @@
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -83,7 +82,7 @@ abstract public class ExtractData {
         String line;
         String[] splitLine;
         String partyName;
-        ArrayList<Object> partyInner = new ArrayList<>; ArrayList<Object> candidateInner = new ArrayList<>;
+        ArrayList<Object> partyInner = new ArrayList<>(); ArrayList<Object> candidateInner = new ArrayList<>();
         ArrayList<String> candidates = new ArrayList<>();
 
         /* This for loop reads a single line from validFile and uses the information
@@ -100,8 +99,7 @@ abstract public class ExtractData {
             //Gets the candidates from splitLine and adds them to the candidate
             //arraylist, also adds them to candidateInner which is used for
             //candidateVotes
-            for (int k = 1, k <splitLine.length();
-            k++){
+            for (int k = 1; k <splitLine.length; k++){
                 candidates.add(splitLine[i]);
 
                 //Initialize candidateVotes with an arrayList of candidateName and 0
@@ -138,6 +136,6 @@ abstract public class ExtractData {
      *                       corresponing number of votes
      */
     abstract protected void formatBallotInformation(ArrayList<ArrayList<Object>> partyVotes,
-                                                    ArrayList<ArrayList<Object>> candidateVotes);
+                                                    ArrayList<ArrayList<Object>> candidateVotes) throws IOException;
 
 }
