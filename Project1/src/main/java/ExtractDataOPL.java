@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ExtractDataOPL extends ExtractData {
@@ -26,10 +27,11 @@ public class ExtractDataOPL extends ExtractData {
      * @param candidateVotes this is an ArrayList<ArrayList<Object>> whih contains
      *                       inner mappings of a candidate name and the number of
      *                       corresponding votes
+     * @throws IOException 
      */
     @Override
     protected void formatBallotInformation(ArrayList<ArrayList<Object>> partyVotes,
-                                           ArrayList<ArrayList<Object>> candidateVotes) {
+                                           ArrayList<ArrayList<Object>> candidateVotes) throws IOException {
         String line = validFile.readLine();
         char[] splitLine;
         int index = -1;
@@ -40,12 +42,12 @@ public class ExtractDataOPL extends ExtractData {
             line.trim();
             splitLine = line.toCharArray();
 
-            for (int i = 0; i < splitLine.length(); i++) {
+            for (int i = 0; i < splitLine.length; i++) {
                 if (splitLine[i] == '1') {
                     index = i;
                 }
 
-                count = candidateVotesVotes.get(index).get(1);
+                count = (int) candidateVotes.get(index).get(1);
                 count += 1;
                 candidateVotes.get(index).set(1, count);
             }
