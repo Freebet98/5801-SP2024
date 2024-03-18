@@ -24,22 +24,23 @@ public class ExtractDataCPL extends ExtractData {
      * candidates will have 0 votes personally
      *
      * @param partyVotes     this is an ArrayList<ArrayList<Object>> which contains
-     *                       inner mappings of a party name and the number of corresponding
+     *                       inner mappings of a party name and the number of
+     *                       corresponding
      *                       votes
      * @param candidateVotes this is an ArrayList<ArrayList<Object>> whih contains
      *                       inner mappings of a candidate name and the number of
      *                       corresponding votes
-     * @throws IOException 
+     * @throws IOException
      */
     @Override
     protected void formatBallotInformation(ArrayList<ArrayList<Object>> partyVotes,
-                                           ArrayList<ArrayList<Object>> candidateVotes) throws IOException {
+            ArrayList<ArrayList<Object>> candidateVotes) throws IOException {
         String line = validFile.readLine();
         char[] splitLine;
         int index = -1;
         int count = 0;
 
-        //Check for the EOF
+        // Check for the EOF
         while (line != null) {
             line.trim();
             splitLine = line.toCharArray();
@@ -47,11 +48,10 @@ public class ExtractDataCPL extends ExtractData {
             for (int i = 0; i < splitLine.length; i++) {
                 if (splitLine[i] == '1') {
                     index = i;
+                    count = (int) partyVotes.get(index).get(1);
+                    count += 1;
+                    partyVotes.get(index).set(1, count);
                 }
-
-                count = (int) partyVotes.get(index).get(1);
-                count += 1;
-                partyVotes.get(index).set(1, count);
             }
 
             line = validFile.readLine();
