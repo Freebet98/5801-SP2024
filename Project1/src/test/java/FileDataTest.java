@@ -1,6 +1,8 @@
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class FileDataTest {
@@ -112,8 +114,13 @@ public class FileDataTest {
                 for (int i = 0; i < names.length; i++) {
                         key = partyNames[i];
                         value = new ArrayList<>();
-                        for (int k = 0; k < names[i].length; k++) {  
+                        for (int k = 0; k < names[i].length; k++) {
                                 value.add(names[i][k]);
+                        }
+                        if (returnVal.containsKey(key)) {
+                                ArrayList<String> tempValue = returnVal.get(key);
+                                tempValue.addAll(value);
+                                returnVal.put(key, tempValue);
                         }
                         returnVal.put(key, value);
                 }
@@ -221,35 +228,154 @@ public class FileDataTest {
         }
 
         @Test
-        public void testCheckPartyCandidates() {
-                // Test 5.a
-                assertEquals("{Dem=[Sarah,Bob,Jon], Rep=[Craig,Klein], Green=[Rain,Water,Grass], Lib=[Ash,Matt]}",
-                                cplInput01.getPartyCandidates().toString());
+        public void testCheckPartyCandidates01() {
+                // Test 5.a1
+                assertEquals(true, cplInput01.getPartyCandidates().containsKey("Dem"));
 
-                // Test 5.b
-                assertEquals("{Dem=[Sarah,Bob,Jon], Rep=[Craig,Klein]}", cplInput02.getPartyCandidates().toString());
+                // Test 5.a2
+                assertEquals("[Sarah, Bob, Jon]", cplInput01.getPartyCandidates().get("Dem").toString());
 
-                // Test 5.c
-                assertEquals("{Dem=[Sarah,Bob,Jon]}", cplInput03.getPartyCandidates().toString());
+                // Test 5.b1
+                assertEquals(true, cplInput01.getPartyCandidates().containsKey("Rep"));
+
+                // Test 5.b2
+                assertEquals("[Craig, Klein]", cplInput01.getPartyCandidates().get("Rep").toString());
+
+                // Test 5.c1
+                assertEquals(true, cplInput01.getPartyCandidates().containsKey("Green"));
+
+                // Test 5.c2
+                assertEquals("[Rain, Water, Grass]", cplInput01.getPartyCandidates().get("Green").toString());
 
                 // Test 5.d
-                assertEquals("{Dem=[Sarah,Bob], Rep=[Craig]}", oplInput04.getPartyCandidates().toString());
+                assertEquals(true, cplInput01.getPartyCandidates().containsKey("Lib"));
+
+                //Test 5.d2
+                assertEquals("[Ash, Matt]", cplInput01.getPartyCandidates().get("Lib").toString());
 
                 // Test 5.e
-                assertEquals("{Dem=[Sarah], Grass=[Rain]}", oplInput05.getPartyCandidates().toString());
+                assertEquals(false, cplInput01.getPartyCandidates().containsKey("Grass"));
+        }
 
-                // Test 5.f
-                assertEquals("{Dem=[Sarah], Grass=[Rain]}", oplInput06.getPartyCandidates().toString());
+        @Test
+        public void testCheckPartyCandidates02() {
+                // Test 6.a1
+                assertEquals(true, cplInput02.getPartyCandidates().containsKey("Dem"));
+
+                // Test 6.a2
+                assertEquals("[Sarah, Bob, Jon]", cplInput01.getPartyCandidates().get("Dem").toString());
+
+                // Test 6.b1
+                assertEquals(true, cplInput02.getPartyCandidates().containsKey("Rep"));
+
+                // Test 6.b2
+                assertEquals("[Craig, Klein]", cplInput02.getPartyCandidates().get("Rep").toString());
+
+                // Test 6.c
+                assertEquals(false, cplInput02.getPartyCandidates().containsKey("Green"));
+
+                // Test 6.d
+                assertEquals(false, cplInput02.getPartyCandidates().containsKey("Lib"));
+
+                // Test 6.e
+                assertEquals(false, cplInput02.getPartyCandidates().containsKey("Grass"));
+        }
+
+        @Test
+        public void testCheckPartyCandidates03() {
+                // Test 7.a1
+                assertEquals(true, cplInput03.getPartyCandidates().containsKey("Dem"));
+
+                // Test 7.a2
+                assertEquals("[Sarah, Bob, Jon]", cplInput03.getPartyCandidates().get("Dem").toString());
+
+                // Test 7.b
+                assertEquals(false, cplInput03.getPartyCandidates().containsKey("Rep"));
+
+                // Test 7.c
+                assertEquals(false, cplInput03.getPartyCandidates().containsKey("Green"));
+
+                // Test 7.d
+                assertEquals(false, cplInput03.getPartyCandidates().containsKey("Lib"));
+
+                // Test 7.e
+                assertEquals(false, cplInput03.getPartyCandidates().containsKey("Grass"));
+        }
+
+        @Test
+        public void testCheckPartyCandidates04() {
+                // Test 8.a1
+                assertEquals(true, oplInput04.getPartyCandidates().containsKey("Dem"));
+
+                // Test 8.a2
+                assertEquals("[Sarah, Bob]", oplInput04.getPartyCandidates().get("Dem").toString());
+
+                // Test 8.b1
+                assertEquals(true, oplInput04.getPartyCandidates().containsKey("Rep"));
+
+                // Test 8.b2
+                assertEquals("[Craig]", oplInput04.getPartyCandidates().get("Rep").toString());
+
+                // Test 8.c
+                assertEquals(false, oplInput04.getPartyCandidates().containsKey("Green"));
+
+                // Test 8.d
+                assertEquals(false, oplInput04.getPartyCandidates().containsKey("Lib"));
+
+                // Test 8.e
+                assertEquals(false, oplInput04.getPartyCandidates().containsKey("Grass"));
+        }
+
+        @Test
+        public void testCheckPartyCandidates05() {
+                // Test 9.a1
+                assertEquals(true, oplInput05.getPartyCandidates().containsKey("Dem"));
+
+                // Test 9.a2
+                assertEquals("[Sarah]", oplInput05.getPartyCandidates().get("Dem").toString());
+
+                // Test 9.b1
+                assertEquals(true, oplInput05.getPartyCandidates().containsKey("Grass"));
+
+                // Test 9.b2
+                assertEquals("[Rain]", oplInput05.getPartyCandidates().get("Grass").toString());
+
+                // Test 9.c
+                assertEquals(false, oplInput05.getPartyCandidates().containsKey("Green"));
+
+                // Test 9.d
+                assertEquals(false, oplInput05.getPartyCandidates().containsKey("Lib"));
+        }
+
+        @Test
+        public void testCheckPartyCandidates06() {
+                // Test 10.a1
+                assertEquals(true, oplInput06.getPartyCandidates().containsKey("Dem"));
+
+                // Test 10.a2
+                assertEquals("[Sarah]", oplInput06.getPartyCandidates().get("Dem").toString());
+
+                // Test 10.b1
+                assertEquals(true, oplInput06.getPartyCandidates().containsKey("Grass"));
+
+                // Test 10.b2
+                assertEquals("[Rain]", oplInput06.getPartyCandidates().get("Grass").toString());
+
+                // Test 10.c
+                assertEquals(false, oplInput06.getPartyCandidates().containsKey("Green"));
+
+                // Test 10.d
+                assertEquals(false, oplInput06.getPartyCandidates().containsKey("Lib"));
         }
 
         @Test
         public void testCheckPartyVotes() {
                 // Test 6.a
-                assertEquals("[[Dem, 750], [Rep, 250]]", cplInput01.getPartyVotes().toString());
+                assertEquals("[[Dem, 2500], [Rep, 3000], [Green, 2100], [Lib, 2400]]",
+                                cplInput01.getPartyVotes().toString());
 
                 // Test 6.b
-                assertEquals("[[Dem, 2500], [Rep, 3000], [Green, 2100], [Lib, 2400]]",
-                                cplInput02.getPartyVotes().toString());
+                assertEquals("[[Dem, 750], [Rep, 250]]", cplInput02.getPartyVotes().toString());
 
                 // Test 6.c
                 assertEquals("[[Dem, 2000]]", cplInput03.getPartyVotes().toString());
@@ -267,7 +393,7 @@ public class FileDataTest {
         @Test
         public void testCheckCandidateVotes() {
                 // Test 7.a
-                assertEquals("[[Sarah, 0], [Bob, 0], [Jon, 0], [Craig, 0], [Klein, 0], [Rain,0], [Water, 0], [Grass, 0], "
+                assertEquals("[[Sarah, 0], [Bob, 0], [Jon, 0], [Craig, 0], [Klein, 0], [Rain, 0], [Water, 0], [Grass, 0], "
                                 +
                                 "[Ash, 0], [Matt, 0]]", cplInput01.getCandidateVotes().toString());
 
