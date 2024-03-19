@@ -109,7 +109,7 @@ public class FileDataTest {
                 HashMap<String, ArrayList<String>> returnVal = new HashMap<>();
                 ArrayList<String> value;
                 String key;
-                for (int i = 0; i < names.length; i++) {
+                for (int i = 0; i < partyNames.length; i++) {
                         key = partyNames[i];
                         value = new ArrayList<>();
                         for (int k = 0; k < names[i].length; k++) {  
