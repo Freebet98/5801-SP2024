@@ -9,6 +9,7 @@ abstract public class ResultsData extends FileData{
     private final ArrayList<ArrayList<Object>> remainingVotes;
     private final ArrayList<String> partyWinOrder;
     private final ArrayList<ArrayList<Object>> finalWinOrder;
+    protected final FileData fileData;
 
     /**
      * This creates an object of ResultsData which is used to store the information obtained after running the election,
@@ -31,41 +32,41 @@ abstract public class ResultsData extends FileData{
         this.seatAllocation = seatAllocation;
         this.remainingVotes = remainingVotes;
         this.partyWinOrder = partyWinOrder;
+        this.fileData = fileDate;
         finalWinOrder = new ArrayList<ArrayList<Object>>();
         computeWinOrder();
     }
 
 	/**
-	* TODO
+	* @return an ArrayList<ArrayList<Object>>
 	*/
     public ArrayList<ArrayList<Object>> getSeatAllocation(){
         return seatAllocation;
     }
 
 	/**
-	* TODO
+	* @return an ArrayList<ArrayList<Object>>
 	*/
     public ArrayList<ArrayList<Object>> getRemainingVotes(){
         return remainingVotes;
     }
 
 	/**
-	* TODO
+	* @return an ArrayList<ArrayList<Object>>
 	*/
     public ArrayList<ArrayList<Object>> getFinalWinOrder(){
         return finalWinOrder;
     }
 
 	/**
-	* TODO
+	* @return an ArrayList<String>
 	*/
     public ArrayList<String> getPartyWinOrder(){
         return partyWinOrder;
     }
 
-    //Will be used to override the Object toString()
 	/**
-	* TODO
+	* @return the output expected by the auditfile
 	*/
     abstract public String toString();
 
