@@ -63,14 +63,18 @@ abstract public class ExtractData {
      * @param line represents a string of the line from the file. This line should
      *             only be digits
      */
-    protected void verifyLineIsDigit(String line) {
+    protected boolean verifyLineIsDigit(String line) {
+        line.trim();
         // Goes through every character in line, looks to see if it's a digit
         for (int i = 0; i < line.length(); i++) {
             if (!Character.isDigit(line.charAt(i))) {
                 System.out.println("Election File is invalid, the program will close now.");
-                System.exit(0);
+                return false;
+                // System.exit(0);
             }
         }
+
+        return true;
     }
 
     /**
