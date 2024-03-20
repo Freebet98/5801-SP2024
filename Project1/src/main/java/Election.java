@@ -1,18 +1,13 @@
-/**
- * This class is used to run an election
- * @author
- * @author
- */
 import java.util.ArrayList;
 
 abstract public class Election {
-    FileData fileData;
-    ResultsData results;
-    int largestRemainder;
-    int availableSeats;
-    ArrayList<ArrayList<Object>> remainingVotes;
-    ArrayList<ArrayList<Object>> seatAllocation;
-    ArrayList<String> winOrder;
+    protected FileData fileData;
+    protected ResultsData results;
+    protected int largestRemainder;
+    protected int availableSeats;
+    protected ArrayList<ArrayList<Object>> remainingVotes;
+    protected ArrayList<ArrayList<Object>> seatAllocation;
+    protected ArrayList<String> winOrder;
 
     /**
      * TODO
@@ -21,31 +16,45 @@ abstract public class Election {
     abstract public ResultsData runElection();
 
     /**
-     * TODO
+     * This will access into the given index of the arraylist remainingvotes
+     * and subtract largestRemainder from it
+     * returns void
      * @param index
      */
     protected void adjustRemainingVotes(int index){
-
+        if(index < 0) {
+            // error, invalid index
+        }
+        int val = (int) this.remainingVotes.get(index).get(1);
+        val -= this.largestRemainder;
+        this.remainingVotes.get(index).set(1, val);
     }
 
     /**
-     * TODO
+     * This will access into the given index of the arraylist
+     * seatAllocation and add 1 to the seat total
+     * returns void
      * @param index
      */
     protected void adjustSeatAllocation(int index){
-
+        int val =(int) this.seatAllocation.get(index).get(1);
+        val++;
+        this.seatAllocation.get(index).set(1, val);
     }
 
     /**
-     * TODO
+     * This will add the string of the party from seatAllocation
+     * at the given index to finalWinOrder
+     * returns void
      * @param index
      */
     protected void addWinner(int index){
-
+        String winner = (String) this.seatAllocation.get(index).get(0);
+        this.winOrder.add(winner);
     }
 
     /**
-     * TODO
+     * Derrick did this
      * @return
      */
     protected float generateRandom(){
@@ -67,7 +76,7 @@ abstract public class Election {
     }
 
     /**
-     * TODO
+     * Derrick did this
      * @param numTie
      * @return
      */
