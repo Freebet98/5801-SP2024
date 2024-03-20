@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * This class is used to run a CPL election
  * @author
@@ -9,6 +11,15 @@ public class CPL extends Election{
      */
     CPL(FileData fileData){
         this.fileData = fileData;
+        availableSeats = fileData.getNumberSeats();
+
+        this.remainingVotes = new ArrayList<ArrayList<Object>>();
+        this.seatAllocation = new ArrayList<ArrayList<Object>>();
+        this.winOrder = new ArrayList<String>();
+
+        // largestRemainder calculation
+        int ballots = fileData.getNumberBallots();
+        this.largestRemainder = ballots / this.availableSeats;
     }
 
     /**
@@ -17,6 +28,10 @@ public class CPL extends Election{
      */
     @Override
     public ResultsData runElection() {
-        return null;
+        firstAllocation();
+        secondAllocation();
+        this.results = new ResultsDataCPL(this.seatAllocation, this.remainingVotes,
+                                            this.winOrder, this.fileData);
+        return this.results;
     }
 }

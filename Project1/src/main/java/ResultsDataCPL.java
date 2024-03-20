@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class ResultsDataCPL extends ResultsData {
     /**
-     * This creates an object of ResultsDataCPL which is used to store the information obtained after running the election,
+     *      * This creates an object of ResultsDataCPL which is used to store the information obtained after running the election,
      * inherits from ResultsData, so will have access to all of ResultsData's methods
      * @param seatAllocation This is a mapping of the name of each party to an array that represents how many seats
      *                       a party got in the first allocation [0] and the second allocation [1]. the actual
