@@ -119,35 +119,6 @@ public class FileDataTest {
                 oplInput06 = new FileData("OPL", 10, 2000, 2, partyCandidates06, partyVotes06, candidateVotes06);
         }
 
-        public HashMap<String, ArrayList<String>> setUpPartyCandidates(String[] partyNames, String[][] names) {
-                HashMap<String, ArrayList<String>> returnVal = new HashMap<>();
-                ArrayList<String> value;
-                String key;
-                for (int i = 0; i < partyNames.length; i++) {
-                        key = partyNames[i];
-                        value = new ArrayList<>();
-                        for (int k = 0; k < names[i].length; k++) {  
-                                value.add(names[i][k]);
-                        }
-                        returnVal.put(key, value);
-                }
-
-                return returnVal;
-        }
-
-        public ArrayList<ArrayList<Object>> setUpVotes(String[] names, int[] votes) {
-                ArrayList<ArrayList<Object>> returnVal = new ArrayList<>();
-
-                for (int i = 0; i < names.length; i++) {
-                        ArrayList<Object> value = new ArrayList<>();
-                        value.add(names[i]);
-                        value.add(votes[i]);
-                        returnVal.add(value);
-                }
-
-                return returnVal;
-        }
-
         // Test start here
 
         @Test
