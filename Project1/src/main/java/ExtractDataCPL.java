@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class ExtractDataCPL extends ExtractData {
+    private static final Exception IncorrectPartyNumberException = null;
+
     /**
      * This creates an object of the ExtractDataCPL class
      *
@@ -33,11 +35,11 @@ public class ExtractDataCPL extends ExtractData {
      * @param candidateVotes this is an ArrayList<ArrayList<Object>> whih contains
      *                       inner mappings of a candidate name and the number of
      *                       corresponding votes
-     * @throws IOException
+     * @throws Exception 
      */
     @Override
     protected void formatBallotInformation(ArrayList<ArrayList<Object>> partyVotes,
-            ArrayList<ArrayList<Object>> candidateVotes) throws IOException {
+            ArrayList<ArrayList<Object>> candidateVotes) throws Exception {
         String line = validFile.readLine();
         char[] splitLine;
         int index = -1;
@@ -47,6 +49,9 @@ public class ExtractDataCPL extends ExtractData {
         while (line != null) {
             line.trim();
             splitLine = line.toCharArray();
+            if(splitLine[0] != '1' || splitLine[0] != ','){
+                throw IncorrectPartyNumberException;
+            }
 
             for (int i = 0; i < splitLine.length; i++) {
                 if (splitLine[i] == '1') {

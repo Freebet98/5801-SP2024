@@ -18,11 +18,9 @@ abstract public class ExtractData {
      *
      * @return fileData, this is a FileData object containing the information from
      *         the extracted file
-     * @throws IOException will throw this exception from readLine() if an error has
-     *                     occurred while
-     *                     reading the file
+     * @throws Exception 
      */
-    protected FileData extractFromFile() throws IOException {
+    protected FileData extractFromFile() throws Exception {
         // represents the string obtained from the BufferedReader while reading a line
         String line;
 
@@ -160,8 +158,9 @@ abstract public class ExtractData {
      *                       number of votes
      * @param candidateVotes is a mapping of multiple candidate names to their
      *                       corresponing number of votes
+     * @throws Exception 
      */
     abstract protected void formatBallotInformation(ArrayList<ArrayList<Object>> partyVotes,
-            ArrayList<ArrayList<Object>> candidateVotes) throws IOException;
+            ArrayList<ArrayList<Object>> candidateVotes) throws IOException, Exception;
 
 }
