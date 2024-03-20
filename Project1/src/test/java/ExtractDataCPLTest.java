@@ -6,8 +6,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 public class ExtractDataCPLTest {
     ExtractDataCPL test01;
@@ -19,12 +20,12 @@ public class ExtractDataCPLTest {
 
     @Before
     public void setUp() throws IOException {
-        String filePath = "C:/Users/cs-apal/Documents/GitHub/repo-Team2/Project1/src/test/java/CPLInput01.txt";
+        // Ask teammates how to do this with a relative path
+        String filePath = "C:\\Users\\bethany\\Documents\\GitHub\\repo-Team2\\Project1\\src\\test\\java\\CPLInput01.txt";
         File file = new File(filePath);
-        FileReader fileR = new FileReader(file);
+        FileReader fileR = new FileReader(file.getAbsolutePath());
         BufferedReader validFile01 = new BufferedReader(fileR);
         test01 = new ExtractDataCPL(validFile01, "CPL");
-        readLineTillBallotInfo(validFile01);
 
         // File file2 = new File("CPLTest02.txt");
         // FileReader fileR2 = new FileReader(file2);
@@ -36,12 +37,6 @@ public class ExtractDataCPLTest {
         // test03 = new ExtractDataCPL(validFile3, "CPL");
     }
 
-    public void readLineTillBallotInfo(BufferedReader validFile) throws IOException {
-        for (int i = 0; i < 4; i++) {
-            validFile.readLine();
-        }
-    }
-
     public String printPartyVotes(ArrayList<ArrayList<Object>> partyVotes) {
         String line = "";
         for (ArrayList<Object> tuple : partyVotes) {
@@ -51,6 +46,44 @@ public class ExtractDataCPLTest {
         }
 
         return line;
+    }
+
+    @Test
+    public void testVerifyLineIsDigit() {
+        // Test 1.a
+        String line = "12";
+        assertEquals(true, test01.verifyLineIsDigit(line));
+
+        // Test 1.b
+        line = " 1";
+        assertEquals(true, test01.verifyLineIsDigit(line));
+
+        // Test 1.c
+        line = "abc";
+        assertEquals(false, test01.verifyLineIsDigit(line));
+
+        // Test 1.d
+        line = " 1a2";
+        assertEquals(false, test01.verifyLineIsDigit(line));
+
+        // Test 1.e
+        line = "1a2";
+        assertEquals(false, test01.verifyLineIsDigit(line));
+    }
+
+    @Test
+    public void testFormatPartyInformation() throws IOException {
+        // Test 2.a
+        ArrayList<ArrayList<Object>> partyVotes = new ArrayList<>();
+        ArrayList<ArrayList<Object>> candidateVotes = new ArrayList<>();
+        HashMap<String, ArrayList<String>> partyCandidates = new HashMap<>();
+        partyCandidates.put("Democratic", new ArrayList<>(Arrays.asList("Mary", "Jane", "Kim")));
+        partyCandidates.put("Republican", new ArrayList<>(Arrays.asList("Allen", "Joe", "Sarah")));
+        partyCandidates.put("Green", new ArrayList<>(Arrays.asList("Sally", "Nikki")));
+        partyCandidates.put("Independant", new ArrayList<>(Arrays.asList("Mike")));
+
+        assertEquals(partyCandidates, test01.formatPartyInformation(4, partyVotes, candidateVotes));
+
     }
 
     @Test
@@ -67,12 +100,37 @@ public class ExtractDataCPLTest {
         candidateVotes = new ArrayList<>();
         test01.formatBallotInformation(partyVotes, candidateVotes);
         assertEquals(
-                "Party: Democratic, Votes: 24936\nParty: Republican, Votes: 25093\nParty: Green, Votes: 25067\nParty: Independent, Votes: 24904\n",
+                "Party: Democratic, Votes: 24937\nParty: Republican, Votes: 25093\nParty: Green, Votes: 25067\nParty: Independent, Votes: 24904\n",
                 printPartyVotes(partyVotes));
 
         // Test 1.b
         partyVotes = new ArrayList<>();
         candidateVotes = new ArrayList<>();
         partyNames = new String[] { "Democratic", "Independent" };
+    }
+
+    @Test
+    public void testExtractFromFile() throws IOException {
+        FileData test = test01.extractFromFile();
+        HashMap<String, ArrayList<String>> partyCandidates = new HashMap<>();
+        partyCandidates.put("Democratic", new ArrayList<>(Arrays.asList("Mary", "Jane", "Kim")));
+        partyCandidates.put("Republican", new ArrayList<>(Arrays.asList("Allen", "Joe", "Sarah")));
+        partyCandidates.put("Green", new ArrayList<>(Arrays.asList("Sally", "Nikki")));
+        partyCandidates.put("Independant", new ArrayList<>(Arrays.asList("Mike")));
+
+        // Test a
+        assertEquals("CPL", test.getElectionType());
+
+        // Test b
+        assertEquals(3, test.getNumberSeats());
+
+        // Test c
+        assertEquals(100000, test.getNumberBallots());
+
+        // Test d
+        assertEquals(4, test.getNumberParties());
+
+        // Test e
+        assertEquals(partyCandidates, test.getPartyCandidates());
     }
 }

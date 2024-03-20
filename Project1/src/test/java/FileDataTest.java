@@ -2,7 +2,6 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class FileDataTest {
@@ -20,81 +19,94 @@ public class FileDataTest {
         public void setUp() {
 
                 // create partyCandidate lists for both CPL and OPL files
-                String[] parties = new String[] { "Dem", "Rep", "Green", "Lib" };
-                String[][] names = new String[][] { { "Sarah", "Bob", "Jon" }, { "Craig", "Klein" },
-                                { "Rain", "Water", "Grass" }, { "Ash", "Matt" } };
-                HashMap<String, ArrayList<String>> partyCandidates01 = setUpPartyCandidates(parties, names);
+                HashMap<String, ArrayList<String>> partyCandidates01 = new HashMap<>();
+                partyCandidates01.put("Dem", new ArrayList<>(Arrays.asList("Sarah", "Bob", "Jon")));
+                partyCandidates01.put("Rep", new ArrayList<>(Arrays.asList("Craig", "Klein")));
+                partyCandidates01.put("Green", new ArrayList<>(Arrays.asList("Rain", "Water", "Grass")));
+                partyCandidates01.put("Lib", new ArrayList<>(Arrays.asList("Ash", "Matt")));
 
-                parties = new String[] { "Dem", "Rep" };
-                names = new String[][] { { "Sarah", "Bob", "Jon" }, { "Craig", "Klein" } };
-                HashMap<String, ArrayList<String>> partyCandidates02 = setUpPartyCandidates(parties, names);
+                HashMap<String, ArrayList<String>> partyCandidates02 = new HashMap<>();
+                partyCandidates02.put("Dem", new ArrayList<>(Arrays.asList("Sarah", "Bob", "Jon")));
+                partyCandidates02.put("Rep", new ArrayList<>(Arrays.asList("Craig", "Klein")));
 
-                parties = new String[] { "Dem" };
-                names = new String[][] { { "Sarah", "Bob", "Jon" } };
-                HashMap<String, ArrayList<String>> partyCandidates03 = setUpPartyCandidates(parties, names);
+                HashMap<String, ArrayList<String>> partyCandidates03 = new HashMap<>();
+                partyCandidates03.put("Dem", new ArrayList<>(Arrays.asList("Sarah", "Bob", "Jon")));
 
-                parties = new String[] { "Dem", "Dem", "Rep" };
-                names = new String[][] { { "Sarah" }, { "Bob" }, { "Craig" } };
-                HashMap<String, ArrayList<String>> partyCandidates04 = setUpPartyCandidates(parties, names);
+                HashMap<String, ArrayList<String>> partyCandidates04 = new HashMap<>();
+                partyCandidates04.put("Dem", new ArrayList<>(Arrays.asList("Sarah", "Bob")));
+                partyCandidates04.put("Rep", new ArrayList<>(Arrays.asList("Craig")));
 
-                parties = new String[] { "Dem", "Grass" };
-                names = new String[][] { { "Sarah" }, { "Rain" } };
-                HashMap<String, ArrayList<String>> partyCandidates05 = setUpPartyCandidates(parties, names);
+                HashMap<String, ArrayList<String>> partyCandidates05 = new HashMap<>();
+                partyCandidates05.put("Dem", new ArrayList<>(Arrays.asList("Sarah")));
+                partyCandidates05.put("Grass", new ArrayList<>(Arrays.asList("Rain")));
 
-                parties = new String[] { "Dem", "Grass" };
-                names = new String[][] { { "Sarah" }, { "Rain" } };
-                HashMap<String, ArrayList<String>> partyCandidates06 = setUpPartyCandidates(parties, names);
+                HashMap<String, ArrayList<String>> partyCandidates06 = new HashMap<>();
+                partyCandidates06.put("Dem", new ArrayList<>(Arrays.asList("Sarah")));
+                partyCandidates06.put("Grass", new ArrayList<>(Arrays.asList("Rain")));
 
                 // create partyVotes lists for both CPL and OPL file
-                parties = new String[] { "Dem", "Rep", "Green", "Lib" };
-                int[] votes = new int[] { 2500, 3000, 2100, 2400 };
-                ArrayList<ArrayList<Object>> partyVotes01 = setUpVotes(parties, votes);
+                ArrayList<ArrayList<Object>> partyVotes01 = new ArrayList<>();
+                partyVotes01.add(new ArrayList<>(Arrays.asList("Dem", 2500)));
+                partyVotes01.add(new ArrayList<>(Arrays.asList("Rep", 3000)));
+                partyVotes01.add(new ArrayList<>(Arrays.asList("Green", 2100)));
+                partyVotes01.add(new ArrayList<>(Arrays.asList("Lib", 2400)));
 
-                parties = new String[] { "Dem", "Rep" };
-                votes = new int[] { 750, 250 };
-                ArrayList<ArrayList<Object>> partyVotes02 = setUpVotes(parties, votes);
+                ArrayList<ArrayList<Object>> partyVotes02 = new ArrayList<>();
+                partyVotes02.add(new ArrayList<>(Arrays.asList("Dem", 750)));
+                partyVotes02.add(new ArrayList<>(Arrays.asList("Rep", 250)));
 
-                parties = new String[] { "Dem" };
-                votes = new int[] { 2000 };
-                ArrayList<ArrayList<Object>> partyVotes03 = setUpVotes(parties, votes);
+                ArrayList<ArrayList<Object>> partyVotes03 = new ArrayList<>();
+                partyVotes03.add(new ArrayList<>(Arrays.asList("Dem", 2000)));
 
-                parties = new String[] { "Dem", "Rep" };
-                votes = new int[] { 6000, 4000 };
-                ArrayList<ArrayList<Object>> partyVotes04 = setUpVotes(parties, votes);
+                ArrayList<ArrayList<Object>> partyVotes04 = new ArrayList<>();
+                partyVotes04.add(new ArrayList<>(Arrays.asList("Dem", 6000)));
+                partyVotes04.add(new ArrayList<>(Arrays.asList("Rep", 4000)));
 
-                parties = new String[] { "Dem", "Grass" };
-                votes = new int[] { 1500, 500 };
-                ArrayList<ArrayList<Object>> partyVotes05 = setUpVotes(parties, votes);
+                ArrayList<ArrayList<Object>> partyVotes05 = new ArrayList<>();
+                partyVotes05.add(new ArrayList<>(Arrays.asList("Dem", 1500)));
+                partyVotes05.add(new ArrayList<>(Arrays.asList("Grass", 500)));
 
-                parties = new String[] { "Dem", "Grass" };
-                votes = new int[] { 1900, 100 };
-                ArrayList<ArrayList<Object>> partyVotes06 = setUpVotes(parties, votes);
+                ArrayList<ArrayList<Object>> partyVotes06 = new ArrayList<>();
+                partyVotes06.add(new ArrayList<>(Arrays.asList("Dem", 1900)));
+                partyVotes06.add(new ArrayList<>(Arrays.asList("Grass", 100)));
 
                 // create candidateVotes list for both CPL and OPL
-                String[] candidates = new String[] { "Sarah", "Bob", "Jon", "Craig", "Klein", "Rain", "Water", "Grass",
-                                "Ash", "Matt" };
-                votes = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-                ArrayList<ArrayList<Object>> candidateVotes01 = setUpVotes(candidates, votes);
+                ArrayList<ArrayList<Object>> candidateVotes01 = new ArrayList<>();
+                candidateVotes01.add(new ArrayList<>(Arrays.asList("Sarah", 0)));
+                candidateVotes01.add(new ArrayList<>(Arrays.asList("Bob", 0)));
+                candidateVotes01.add(new ArrayList<>(Arrays.asList("Jon", 0)));
+                candidateVotes01.add(new ArrayList<>(Arrays.asList("Craig", 0)));
+                candidateVotes01.add(new ArrayList<>(Arrays.asList("Klein", 0)));
+                candidateVotes01.add(new ArrayList<>(Arrays.asList("Rain", 0)));
+                candidateVotes01.add(new ArrayList<>(Arrays.asList("Water", 0)));
+                candidateVotes01.add(new ArrayList<>(Arrays.asList("Grass", 0)));
+                candidateVotes01.add(new ArrayList<>(Arrays.asList("Ash", 0)));
+                candidateVotes01.add(new ArrayList<>(Arrays.asList("Matt", 0)));
 
-                candidates = new String[] { "Sarah", "Bob", "Jon", "Craig", "Klein" };
-                votes = new int[] { 0, 0, 0, 0, 0 };
-                ArrayList<ArrayList<Object>> candidateVotes02 = setUpVotes(candidates, votes);
+                ArrayList<ArrayList<Object>> candidateVotes02 = new ArrayList<>();
+                candidateVotes02.add(new ArrayList<>(Arrays.asList("Sarah", 0)));
+                candidateVotes02.add(new ArrayList<>(Arrays.asList("Bob", 0)));
+                candidateVotes02.add(new ArrayList<>(Arrays.asList("Jon", 0)));
+                candidateVotes02.add(new ArrayList<>(Arrays.asList("Craig", 0)));
+                candidateVotes02.add(new ArrayList<>(Arrays.asList("Klein", 0)));
 
-                candidates = new String[] { "Sarah", "Bob", "Jon" };
-                votes = new int[] { 0, 0, 0 };
-                ArrayList<ArrayList<Object>> candidateVotes03 = setUpVotes(candidates, votes);
+                ArrayList<ArrayList<Object>> candidateVotes03 = new ArrayList<>();
+                candidateVotes03.add(new ArrayList<>(Arrays.asList("Sarah", 0)));
+                candidateVotes03.add(new ArrayList<>(Arrays.asList("Bob", 0)));
+                candidateVotes03.add(new ArrayList<>(Arrays.asList("Jon", 0)));
 
-                candidates = new String[] { "Sarah", "Bob", "Jon" };
-                votes = new int[] { 4500, 2000, 3500 };
-                ArrayList<ArrayList<Object>> candidateVotes04 = setUpVotes(candidates, votes);
+                ArrayList<ArrayList<Object>> candidateVotes04 = new ArrayList<>();
+                candidateVotes04.add(new ArrayList<>(Arrays.asList("Sarah", 4500)));
+                candidateVotes04.add(new ArrayList<>(Arrays.asList("Bob", 2000)));
+                candidateVotes04.add(new ArrayList<>(Arrays.asList("Jon", 3500)));
 
-                candidates = new String[] { "Sarah, Rain" };
-                votes = new int[] { 1500, 500 };
-                ArrayList<ArrayList<Object>> candidateVotes05 = setUpVotes(candidates, votes);
+                ArrayList<ArrayList<Object>> candidateVotes05 = new ArrayList<>();
+                candidateVotes05.add(new ArrayList<>(Arrays.asList("Sarah", 1500)));
+                candidateVotes05.add(new ArrayList<>(Arrays.asList("Rain", 500)));
 
-                candidates = new String[] { "Sarah, Rain" };
-                votes = new int[] { 1900, 100 };
-                ArrayList<ArrayList<Object>> candidateVotes06 = setUpVotes(candidates, votes);
+                ArrayList<ArrayList<Object>> candidateVotes06 = new ArrayList<>();
+                candidateVotes06.add(new ArrayList<>(Arrays.asList("Sarah", 1900)));
+                candidateVotes06.add(new ArrayList<>(Arrays.asList("Rain", 100)));
 
                 // finish initializing CPL FileData
                 cplInput01 = new FileData("CPL", 3, 10000, 4, partyCandidates01, partyVotes01, candidateVotes01);
@@ -105,40 +117,6 @@ public class FileDataTest {
                 oplInput04 = new FileData("OPL", 2, 10000, 3, partyCandidates04, partyVotes04, candidateVotes04);
                 oplInput05 = new FileData("OPL", 0, 2000, 2, partyCandidates05, partyVotes05, candidateVotes05);
                 oplInput06 = new FileData("OPL", 10, 2000, 2, partyCandidates06, partyVotes06, candidateVotes06);
-        }
-
-        public HashMap<String, ArrayList<String>> setUpPartyCandidates(String[] partyNames, String[][] names) {
-                HashMap<String, ArrayList<String>> returnVal = new HashMap<>();
-                ArrayList<String> value;
-                String key;
-                for (int i = 0; i < names.length; i++) {
-                        key = partyNames[i];
-                        value = new ArrayList<>();
-                        for (int k = 0; k < names[i].length; k++) {
-                                value.add(names[i][k]);
-                        }
-                        if (returnVal.containsKey(key)) {
-                                ArrayList<String> tempValue = returnVal.get(key);
-                                tempValue.addAll(value);
-                                returnVal.put(key, tempValue);
-                        }
-                        returnVal.put(key, value);
-                }
-
-                return returnVal;
-        }
-
-        public ArrayList<ArrayList<Object>> setUpVotes(String[] names, int[] votes) {
-                ArrayList<ArrayList<Object>> returnVal = new ArrayList<>();
-
-                for (int i = 0; i < names.length; i++) {
-                        ArrayList<Object> value = new ArrayList<>();
-                        value.add(names[i]);
-                        value.add(votes[i]);
-                        returnVal.add(value);
-                }
-
-                return returnVal;
         }
 
         // Test start here
@@ -250,7 +228,7 @@ public class FileDataTest {
                 // Test 5.d
                 assertEquals(true, cplInput01.getPartyCandidates().containsKey("Lib"));
 
-                //Test 5.d2
+                // Test 5.d2
                 assertEquals("[Ash, Matt]", cplInput01.getPartyCandidates().get("Lib").toString());
 
                 // Test 5.e
@@ -381,7 +359,7 @@ public class FileDataTest {
                 assertEquals("[[Dem, 2000]]", cplInput03.getPartyVotes().toString());
 
                 // Test 6.d
-                assertEquals("[[Dem, 2500], [Rep, 3000]]", oplInput04.getPartyVotes().toString());
+                assertEquals("[[Dem, 6000], [Rep, 4000]]", oplInput04.getPartyVotes().toString());
 
                 // Test 6.e
                 assertEquals("[[Dem, 1500], [Grass, 500]]", oplInput05.getPartyVotes().toString());
