@@ -1,3 +1,8 @@
+/**
+ * This class is used to run an election
+ * @author
+ * @author
+ */
 import java.util.ArrayList;
 
 abstract public class Election {

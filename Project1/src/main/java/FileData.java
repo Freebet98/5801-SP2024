@@ -1,3 +1,7 @@
+/**
+ * This class is used to store all the information extracted from the file
+ * @author Bethany Freeman
+ */
 import java.util.ArrayList;
 import java.util.HashMap;
 

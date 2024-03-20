@@ -1,4 +1,8 @@
-import java.lang.reflect.Array;
+/**
+ * This class is used to run an OPL election
+ * @author 
+ */
+
 import java.util.ArrayList;
 import java.util.HashMap;
 

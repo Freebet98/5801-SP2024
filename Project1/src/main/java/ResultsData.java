@@ -1,4 +1,8 @@
-import java.lang.reflect.Array;
+/**
+ * This class is used to store all the information obtained after running the election
+ * @author Bethany Freeman
+ */
+
 import java.util.ArrayList;
 
 abstract public class ResultsData extends FileData{
