@@ -1,13 +1,14 @@
-/**
- * This class is used to test the FileData class
- * @author Bethany Freeman
- */
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 import java.util.*;
 
+/**
+ * This class is used to test the FileData class
+ * 
+ * @author Bethany Freeman
+ */
 public class FileDataTest {
         // Create CPL input files
         FileData cplInput01;
@@ -21,7 +22,6 @@ public class FileDataTest {
 
         @Before
         public void setUp() {
-
                 // create partyCandidate lists for both CPL and OPL files
                 HashMap<String, ArrayList<String>> partyCandidates01 = new HashMap<>();
                 partyCandidates01.put("Dem", new ArrayList<>(Arrays.asList("Sarah", "Bob", "Jon")));
