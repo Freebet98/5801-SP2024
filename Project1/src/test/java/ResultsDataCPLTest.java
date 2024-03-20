@@ -12,7 +12,7 @@ public class ResultsDataCPLTest{
         //TODO
     }
 
-    @@Test
+    @Test
     public void testGetSeatAllocation(){
         //TODO
     }

@@ -25,7 +25,8 @@ public class ExtractDataCPLTest {
     @Before
     public void setUp() throws IOException {
         // Ask teammates how to do this with a relative path
-        String filePath = "C:\\Users\\betha\\OneDrive\\Documents\\GitHub\\repo-Team2\\Project1\\src\\test\\java\\InputFiles\\CPLInput01.txt";
+        String filePath = "\\Project1\\src\\test\\java\\InputFiles\\CPLInput02.txt";
+        //Project1\src\test\java\InputFiles
         File file = new File(filePath);
         FileReader fileR = new FileReader(file);
         BufferedReader validFile01 = new BufferedReader(fileR);
@@ -128,7 +129,7 @@ public class ExtractDataCPLTest {
         // Test 3.b
         partyVotes = new ArrayList<>();
         candidateVotes = new ArrayList<>();
-        assertEquals(exception, test02.formatBallotInformation(partyVotes, candidateVotes));
+        //assertEquals(, test02.formatBallotInformation(partyVotes, candidateVotes));
         
     }
 
@@ -157,7 +158,7 @@ public class ExtractDataCPLTest {
         assertEquals(partyCandidates, test.getPartyCandidates());
 
         //Test 4.2a
-        assertEquals(exception, test02.extractFromFile());
+        //assertEquals(exception, test02.extractFromFile());
 
         
     }

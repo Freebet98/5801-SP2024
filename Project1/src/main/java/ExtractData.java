@@ -18,9 +18,10 @@ abstract public class ExtractData {
      *
      * @return fileData, this is a FileData object containing the information from
      *         the extracted file
+     * @throws IOException 
      * @throws Exception 
      */
-    protected FileData extractFromFile() throws Exception {
+    protected FileData extractFromFile() throws IOException {
         // represents the string obtained from the BufferedReader while reading a line
         String line;
 
@@ -51,7 +52,7 @@ abstract public class ExtractData {
                 candidateVotes);
 
         // Values for these get set in formatBallotInformation
-        formatBallotInformation(partyVotes, candidateVotes);
+        formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
 
         fileData = new FileData(header, numSeats, numBallots, numParties, partyCandidates, partyVotes, candidateVotes);
         return fileData;
@@ -66,7 +67,8 @@ abstract public class ExtractData {
      *             only be digits
      */
     protected boolean verifyLineIsDigit(String line) {
-        line.trim();
+        line = line.trim();
+
         // Goes through every character in line, looks to see if it's a digit
         for (int i = 0; i < line.length(); i++) {
             if (!Character.isDigit(line.charAt(i))) {
@@ -158,9 +160,10 @@ abstract public class ExtractData {
      *                       number of votes
      * @param candidateVotes is a mapping of multiple candidate names to their
      *                       corresponing number of votes
+     * @param partyCandidates 
      * @throws Exception 
      */
     abstract protected void formatBallotInformation(ArrayList<ArrayList<Object>> partyVotes,
-            ArrayList<ArrayList<Object>> candidateVotes) throws IOException, Exception;
+            ArrayList<ArrayList<Object>> candidateVotes, HashMap<String, ArrayList<String>> partyCandidates) throws IOException;
 
 }
