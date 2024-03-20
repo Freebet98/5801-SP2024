@@ -1,3 +1,7 @@
+/**
+ * This class is used to run a CPL election
+ * @author
+ */
 public class CPL extends Election{
     /**
      * TODO

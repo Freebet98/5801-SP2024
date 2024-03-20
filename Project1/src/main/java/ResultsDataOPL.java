@@ -1,3 +1,7 @@
+/**
+ * This class is used to store all the information obtained after running the election in an OPL election
+ * @author Bethany Freeman
+ */
 import java.util.ArrayList;
 
 public class ResultsDataOPL extends ResultsData{

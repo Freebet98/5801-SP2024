@@ -1,3 +1,7 @@
+/**
+ * This class is used to extract data from the file for the CPL election
+ * @author Bethany Freeman
+ */
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
