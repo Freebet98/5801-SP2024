@@ -42,13 +42,12 @@ public class ExtractDataCPL extends ExtractData {
     @Override
     protected void formatBallotInformation(ArrayList<ArrayList<Object>> partyVotes,
             ArrayList<ArrayList<Object>> candidateVotes , HashMap<String, ArrayList<String>> partyCandidates) throws IOException {
-        String line = validFile.readLine();
+        String line;
         char[] splitLine;
         int index = -1;
         int count = 0;
 
-        // Check for the EOF
-        while (line != null) {
+        while ((line = validFile.readLine()) != null) {
             line.trim();
             splitLine = line.toCharArray();
             if(splitLine[0] != '1' && splitLine[0] != ','){
@@ -63,8 +62,10 @@ public class ExtractDataCPL extends ExtractData {
                     partyVotes.get(index).set(1, count);
                 }
             }
+        }
 
-            line = validFile.readLine();
+        if(validFile.ready()){
+            throw new IOException("File has more infomation that wasn't read");
         }
     }
 }
