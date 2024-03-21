@@ -28,19 +28,25 @@ abstract public class ExtractData {
         // Looks at the second line of the file, if it's an integer, numSeats is set to
         // it
         line = validFile.readLine();
-        verifyLineIsDigit(line);
+        if(!verifyLineIsDigit(line)){
+            return null;
+        }
         int numSeats = Integer.parseInt(line);
 
         // Looks at the third line of the file, if it's an integer, numBallots is set to
         // it
         line = validFile.readLine();
-        verifyLineIsDigit(line);
+        if(!verifyLineIsDigit(line)){
+            return null;
+        }
         int numBallots = Integer.parseInt(line);
 
         // Looks at the fourth line of the file, if it's an integer, numParties is set
         // to it
         line = validFile.readLine();
-        verifyLineIsDigit(line);
+        if(!verifyLineIsDigit(line)){
+            return null;
+        }
         int numParties = Integer.parseInt(line);
 
         // Create two new ArrayList<ArrayList<Object>> to store partyVotes and
@@ -67,14 +73,15 @@ abstract public class ExtractData {
      *             only be digits
      */
     protected boolean verifyLineIsDigit(String line) {
+        if (line == "" || line == null) {
+            return false;
+        }
         line = line.trim();
 
         // Goes through every character in line, looks to see if it's a digit
         for (int i = 0; i < line.length(); i++) {
             if (!Character.isDigit(line.charAt(i))) {
-                System.out.println("Election File is invalid, the program will close now.");
                 return false;
-                // System.exit(0);
             }
         }
 
@@ -125,10 +132,10 @@ abstract public class ExtractData {
             // arraylist, also adds them to candidateInner which is used for
             // candidateVotes
             for (int k = 1; k < splitLine.length; k++) {
-                candidates.add(splitLine[i]);
+                candidates.add(splitLine[k]);
 
                 // Initialize candidateVotes with an arrayList of candidateName and 0
-                candidateInner.add(splitLine[i]);
+                candidateInner.add(splitLine[k]);
                 candidateInner.add(0);
                 candidateVotes.add(candidateInner);
             }
