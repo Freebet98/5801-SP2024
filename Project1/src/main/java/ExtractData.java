@@ -111,9 +111,9 @@ abstract public class ExtractData {
         String line;
         String[] splitLine;
         String partyName;
-        ArrayList<Object> partyInner = new ArrayList<>();
-        ArrayList<Object> candidateInner = new ArrayList<>();
-        ArrayList<String> candidates = new ArrayList<>();
+        ArrayList<Object> partyInner;
+        ArrayList<Object> candidateInner;
+        ArrayList<String> candidates;
 
         /*
          * This for loop reads a single line from validFile and uses the information
@@ -131,26 +131,24 @@ abstract public class ExtractData {
             // Gets the candidates from splitLine and adds them to the candidate
             // arraylist, also adds them to candidateInner which is used for
             // candidateVotes
+            candidates = new ArrayList<>();
             for (int k = 1; k < splitLine.length; k++) {
                 candidates.add(splitLine[k]);
 
                 // Initialize candidateVotes with an arrayList of candidateName and 0
+                candidateInner = new ArrayList<>();
                 candidateInner.add(splitLine[k]);
                 candidateInner.add(0);
                 candidateVotes.add(candidateInner);
             }
 
             // Initialize partyVotes with an arraylist of partyName and 0
+            partyInner = new ArrayList<>();
             partyInner.add(partyName);
             partyInner.add(0);
             partyVotes.add(partyInner);
 
             partyCandidates.put(partyName, candidates);
-
-            // Reset inner ArrayLists
-            candidates.clear();
-            partyInner.clear();
-            candidateInner.clear();
         }
 
         return partyCandidates;

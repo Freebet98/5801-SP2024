@@ -51,9 +51,8 @@ public class ExtractDataCPL extends ExtractData {
         while (line != null) {
             line.trim();
             splitLine = line.toCharArray();
-            if(splitLine[0] != '1' || splitLine[0] != ','){
-                //TODO
-                System.exit(0);
+            if(splitLine[0] != '1' && splitLine[0] != ','){
+                throw new IOException("File format is not in the correct format");
             }
 
             for (int i = 0; i < splitLine.length; i++) {
