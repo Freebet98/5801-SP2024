@@ -9,7 +9,7 @@ import java.util.HashMap;
  * @author Bethany Freeman
  */
 public class ExtractDataCPL extends ExtractData {
-    
+
     /**
      * This creates an object of the ExtractDataCPL class
      *
@@ -36,13 +36,19 @@ public class ExtractDataCPL extends ExtractData {
      * @param candidateVotes this is an ArrayList<ArrayList<Object>> whih contains
      *                       inner mappings of a candidate name and the number of
      *                       corresponding votes
-     * @throws IOException 
-     * @throws Exception 
+     * @throws IOException
+     * @throws Exception
      */
     @Override
     protected void formatBallotInformation(ArrayList<ArrayList<Object>> partyVotes,
+<<<<<<< Updated upstream
             ArrayList<ArrayList<Object>> candidateVotes , HashMap<String, ArrayList<String>> partyCandidates) throws IOException {
         String line = validFile.readLine();
+=======
+            ArrayList<ArrayList<Object>> candidateVotes, HashMap<String, ArrayList<String>> partyCandidates)
+            throws IOException {
+        String line;
+>>>>>>> Stashed changes
         char[] splitLine;
         int index = -1;
         int count = 0;
@@ -51,7 +57,7 @@ public class ExtractDataCPL extends ExtractData {
         while (line != null) {
             line.trim();
             splitLine = line.toCharArray();
-            if(splitLine[0] != '1' && splitLine[0] != ','){
+            if (splitLine[0] != '1' && splitLine[0] != ',') {
                 throw new IOException("File format is not in the correct format");
             }
 
@@ -64,7 +70,12 @@ public class ExtractDataCPL extends ExtractData {
                 }
             }
 
+<<<<<<< Updated upstream
             line = validFile.readLine();
+=======
+        if (validFile.ready()) {
+            throw new IOException("File has more infomation that wasn't read");
+>>>>>>> Stashed changes
         }
     }
 }

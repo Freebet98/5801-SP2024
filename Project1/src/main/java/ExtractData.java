@@ -1,3 +1,4 @@
+
 /**
  * This class is used to extract data from the file
  * @author Bethany Freeman
@@ -18,8 +19,8 @@ abstract public class ExtractData {
      *
      * @return fileData, this is a FileData object containing the information from
      *         the extracted file
-     * @throws IOException 
-     * @throws Exception 
+     * @throws IOException
+     * @throws Exception
      */
     protected FileData extractFromFile() throws IOException {
         // represents the string obtained from the BufferedReader while reading a line
@@ -28,7 +29,7 @@ abstract public class ExtractData {
         // Looks at the second line of the file, if it's an integer, numSeats is set to
         // it
         line = validFile.readLine();
-        if(!verifyLineIsDigit(line)){
+        if (!verifyLineIsDigit(line)) {
             return null;
         }
         int numSeats = Integer.parseInt(line);
@@ -36,7 +37,7 @@ abstract public class ExtractData {
         // Looks at the third line of the file, if it's an integer, numBallots is set to
         // it
         line = validFile.readLine();
-        if(!verifyLineIsDigit(line)){
+        if (!verifyLineIsDigit(line)) {
             return null;
         }
         int numBallots = Integer.parseInt(line);
@@ -44,7 +45,7 @@ abstract public class ExtractData {
         // Looks at the fourth line of the file, if it's an integer, numParties is set
         // to it
         line = validFile.readLine();
-        if(!verifyLineIsDigit(line)){
+        if (!verifyLineIsDigit(line)) {
             return null;
         }
         int numParties = Integer.parseInt(line);
@@ -96,8 +97,15 @@ abstract public class ExtractData {
      * added to the Arraylist of string, which represents the list of candidates for
      * a party
      *
-     * @param numParties this represents the number of parties that are listed in
-     *                   the given file
+     * @param numParties     this represents the number of parties that are listed
+     *                       in
+     *                       the given file
+     * @param partyVotes     this is an ArrayList<ArrayList<Object>> which contains
+     *                       inner mappings of a party name and the number of
+     *                       corresponding votes
+     * @param candidateVotes this is an ArrayList<ArrayList<Object>> whih contains
+     *                       inner mappings of a candidate name and the number of
+     *                       corresponding votes
      * @return HashMap<String, ArrayList < String>> that represents a key value of a
      *         party name
      *         to a list of candidate names
@@ -160,15 +168,16 @@ abstract public class ExtractData {
      * update the number of votes in partyVotes and in OPL will also update the
      * number of votes in candidateVotes
      *
-     * @param partyVotes     is a mapping of multiple party names to their
-     *                       corresponding
-     *                       number of votes
-     * @param candidateVotes is a mapping of multiple candidate names to their
-     *                       corresponing number of votes
-     * @param partyCandidates 
-     * @throws Exception 
+     * @param partyVotes      is a mapping of multiple party names to their
+     *                        corresponding
+     *                        number of votes
+     * @param candidateVotes  is a mapping of multiple candidate names to their
+     *                        corresponing number of votes
+     * @param partyCandidates
+     * @throws Exception
      */
     abstract protected void formatBallotInformation(ArrayList<ArrayList<Object>> partyVotes,
-            ArrayList<ArrayList<Object>> candidateVotes, HashMap<String, ArrayList<String>> partyCandidates) throws IOException;
+            ArrayList<ArrayList<Object>> candidateVotes, HashMap<String, ArrayList<String>> partyCandidates)
+            throws IOException;
 
 }

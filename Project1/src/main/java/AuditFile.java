@@ -1,5 +1,7 @@
 /**
- * This class is used to print all the information obtained after running the election to a file
+ * This class is used to print all the information obtained after running the
+ * election to a file
+ * 
  * @author
  */
 public class AuditFile {
@@ -7,16 +9,17 @@ public class AuditFile {
 
     /**
      * TODO
+     * 
      * @param results
      */
-    AuditFile(ResultsData results){
+    AuditFile(ResultsData results) {
         this.results = results;
     }
 
     /**
      * TODO
      */
-    public void printToFile(){
+    public void printToFile() {
 
     }
 

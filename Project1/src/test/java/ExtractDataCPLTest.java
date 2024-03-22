@@ -18,8 +18,13 @@ import java.util.HashMap;
 
 public class ExtractDataCPLTest {
     ExtractDataCPL test01;
+<<<<<<< Updated upstream
     ExtractDataCPL test02;
     ExtractDataCPL test03;
+=======
+    // ExtractDataCPL test02;
+    // ExtractDataCPL test03;
+>>>>>>> Stashed changes
     BufferedReader validFile01;
     HashMap<String, ArrayList<String>> partyCandidates;
     ArrayList<ArrayList<Object>> partyVotes;
@@ -112,9 +117,15 @@ public class ExtractDataCPLTest {
     public void testFormatBallotInformation() throws IOException {
         partyVotes = new ArrayList<ArrayList<Object>>();
         candidateVotes = new ArrayList<ArrayList<Object>>();
+<<<<<<< Updated upstream
         
         //Test 3.a correct formatting
         validFile01 = new BufferedReader(new FileReader(new File("C:/Users/cs-apal/Documents/GitHub/repo-Team2/Project1/src/test/java/InputFiles/CPLBallotTest01.txt")));
+=======
+
+        // Test 3.a correct formatting
+        validFile01 = new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLBallotTest01.txt")));
+>>>>>>> Stashed changes
         test01 = new ExtractDataCPL(validFile01, "CPL");
         partyCandidates = test01.formatPartyInformation(3, partyVotes, candidateVotes);
         test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
@@ -123,10 +134,17 @@ public class ExtractDataCPLTest {
         expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Pluto", 26742)));
         expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Republican", 26612)));
 
-        assertEquals(expectedPartyVotes,partyVotes);
+        assertEquals(expectedPartyVotes, partyVotes);
 
+<<<<<<< Updated upstream
         //Test 3.b incorrect formatting on one of the votes
         validFile01 = new BufferedReader(new FileReader(new File("C:\\Users\\cs-apal\\Documents\\GitHub\\repo-Team2\\Project1\\src\\test\\java\\InputFiles\\CPLBallotTest02.txt")));
+=======
+        // Test 3.b incorrect formatting on one of the votes
+        partyVotes = new ArrayList<ArrayList<Object>>();
+        candidateVotes = new ArrayList<ArrayList<Object>>();
+        validFile01 = new BufferedReader(new FileReader(new File("src\\test\\java\\InputFiles\\CPLBallotTest02.txt")));
+>>>>>>> Stashed changes
         test01 = new ExtractDataCPL(validFile01, "CPL");
         partyCandidates = test01.formatPartyInformation(3, partyVotes, candidateVotes);
         expectedPartyVotes = new ArrayList<>();
@@ -134,10 +152,32 @@ public class ExtractDataCPLTest {
         expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Pluto", 16640)));
         expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Republican", 16498)));
 
-        assertThrows(IOException.class, () -> test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates));
+        assertThrows(IOException.class,
+                () -> test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates));
 
+<<<<<<< Updated upstream
         //3.c line is null
         validFile01 = new BufferedReader(new FileReader(new File("C:\\Users\\cs-apal\\Documents\\GitHub\\repo-Team2\\Project1\\src\\test\\java\\InputFiles\\CPLPartyInfo01.txt")));
+=======
+        // 3.c line is null
+        partyVotes = new ArrayList<ArrayList<Object>>();
+        candidateVotes = new ArrayList<ArrayList<Object>>();
+        validFile01 = new BufferedReader(new FileReader(new File("src\\test\\java\\InputFiles\\CPLPartyInfo01.txt")));
+        test01 = new ExtractDataCPL(validFile01, "CPL");
+        partyCandidates = test01.formatPartyInformation(3, partyVotes, candidateVotes);
+        expectedPartyVotes = new ArrayList<>();
+        expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Grass", 0)));
+        expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Pluto", 0)));
+        expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Republican", 0)));
+
+        assertThrows(IOException.class,
+                () -> test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates));
+
+        // 3.d no votes technically
+        partyVotes = new ArrayList<ArrayList<Object>>();
+        candidateVotes = new ArrayList<ArrayList<Object>>();
+        validFile01 = new BufferedReader(new FileReader(new File("src\\test\\java\\InputFiles\\CPLBallotTest03.txt")));
+>>>>>>> Stashed changes
         test01 = new ExtractDataCPL(validFile01, "CPL");
         partyCandidates = test01.formatPartyInformation(3, partyVotes, candidateVotes);
         test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
@@ -156,8 +196,15 @@ public class ExtractDataCPLTest {
         expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Pluto", 0)));
         expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Republican", 0)));
 
+<<<<<<< Updated upstream
         //3.e correct formatting two
         validFile01 = new BufferedReader(new FileReader(new File("C:\\Users\\cs-apal\\Documents\\GitHub\\repo-Team2\\Project1\\src\\test\\java\\InputFiles\\CPLBallotTest04.txt")));
+=======
+        // 3.e correct formatting two
+        partyVotes = new ArrayList<ArrayList<Object>>();
+        candidateVotes = new ArrayList<ArrayList<Object>>();
+        validFile01 = new BufferedReader(new FileReader(new File("src\\test\\java\\InputFiles\\CPLBallotTest04.txt")));
+>>>>>>> Stashed changes
         test01 = new ExtractDataCPL(validFile01, "CPL");
         partyCandidates = test01.formatPartyInformation(3, partyVotes, candidateVotes);
         test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
@@ -167,6 +214,10 @@ public class ExtractDataCPLTest {
         expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Grass", 22231)));
         expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Pluto", 22508)));
 
+<<<<<<< Updated upstream
+=======
+        assertEquals(expectedPartyVotes, partyVotes);
+>>>>>>> Stashed changes
 
     }
 
@@ -179,8 +230,62 @@ public class ExtractDataCPLTest {
         test01 = new ExtractDataCPL(validFile01, "CPL");
         test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
 
+<<<<<<< Updated upstream
         // Test 1.a
 
         //
+=======
+        // Test 4.a Header = "CPL"
+        assertEquals("CPL", test.getElectionType());
+
+        // Test 4.b Number of Seats
+        assertEquals(3, test.getNumberSeats());
+
+        // Test 4.c Number of Ballots
+        assertEquals(100000, test.getNumberBallots());
+
+        // Test 4.e Number of Parties
+        assertEquals(4, test.getNumberParties());
+
+        // Test 4.e partyCandidates
+        partyCandidates = new HashMap<>();
+        partyCandidates.put("Democratic", new ArrayList<>(Arrays.asList("Mary", "Jane", "Kim")));
+        partyCandidates.put("Republican", new ArrayList<>(Arrays.asList("Allen, Joe, Sarah")));
+        partyCandidates.put("Green", new ArrayList<>(Arrays.asList("Sally", "Nikki")));
+        partyCandidates.put("Independent", new ArrayList<>(Arrays.asList("Mike")));
+
+        assertEquals(true, test.getPartyCandidates().containsKey("Democratic"));
+        assertEquals(true, test.getPartyCandidates().containsKey("Republican"));
+        assertEquals(true, test.getPartyCandidates().containsKey("Green"));
+        assertEquals(true, test.getPartyCandidates().containsKey("Independant"));
+
+        assertEquals("[ Mary,  Jane,  Kim]", test.getPartyCandidates().get("Democratic").toString());
+        assertEquals("[ Allen,  Joe,  Sarah]", test.getPartyCandidates().get("Republican").toString());
+        assertEquals("[ Sally,  Nikki]", test.getPartyCandidates().get("Green").toString());
+        assertEquals("[ Mike]", test.getPartyCandidates().get("Independant").toString());
+
+        // Test 4.f partyVotes
+        partyVotes = new ArrayList<>();
+        partyVotes.add(new ArrayList<>(Arrays.asList("Democratic", 24936)));
+        partyVotes.add(new ArrayList<>(Arrays.asList("Republican", 25093)));
+        partyVotes.add(new ArrayList<>(Arrays.asList("Green", 25067)));
+        partyVotes.add(new ArrayList<>(Arrays.asList("Independant", 24904)));
+
+        assertEquals(partyVotes, test.getPartyVotes());
+
+        // Test 4.g
+        candidateVotes = new ArrayList<>();
+        candidateVotes.add(new ArrayList<>(Arrays.asList(" Mary", 0)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList(" Jane", 0)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList(" Kim", 0)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList(" Allen", 0)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList(" Joe", 0)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList(" Sarah", 0)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList(" Sally", 0)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList(" Nikki", 0)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList(" Mike", 0)));
+
+        assertEquals(candidateVotes, test.getCandidateVotes());
+>>>>>>> Stashed changes
     }
 }
