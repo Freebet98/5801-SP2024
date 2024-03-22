@@ -2,14 +2,16 @@ import java.util.ArrayList;
 
 /**
  * This class is used to run a CPL election
+ * 
  * @author
  */
-public class CPL extends Election{
+public class CPL extends Election {
     /**
      * TODO
+     * 
      * @param fileData
      */
-    CPL(FileData fileData){
+    CPL(FileData fileData) {
         this.fileData = fileData;
         availableSeats = fileData.getNumberSeats();
 
@@ -24,6 +26,7 @@ public class CPL extends Election{
 
     /**
      * TODO
+     * 
      * @return
      */
     @Override
@@ -31,7 +34,7 @@ public class CPL extends Election{
         firstAllocation();
         secondAllocation();
         this.results = new ResultsDataCPL(this.seatAllocation, this.remainingVotes,
-                                            this.winOrder, this.fileData);
+                this.winOrder, this.fileData);
         return this.results;
     }
 }

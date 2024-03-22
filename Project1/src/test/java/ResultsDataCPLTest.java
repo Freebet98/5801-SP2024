@@ -4,36 +4,37 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * This class is used to test the ResultsDataCPL class
+ * 
  * @author Bethany Freeman
  */
-public class ResultsDataCPLTest{
+public class ResultsDataCPLTest {
     @Before
-    public void setUp(){
-        //TODO
+    public void setUp() {
+        // TODO
     }
 
     @Test
-    public void testGetSeatAllocation(){
-        //TODO
+    public void testGetSeatAllocation() {
+        // TODO
     }
 
     @Test
-    public void testGetRemainingVotes(){
-        //TODO
+    public void testGetRemainingVotes() {
+        // TODO
     }
 
     @Test
-    public void testGetFinalWinOrder(){
-        //TODO
+    public void testGetFinalWinOrder() {
+        // TODO
     }
 
     @Test
-    public void testGetPartyWinOrder(){
-        //TODO
+    public void testGetPartyWinOrder() {
+        // TODO
     }
 
     @Test
-    public void testGetToString(){
-        //TODO
+    public void testGetToString() {
+        // TODO
     }
 }
