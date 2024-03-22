@@ -1,7 +1,3 @@
-/**
- * This class is used to test the CPL class
- * @author
- */
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
@@ -13,7 +9,7 @@ import java.util.*;
  * 
  * @author Rock Zgutowicz
  */
-public class CPLTest {
+public class CPLTest{
 
     // Create CPL input files
     CPL cpl01;
@@ -23,9 +19,8 @@ public class CPLTest {
     @Before
     public void setUp() {
 
-        // Create 4 ResultsDataCPL objects, 3 of which with proper outcomes for each
-        // cplInput,
-        // and 1 with incorrect outcomes for all 3.
+        // Create 4 ResultsDataCPL objects, 3 of which with proper outcomes for each cplInput,
+        // and 1 with incorrect outcomes for all 3. 
 
         // create partyCandidate lists for CPL file
         HashMap<String, ArrayList<String>> partyCandidates01 = new HashMap<>();
@@ -100,7 +95,7 @@ public class CPLTest {
         assertEquals("Lib", cpl01.runElection().getPartyWinOrder().get(2));
 
         // Test 1.d
-
+        
         // cpl02
         // cpl03
     }
