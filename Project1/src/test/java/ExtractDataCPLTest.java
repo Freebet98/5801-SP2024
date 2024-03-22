@@ -18,8 +18,8 @@ import java.util.HashMap;
 
 public class ExtractDataCPLTest {
     ExtractDataCPL test01;
-    ExtractDataCPL test02;
-    ExtractDataCPL test03;
+    //ExtractDataCPL test02;
+    //ExtractDataCPL test03;
     BufferedReader validFile01;
     HashMap<String, ArrayList<String>> partyCandidates;
     ArrayList<ArrayList<Object>> partyVotes;
@@ -28,17 +28,6 @@ public class ExtractDataCPLTest {
     @Before
     public void setUp() throws IOException {
         test01 = new ExtractDataCPL(validFile01, "CPL");
-    }
-
-    public String printPartyVotes(ArrayList<ArrayList<Object>> partyVotes) {
-        String line = "";
-        for (ArrayList<Object> tuple : partyVotes) {
-            String partyName = (String) tuple.get(0);
-            int votes = (int) tuple.get(1);
-            line += ("Party: " + partyName + ", Votes: " + votes + "\n");
-        }
-
-        return line;
     }
 
     @Test
