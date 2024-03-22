@@ -41,14 +41,9 @@ public class ExtractDataCPL extends ExtractData {
      */
     @Override
     protected void formatBallotInformation(ArrayList<ArrayList<Object>> partyVotes,
-<<<<<<< Updated upstream
-            ArrayList<ArrayList<Object>> candidateVotes , HashMap<String, ArrayList<String>> partyCandidates) throws IOException {
-        String line = validFile.readLine();
-=======
             ArrayList<ArrayList<Object>> candidateVotes, HashMap<String, ArrayList<String>> partyCandidates)
             throws IOException {
-        String line;
->>>>>>> Stashed changes
+        String line = validFile.readLine();
         char[] splitLine;
         int index = -1;
         int count = 0;
@@ -70,12 +65,10 @@ public class ExtractDataCPL extends ExtractData {
                 }
             }
 
-<<<<<<< Updated upstream
             line = validFile.readLine();
-=======
-        if (validFile.ready()) {
-            throw new IOException("File has more infomation that wasn't read");
->>>>>>> Stashed changes
+            if (validFile.ready()) {
+                throw new IOException("File has more infomation that wasn't read");
+            }
         }
     }
 }

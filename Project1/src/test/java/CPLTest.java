@@ -6,9 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
-<<<<<<< Updated upstream
-public class CPLTest{
-=======
 import java.util.*;
 
 /**
@@ -107,5 +104,4 @@ public class CPLTest {
         // cpl02
         // cpl03
     }
->>>>>>> Stashed changes
 }

@@ -18,13 +18,8 @@ import java.util.HashMap;
 
 public class ExtractDataCPLTest {
     ExtractDataCPL test01;
-<<<<<<< Updated upstream
-    ExtractDataCPL test02;
-    ExtractDataCPL test03;
-=======
     // ExtractDataCPL test02;
     // ExtractDataCPL test03;
->>>>>>> Stashed changes
     BufferedReader validFile01;
     HashMap<String, ArrayList<String>> partyCandidates;
     ArrayList<ArrayList<Object>> partyVotes;
@@ -117,15 +112,9 @@ public class ExtractDataCPLTest {
     public void testFormatBallotInformation() throws IOException {
         partyVotes = new ArrayList<ArrayList<Object>>();
         candidateVotes = new ArrayList<ArrayList<Object>>();
-<<<<<<< Updated upstream
-        
-        //Test 3.a correct formatting
-        validFile01 = new BufferedReader(new FileReader(new File("C:/Users/cs-apal/Documents/GitHub/repo-Team2/Project1/src/test/java/InputFiles/CPLBallotTest01.txt")));
-=======
 
         // Test 3.a correct formatting
         validFile01 = new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLBallotTest01.txt")));
->>>>>>> Stashed changes
         test01 = new ExtractDataCPL(validFile01, "CPL");
         partyCandidates = test01.formatPartyInformation(3, partyVotes, candidateVotes);
         test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
@@ -136,15 +125,10 @@ public class ExtractDataCPLTest {
 
         assertEquals(expectedPartyVotes, partyVotes);
 
-<<<<<<< Updated upstream
-        //Test 3.b incorrect formatting on one of the votes
-        validFile01 = new BufferedReader(new FileReader(new File("C:\\Users\\cs-apal\\Documents\\GitHub\\repo-Team2\\Project1\\src\\test\\java\\InputFiles\\CPLBallotTest02.txt")));
-=======
         // Test 3.b incorrect formatting on one of the votes
         partyVotes = new ArrayList<ArrayList<Object>>();
         candidateVotes = new ArrayList<ArrayList<Object>>();
         validFile01 = new BufferedReader(new FileReader(new File("src\\test\\java\\InputFiles\\CPLBallotTest02.txt")));
->>>>>>> Stashed changes
         test01 = new ExtractDataCPL(validFile01, "CPL");
         partyCandidates = test01.formatPartyInformation(3, partyVotes, candidateVotes);
         expectedPartyVotes = new ArrayList<>();
@@ -155,10 +139,6 @@ public class ExtractDataCPLTest {
         assertThrows(IOException.class,
                 () -> test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates));
 
-<<<<<<< Updated upstream
-        //3.c line is null
-        validFile01 = new BufferedReader(new FileReader(new File("C:\\Users\\cs-apal\\Documents\\GitHub\\repo-Team2\\Project1\\src\\test\\java\\InputFiles\\CPLPartyInfo01.txt")));
-=======
         // 3.c line is null
         partyVotes = new ArrayList<ArrayList<Object>>();
         candidateVotes = new ArrayList<ArrayList<Object>>();
@@ -177,7 +157,6 @@ public class ExtractDataCPLTest {
         partyVotes = new ArrayList<ArrayList<Object>>();
         candidateVotes = new ArrayList<ArrayList<Object>>();
         validFile01 = new BufferedReader(new FileReader(new File("src\\test\\java\\InputFiles\\CPLBallotTest03.txt")));
->>>>>>> Stashed changes
         test01 = new ExtractDataCPL(validFile01, "CPL");
         partyCandidates = test01.formatPartyInformation(3, partyVotes, candidateVotes);
         test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
@@ -196,15 +175,10 @@ public class ExtractDataCPLTest {
         expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Pluto", 0)));
         expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Republican", 0)));
 
-<<<<<<< Updated upstream
-        //3.e correct formatting two
-        validFile01 = new BufferedReader(new FileReader(new File("C:\\Users\\cs-apal\\Documents\\GitHub\\repo-Team2\\Project1\\src\\test\\java\\InputFiles\\CPLBallotTest04.txt")));
-=======
         // 3.e correct formatting two
         partyVotes = new ArrayList<ArrayList<Object>>();
         candidateVotes = new ArrayList<ArrayList<Object>>();
         validFile01 = new BufferedReader(new FileReader(new File("src\\test\\java\\InputFiles\\CPLBallotTest04.txt")));
->>>>>>> Stashed changes
         test01 = new ExtractDataCPL(validFile01, "CPL");
         partyCandidates = test01.formatPartyInformation(3, partyVotes, candidateVotes);
         test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
@@ -214,10 +188,7 @@ public class ExtractDataCPLTest {
         expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Grass", 22231)));
         expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Pluto", 22508)));
 
-<<<<<<< Updated upstream
-=======
         assertEquals(expectedPartyVotes, partyVotes);
->>>>>>> Stashed changes
 
     }
 
@@ -227,14 +198,11 @@ public class ExtractDataCPLTest {
         partyVotes = new ArrayList<ArrayList<Object>>();
         candidateVotes = new ArrayList<ArrayList<Object>>();
         validFile01 = new BufferedReader(new FileReader(new File("CPLInput01.txt")));
+        validFile01.readLine();
         test01 = new ExtractDataCPL(validFile01, "CPL");
         test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
+        FileData test = test01.extractFromFile();
 
-<<<<<<< Updated upstream
-        // Test 1.a
-
-        //
-=======
         // Test 4.a Header = "CPL"
         assertEquals("CPL", test.getElectionType());
 
@@ -286,6 +254,5 @@ public class ExtractDataCPLTest {
         candidateVotes.add(new ArrayList<>(Arrays.asList(" Mike", 0)));
 
         assertEquals(candidateVotes, test.getCandidateVotes());
->>>>>>> Stashed changes
     }
 }

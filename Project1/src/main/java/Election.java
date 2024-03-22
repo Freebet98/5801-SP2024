@@ -11,16 +11,11 @@ abstract public class Election {
     protected ArrayList<String> winOrder;
 
     /**
-<<<<<<< Updated upstream
-     * TODO
-     * @return
-=======
      * Runs the election and populates a ResultsData object, will be implemented by
      * classes that inherit from this abstract class
      * 
      * @return returns the ResultsData object created and populated within the
      *         method containing the election results
->>>>>>> Stashed changes
      */
     abstract public ResultsData runElection();
 
@@ -66,15 +61,10 @@ abstract public class Election {
     }
 
     /**
-<<<<<<< Updated upstream
-     * TODO
-     * @return
-=======
      * Generates 1000 random floats and takes the 1001th as the return value to
      * circumvent the pseudorandomness of the Random object
      * 
      * @return returns the 1001th float
->>>>>>> Stashed changes
      */
     protected float generateRandom() {
         Random rand = new Random();
@@ -89,15 +79,11 @@ abstract public class Election {
     }
 
     /**
-<<<<<<< Updated upstream
-     * TODO
-=======
      * Preforms the first round of seat allocation.
      * Runs a while loop until all seat are allocated or all parties are under the
      * remainder.
      * Adds winners if votes>=largestRemainder otherwise increments the number under
      * the remainder
->>>>>>> Stashed changes
      */
     protected void firstAllocation() {
         int i = 0;
