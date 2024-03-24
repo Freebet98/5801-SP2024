@@ -54,12 +54,16 @@ public class ResultsDataCPL extends ResultsData {
         output.append("---------------------------------------------------\n");
         output.append(partySetUp());
         output.append("---------------------------------------------------\n\n");
-        output.append("----------------------------------------------------------------------------------------------------------------------------------\n");
-        output.append("                 |               |      First        |     Remaining     |       Second       |     Final     |     % of Vote\n");
-        output.append("     Parties     |     Votes     |    Allocation     |       Votes       |     Allocation     |     Seat      |        to\n");
-        output.append("                 |               |     Of Seats      |                   |      Of Seats      |     Total     |     % of Seats\n");
-        output.append("----------------------------------------------------------------------------------------------------------------------------------\n");
-
+        output.append(
+                "----------------------------------------------------------------------------------------------------------------------------------\n");
+        output.append(
+                "                 |               |      First        |     Remaining     |       Second       |     Final     |     % of Vote\n");
+        output.append(
+                "     Parties     |     Votes     |    Allocation     |       Votes       |     Allocation     |     Seat      |        to\n");
+        output.append(
+                "                 |               |     Of Seats      |                   |      Of Seats      |     Total     |     % of Seats\n");
+        output.append(
+                "----------------------------------------------------------------------------------------------------------------------------------\n");
 
         return output.toString();
 
@@ -67,32 +71,25 @@ public class ResultsDataCPL extends ResultsData {
 
     /**
      * Formats the party candidates section of the output
+     * 
      * @return a string to be appended to the toString()
      */
-    private String partySetUp(){
+    private String partySetUp() {
         StringBuilder output = new StringBuilder();
-        String currString = (String) partyVotes.get(0).get(0);
-        int maxLength = currString.length();
 
-        for(int i = 1; i < partyVotes.size(); i++){
-            currString = (String) partyVotes.get(i).get(0);
-            int tempLength = currString.length();
-            if(tempLength > maxLength){
-                maxLength = tempLength;
-            }
-        }
+        int maxLength = findMaxLength();
 
-        for(int i = 0; i < partyVotes.size(); i++){
+        for (int i = 0; i < partyVotes.size(); i++) {
             String partyName = (String) partyVotes.get(i).get(0);
-            
+
             output.append("  " + partyName);
             output.append(String.join("", Collections.nCopies((maxLength - partyName.length()) + 3, " ")));
             output.append("|      ");
 
             ArrayList<String> innerList = partyCandidates.get(partyName);
-            for(int k = 0; k < innerList.size(); k++){
+            for (int k = 0; k < innerList.size(); k++) {
                 String candidateName = innerList.get(k);
-                if(k == innerList.size() -1){
+                if (k == innerList.size() - 1) {
                     output.append(candidateName + "\n");
                 }
                 output.append(candidateName + ", ");
@@ -102,10 +99,55 @@ public class ResultsDataCPL extends ResultsData {
         return output.toString();
     }
 
-    private String electionResultsSetUp(){
+    private String electionResultsSetUp() {
         StringBuilder output = new StringBuilder();
-        
+        int maxLength = findMaxLength();
+        int[] seatAllocation;
+        int maxSpace;
+
+        for (int i = 0; i < partyVotes.size(); i++) {
+            seatAllocation = (int[]) seatAllocation.get(i);
+            //Party Name
+            String partyName = (String) partyVotes.get(i).get(0);
+
+            output.append("  " + partyName);
+            output.append(String.join("", Collections.nCopies((maxLength - partyName.length()) + 3, " ")));
+            output.append("|");
+
+            //Votes
+            maxSpace = 10;
+            String votes = String.valueOf((int) partyVotes.get(i).get(1));
+            output.append(String.join("", Collections.nCopies(maxSpace - votes.length(), " ")));
+            output.append(votes + "    |         ");
+
+            //Seats
+            output.append();
+        }
+
+        return output.toString();
+
     }
+
+    /**
+     * Goes through the partyNames and finds the longest one
+     * 
+     * @return the length of the longest partyName
+     */
+    private int findMaxLength() {
+        String currString = (String) partyVotes.get(0).get(0);
+        int maxLength = currString.length();
+
+        for (int i = 1; i < partyVotes.size(); i++) {
+            currString = (String) partyVotes.get(i).get(0);
+            int tempLength = currString.length();
+            if (tempLength > maxLength) {
+                maxLength = tempLength;
+            }
+        }
+
+        return maxLength;
+    }
+
     /**
      * TODO
      */
