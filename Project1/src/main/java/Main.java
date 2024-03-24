@@ -29,46 +29,52 @@ public class Main {
          * filename or for the letter 'q', the letter 'q' if entered will quit the
          * entire system
          */
-        while (true) {
-            File file = new File(fileName);
+        try {
+            while (true) {
+                File file = new File(fileName);
 
-            if (fileName.equals("q")) {
-                System.exit(0);
-            } else if (file.exists() && !file.isDirectory()) {
-                FileReader fileR = new FileReader(file);
-                validFile = new BufferedReader(fileR);
-                header = validFile.readLine();
+                if (fileName.equals("q")) {
+                    System.exit(0);
+                } else if (file.exists() && !file.isDirectory()) {
+                    FileReader fileR = new FileReader(file);
+                    validFile = new BufferedReader(fileR);
+                    header = validFile.readLine();
 
-                // finish creating extraction depending on which type of election it is
-                if (header.equals("OPL")) {
-                    extraction = new ExtractDataOPL(validFile, header);
-                    break;
-                } else if (header.equals("CPL")) {
-                    extraction = new ExtractDataCPL(validFile, header);
-                    break;
+                    // finish creating extraction depending on which type of election it is
+                    if (header.equals("OPL")) {
+                        extraction = new ExtractDataOPL(validFile, header);
+                        break;
+                    } else if (header.equals("CPL")) {
+                        extraction = new ExtractDataCPL(validFile, header);
+                        break;
+                    }
+                } else {
+                    // prompt for new file name or "q"
                 }
-            } else {
-                // prompt for new file name or "q"
             }
+
+            // Extracts information into fileData
+            fileData = extraction.extractFromFile();
+
+            // finish creating election depending on which election needs to run
+            if (header.equals("OPL")) {
+                election = new OPL(fileData);
+            } else {
+                election = new CPL(fileData);
+            }
+
+            results = election.runElection();
+
+            // Finish creating the AuditFile object and print the formatted results to an
+            // audit file
+            fileCreation = new AuditFile(results);
+            fileCreation.printToFile();
+
+            // Display the results to the user
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            System.exit(0);
         }
-
-        // Extracts information into fileData
-        fileData = extraction.extractFromFile();
-
-        // finish creating election depending on which election needs to run
-        if (header.equals("OPL")) {
-            election = new OPL(fileData);
-        } else {
-            election = new CPL(fileData);
-        }
-
-        results = election.runElection();
-
-        // Finish creating the AuditFile object and print the formatted results to an
-        // audit file
-        fileCreation = new AuditFile(results);
-        fileCreation.printToFile();
-
-        // Display the results to the user
     }
+
 }

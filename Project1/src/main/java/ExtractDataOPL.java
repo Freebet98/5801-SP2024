@@ -52,11 +52,53 @@ public class ExtractDataOPL extends ExtractData {
         HashMap<String, ArrayList<String>> partyCandidates = new HashMap<>();
         String line;
         String[] splitLine;
+        String partyName;
+        String candidateName;
         ArrayList<Object> partyInner;
         ArrayList<Object> candidateInner;
-        ArrayList<String> candidates;
 
-        return null;
+        for (int i = 0; i < numParties; i++) {
+            try {
+                // reads a file and splits the words into a string[] and also trims the
+                // whitespace
+                line = validFile.readLine();
+                splitLine = line.trim().split(",");
+                partyName = splitLine[0];
+                candidateName = splitLine[1];
+
+                try {
+                    // Add another candidate to a party already in the HashMap
+                    ArrayList<String> tempList = partyCandidates.get(partyName);
+                    tempList.add(candidateName);
+
+                    partyCandidates.put(partyName, tempList);
+
+                } catch (NullPointerException e) {
+                    // Add new party with candidate to HashMap
+                    ArrayList<String> tempList = new ArrayList<>();
+                    tempList.add(candidateName);
+
+                    partyCandidates.put(partyName, tempList);
+
+                    // Add party to partyVotes
+                    partyInner = new ArrayList<>();
+                    partyInner.add(partyName);
+                    partyInner.add(0);
+                    partyVotes.add(partyInner);
+                }
+
+                // Add candidate to candidateVotes
+                candidateInner = new ArrayList<>();
+                candidateInner.add(candidateName);
+                candidateInner.add(0);
+                candidateVotes.add(candidateInner);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                throw new IOException("Candidates list is empty");
+            }
+
+        }
+
+        return partyCandidates;
     }
 
     /**
@@ -87,9 +129,8 @@ public class ExtractDataOPL extends ExtractData {
         while (line != null) {
             line.trim();
             splitLine = line.toCharArray();
-            if (splitLine[0] != '1' || splitLine[1] != ',') {
-                // TODO
-                System.exit(0);
+            if (splitLine[0] != '1' && splitLine[0] != ',') {
+                throw new IOException("File format is not in the correct format");
             }
 
             // Gets index in splitLine and adds 1 vote to it
