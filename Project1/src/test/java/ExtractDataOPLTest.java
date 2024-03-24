@@ -94,22 +94,26 @@ public class ExtractDataOPLTest {
 
     @Test
     public void testFormatBallotInformation() throws IOException {
+    
+    // Test 4.a correct formatting
     partyVotes = new ArrayList<ArrayList<Object>>();
     candidateVotes = new ArrayList<ArrayList<Object>>();
-
-    // Test 4.a correct formatting
     validFile = new BufferedReader(new FileReader(new
-    File("src/test/java/InputFiles/CPLBallotTest01.txt")));
+    File("src/test/java/InputFiles/OPLBallotTest01.txt")));
     test01 = new ExtractDataOPL(validFile, "OPL");
-    partyCandidates = test01.formatPartyInformation(3, partyVotes,
+    partyCandidates = test01.formatPartyInformation(5, partyVotes,
     candidateVotes);
     test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
     ArrayList<ArrayList<Object>> expectedPartyVotes = new ArrayList<>();
-    expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Grass", 26646)));
-    expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Pluto", 26742)));
-    expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Republican", 26612)));
+    expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Pluto", 40048)));
+    expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Green", 59952)));
 
     ArrayList<ArrayList<Object>> expectedCandidateVotes = new ArrayList<>();
+    expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Becky", 20105)));
+    expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Jonah", 19943)));
+    expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Mariah", 19943)));
+    expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Radius", 20020)));
+    expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Louis", 19989)));
 
     assertEquals(expectedPartyVotes, partyVotes);
     assertEquals(expectedCandidateVotes, candidateVotes);
@@ -118,14 +122,9 @@ public class ExtractDataOPLTest {
     partyVotes = new ArrayList<ArrayList<Object>>();
     candidateVotes = new ArrayList<ArrayList<Object>>();
     validFile = new BufferedReader(new FileReader(new
-    File("src\\test\\java\\InputFiles\\CPLBallotTest02.txt")));
+    File("src\\test\\java\\InputFiles\\OPLBallotTest02.txt")));
     test01 = new ExtractDataOPL(validFile, "OPL");
-    partyCandidates = test01.formatPartyInformation(3, partyVotes,
-    candidateVotes);
-    expectedPartyVotes = new ArrayList<>();
-    expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Grass", 16862)));
-    expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Pluto", 16640)));
-    expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Republican", 16498)));
+    partyCandidates = test01.formatPartyInformation(5, partyVotes, candidateVotes);
 
     assertThrows(IOException.class,
     () -> test01.formatBallotInformation(partyVotes, candidateVotes,
@@ -135,14 +134,10 @@ public class ExtractDataOPLTest {
     partyVotes = new ArrayList<ArrayList<Object>>();
     candidateVotes = new ArrayList<ArrayList<Object>>();
     validFile = new BufferedReader(new FileReader(new
-    File("src\\test\\java\\InputFiles\\CPLPartyInfo01.txt")));
+    File("src\\test\\java\\InputFiles\\OPLPartyInfo01.txt")));
     test01 = new ExtractDataOPL(validFile, "OPL");
-    partyCandidates = test01.formatPartyInformation(3, partyVotes,
+    partyCandidates = test01.formatPartyInformation(5, partyVotes,
     candidateVotes);
-    expectedPartyVotes = new ArrayList<>();
-    expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Grass", 0)));
-    expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Pluto", 0)));
-    expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Republican", 0)));
 
     assertThrows(IOException.class,
     () -> test01.formatBallotInformation(partyVotes, candidateVotes,
@@ -154,13 +149,19 @@ public class ExtractDataOPLTest {
     validFile = new BufferedReader(new FileReader(new
     File("src\\test\\java\\InputFiles\\CPLBallotTest03.txt")));
     test01 = new ExtractDataOPL(validFile, "OPL");
-    partyCandidates = test01.formatPartyInformation(3, partyVotes,
+    partyCandidates = test01.formatPartyInformation(5, partyVotes,
     candidateVotes);
     test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
     expectedPartyVotes = new ArrayList<>();
-    expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Grass", 0)));
     expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Pluto", 0)));
-    expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Republican", 0)));
+    expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Green", 0)));
+
+    expectedCandidateVotes = new ArrayList<>();
+    expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Becky", 0)));
+    expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Jonah", 0)));
+    expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Mariah", 0)));
+    expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Radius", 0)));
+    expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Louis", 0)));
 
     assertEquals(expectedPartyVotes, partyVotes);
 
