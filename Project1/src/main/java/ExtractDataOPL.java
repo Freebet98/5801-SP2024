@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -120,16 +121,17 @@ public class ExtractDataOPL extends ExtractData {
     protected void formatBallotInformation(ArrayList<ArrayList<Object>> partyVotes,
             ArrayList<ArrayList<Object>> candidateVotes, HashMap<String, ArrayList<String>> partyCandidates)
             throws IOException {
-        String line = validFile.readLine();
+        String line;
         char[] splitLine;
         int index = -1;
         int count = 0;
 
         // Check for the EOF
-        while (line != null) {
+        while ((line = validFile.readLine()) != null) {
             line.trim();
             splitLine = line.toCharArray();
-            if (splitLine[0] != '1' && splitLine[0] != ',') {
+
+            if (line.indexOf('1') == -1 || line.indexOf(',') == -1) {
                 throw new IOException("File format is not in the correct format");
             }
 
@@ -144,7 +146,7 @@ public class ExtractDataOPL extends ExtractData {
                 }
             }
 
-            line = validFile.readLine();
+            
         }
 
         // Gathers the votes from candidateVotes and place in partyVotes

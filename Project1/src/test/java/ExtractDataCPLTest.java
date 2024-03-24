@@ -161,13 +161,8 @@ public class ExtractDataCPLTest {
         validFile01 = new BufferedReader(new FileReader(new File("src\\test\\java\\InputFiles\\CPLBallotTest03.txt")));
         test01 = new ExtractDataCPL(validFile01, "CPL");
         partyCandidates = test01.formatPartyInformation(3, partyVotes, candidateVotes);
-        test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
-        expectedPartyVotes = new ArrayList<>();
-        expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Grass", 0)));
-        expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Pluto", 0)));
-        expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Republican", 0)));
-
-        assertEquals(expectedPartyVotes, partyVotes);
+    
+        assertThrows(IOException.class, () -> test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates));
 
         //3.e correct formatting two
         partyVotes = new ArrayList<ArrayList<Object>>();
@@ -233,7 +228,7 @@ public class ExtractDataCPLTest {
 
         assertEquals(partyVotes, test.getPartyVotes());
 
-        // Test 4.g
+        // Test 4.g candidateVotes
         candidateVotes = new ArrayList<>();
         candidateVotes.add(new ArrayList<>(Arrays.asList(" Mary", 0)));
         candidateVotes.add(new ArrayList<>(Arrays.asList(" Jane", 0)));
