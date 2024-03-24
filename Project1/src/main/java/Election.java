@@ -122,7 +122,7 @@ abstract public class Election {
      */
     protected void secondAllocation() {
         // creates a new ArrayList<ArrayList<Object>> which is a copy of remainingVote
-        ArrayList<ArrayList<Object>> remainVotesNew = new ArrayList();
+        ArrayList<ArrayList<Object>> remainVotesNew = new ArrayList<>();
         for (int i = 0; i < remainingVotes.size(); i++) {
             ArrayList<Object> innerList = new ArrayList<>(remainingVotes.get(i));
             remainVotesNew.add(innerList);
