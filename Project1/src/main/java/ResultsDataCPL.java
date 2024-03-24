@@ -102,11 +102,9 @@ public class ResultsDataCPL extends ResultsData {
     private String electionResultsSetUp() {
         StringBuilder output = new StringBuilder();
         int maxLength = findMaxLength();
-        int[] seatAllocation;
         int maxSpace;
 
-        for (int i = 0; i < partyVotes.size(); i++) {
-            seatAllocation = (int[]) seatAllocation.get(i);
+        for (int i = 0; i < partyVotes.size(); i++) {            
             //Party Name
             String partyName = (String) partyVotes.get(i).get(0);
 
@@ -115,13 +113,20 @@ public class ResultsDataCPL extends ResultsData {
             output.append("|");
 
             //Votes
-            maxSpace = 10;
+            maxSpace = 11;
             String votes = String.valueOf((int) partyVotes.get(i).get(1));
             output.append(String.join("", Collections.nCopies(maxSpace - votes.length(), " ")));
-            output.append(votes + "    |         ");
+            output.append(votes + "    |");
 
             //Seats
-            output.append();
+            int[] alloc = (int[]) this.seatAllocation.get(i).get(1);
+            String firstAlloc = String.valueOf(alloc[0]);
+            maxSpace = 10;
+            output.append(String.join("",Collections.nCopies(maxSpace - firstAlloc.length(), " ")));
+            output.append(firstAlloc + "         |");
+
+            //RemainingVotes
+            
         }
 
         return output.toString();
