@@ -40,11 +40,18 @@ abstract public class Election {
      * seatAllocation and add 1 to the seat total
      * returns void
      * 
-     * @param index
+     * @param index      which index this references in seatAllocation
+     * @param firstRound true if allocating for the firstRound, false otherwise
      */
-    protected void adjustSeatAllocation(int index) {
-        int val = (int) this.seatAllocation.get(index).get(1);
-        val++;
+    protected void adjustSeatAllocation(int index, boolean firstRound) {
+        int[] val = (int[]) this.seatAllocation.get(index).get(1);
+
+        if (firstRound) {
+            val[0]++;
+        } else {
+            val[1]++;
+        }
+
         this.seatAllocation.get(index).set(1, val);
     }
 
@@ -94,11 +101,12 @@ abstract public class Election {
             int votes = (int) this.remainingVotes.get(i).get(1);
             if (votes >= largestRemainder) {
                 adjustRemainingVotes(i);
-                adjustSeatAllocation(i);
+                adjustSeatAllocation(i, true);
                 addWinner(i);
                 availableSeats--; // a winner was added so a seat should be removed
             } else {
-                underRemain++; // what is this supposed to be
+                underRemain++; // underRemain is a number that indicates how many parties are currently under
+                               // the largest remainder
             }
             i++;
             if (availableSeats <= 0) { // there are no seats, break from loop
@@ -158,7 +166,7 @@ abstract public class Election {
             }
 
             // allocate seat to the candidate with the highest score
-            adjustSeatAllocation(index);
+            adjustSeatAllocation(index, false);
             int value = (int) remainingVotes.get(index).get(1);
             value -= largestRemainder;
             remainingVotes.get(index).set(1, value);

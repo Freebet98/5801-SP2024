@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * @author Bethany Freeman
  */
 abstract public class ResultsData extends FileData {
-    private final ArrayList<ArrayList<Object>> seatAllocation;
+    protected final ArrayList<ArrayList<Object>> seatAllocation;
     private final ArrayList<ArrayList<Object>> remainingVotes;
     private final ArrayList<String> partyWinOrder;
     private final ArrayList<ArrayList<Object>> finalWinOrder;
