@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class ResultsDataCPL extends ResultsData {
+    ArrayList<ArrayList<Object>> finalWinOrder;
+
     /**
      * * This creates an object of ResultsDataCPL which is used to store the
      * information obtained after running the election,
@@ -35,6 +37,7 @@ public class ResultsDataCPL extends ResultsData {
     ResultsDataCPL(ArrayList<ArrayList<Object>> seatAllocation, ArrayList<ArrayList<Object>> remainingVotes,
             ArrayList<String> partyWinOrder, FileData fileData) {
         super(seatAllocation, remainingVotes, partyWinOrder, fileData);
+        this.finalWinOrder = new ArrayList<>();
     }
 
     /**
@@ -49,11 +52,15 @@ public class ResultsDataCPL extends ResultsData {
         output.append(numberSeats + " Parties\n");
         output.append(numberBallots + " Ballots Cast\n");
         output.append(numberParties + " Seats Avaliable\n");
+
+        // List of party and Candidates
         output.append("---------------------------------------------------\n");
         output.append("     Party     |     Candidates\n");
         output.append("---------------------------------------------------\n");
         output.append(partySetUp());
         output.append("---------------------------------------------------\n\n");
+
+        // List of Election Information
         output.append(
                 "----------------------------------------------------------------------------------------------------------------------------------\n");
         output.append(
@@ -64,6 +71,12 @@ public class ResultsDataCPL extends ResultsData {
                 "                 |               |     Of Seats      |                   |      Of Seats      |     Total     |     % of Seats\n");
         output.append(
                 "----------------------------------------------------------------------------------------------------------------------------------\n");
+        output.append(electionResultsSetUp());
+        output.append(
+                "----------------------------------------------------------------------------------------------------------------------------------\n\n");
+
+        //List of Winners
+
 
         return output.toString();
 
@@ -99,38 +112,85 @@ public class ResultsDataCPL extends ResultsData {
         return output.toString();
     }
 
+    /**
+     * This creates the formatted election results for the toString()
+     * @return a string
+     */
     private String electionResultsSetUp() {
         StringBuilder output = new StringBuilder();
         int maxLength = findMaxLength();
         int maxSpace;
 
-        for (int i = 0; i < partyVotes.size(); i++) {            
-            //Party Name
+        for (int i = 0; i < partyVotes.size(); i++) {
+            // Party Name
             String partyName = (String) partyVotes.get(i).get(0);
 
             output.append("  " + partyName);
             output.append(String.join("", Collections.nCopies((maxLength - partyName.length()) + 3, " ")));
             output.append("|");
 
-            //Votes
+            // Votes
             maxSpace = 11;
             String votes = String.valueOf((int) partyVotes.get(i).get(1));
             output.append(String.join("", Collections.nCopies(maxSpace - votes.length(), " ")));
             output.append(votes + "    |");
 
-            //Seats
+            // Seats (1st alloc)
             int[] alloc = (int[]) this.seatAllocation.get(i).get(1);
             String firstAlloc = String.valueOf(alloc[0]);
             maxSpace = 10;
-            output.append(String.join("",Collections.nCopies(maxSpace - firstAlloc.length(), " ")));
+            output.append(String.join("", Collections.nCopies(maxSpace - firstAlloc.length(), " ")));
             output.append(firstAlloc + "         |");
 
-            //RemainingVotes
-            
+            // RemainingVotes
+            maxSpace = 13;
+            String remainVotes = String.valueOf((int) remainingVotes.get(i).get(1));
+            output.append(String.join("", Collections.nCopies(maxSpace - remainVotes.length(), " ")));
+            output.append(remainVotes + "      |");
+
+            // Seats (2nd alloc)
+            maxSpace = 11;
+            String secAlloc = String.valueOf(alloc[1]);
+            output.append(String.join("", Collections.nCopies(maxSpace - secAlloc.length(), " ")));
+            output.append(secAlloc + "         |");
+
+            // Final seat
+            maxSpace = 8;
+            String finalAlloc = String.valueOf(alloc[0] + alloc[1]);
+            output.append(String.join("", Collections.nCopies(maxSpace - finalAlloc.length(), " ")));
+            output.append(finalAlloc + "       |");
+
+            // %vote to %seat
+            int[] percents = getPercents(i);
+            String votePer = String.valueOf(percents[0]) + "%";
+            String seatPer = String.valueOf(percents[1] + "%");
+            maxSpace = 9;
+            output.append(String.join("", Collections.nCopies(maxSpace - votePer.length(), " ")));
+            output.append(votePer + "/" + seatPer + "\n");
         }
 
         return output.toString();
 
+    }
+
+    /**
+     * This calculates the percents for vote and seats for the given index
+     * @param index used to indicate what party or candidate is being calculated for
+     * @return an int[] for electionResultsSetUp to us to convert values to a string
+     */
+    private int[] getPercents(int index) {
+        int[] seatAlloc = (int[]) this.seatAllocation.get(index).get(1);
+        int totalSeats = seatAlloc[0] + seatAlloc[1];
+        int[] percents = new int[2];
+
+        int votes = (int) partyVotes.get(index).get(1);
+        double perVote = (votes / numberBallots) * 100;
+        percents[0] = (int) Math.round(perVote);
+
+        double perSeats = (totalSeats / numberSeats) * 100;
+        percents[1] = (int) Math.round(perSeats);
+
+        return percents;
     }
 
     /**
