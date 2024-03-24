@@ -4,6 +4,7 @@
  * @author Bethany Freeman
  */
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ResultsDataCPL extends ResultsData {
     /**
@@ -43,21 +44,68 @@ public class ResultsDataCPL extends ResultsData {
      */
     @Override
     public String toString() {
+        StringBuilder output = new StringBuilder();
+        output.append(electionType + " Election\n");
+        output.append(numberSeats + " Parties\n");
+        output.append(numberBallots + " Ballots Cast\n");
+        output.append(numberParties + " Seats Avaliable\n");
+        output.append("---------------------------------------------------\n");
+        output.append("     Party     |     Candidates\n");
+        output.append("---------------------------------------------------\n");
+        output.append(partySetUp());
+        output.append("---------------------------------------------------\n\n");
+        output.append("----------------------------------------------------------------------------------------------------------------------------------\n");
+        output.append("                 |               |      First        |     Remaining     |       Second       |     Final     |     % of Vote\n");
+        output.append("     Parties     |     Votes     |    Allocation     |       Votes       |     Allocation     |     Seat      |        to\n");
+        output.append("                 |               |     Of Seats      |                   |      Of Seats      |     Total     |     % of Seats\n");
+        output.append("----------------------------------------------------------------------------------------------------------------------------------\n");
 
-        String output = "";
-        output += super.fileData.getElectionType() + " Election\n";
-        output += super.fileData.getNumberSeats() + " Parties\n";
-        output += super.fileData.getNumberBallots() + " Ballots Cast\n";
-        output += super.fileData.getNumberParties() + " Seats Avaliable\n";
-        output += "---------------------------------------------------";
-        output += "     Party     |     Candidates\n";
-        output += "---------------------------------------------------";
-        // output += +
 
-        return output;
+        return output.toString();
 
     }
 
+    /**
+     * Formats the party candidates section of the output
+     * @return a string to be appended to the toString()
+     */
+    private String partySetUp(){
+        StringBuilder output = new StringBuilder();
+        String currString = (String) partyVotes.get(0).get(0);
+        int maxLength = currString.length();
+
+        for(int i = 1; i < partyVotes.size(); i++){
+            currString = (String) partyVotes.get(i).get(0);
+            int tempLength = currString.length();
+            if(tempLength > maxLength){
+                maxLength = tempLength;
+            }
+        }
+
+        for(int i = 0; i < partyVotes.size(); i++){
+            String partyName = (String) partyVotes.get(i).get(0);
+            
+            output.append("  " + partyName);
+            output.append(String.join("", Collections.nCopies((maxLength - partyName.length()) + 3, " ")));
+            output.append("|      ");
+
+            ArrayList<String> innerList = partyCandidates.get(partyName);
+            for(int k = 0; k < innerList.size(); k++){
+                String candidateName = innerList.get(k);
+                if(k == innerList.size() -1){
+                    output.append(candidateName + "\n");
+                }
+                output.append(candidateName + ", ");
+            }
+        }
+
+        return output.toString();
+    }
+
+    private String electionResultsSetUp(){
+        StringBuilder output = new StringBuilder();
+        
+    }
     /**
      * TODO
      */
