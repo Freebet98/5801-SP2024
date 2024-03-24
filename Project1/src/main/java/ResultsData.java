@@ -9,7 +9,7 @@ import java.util.ArrayList;
 abstract public class ResultsData extends FileData {
     protected final ArrayList<ArrayList<Object>> seatAllocation;
     protected final ArrayList<ArrayList<Object>> remainingVotes;
-    private final ArrayList<String> partyWinOrder;
+    protected final ArrayList<String> partyWinOrder;
     private final ArrayList<ArrayList<Object>> finalWinOrder;
     protected final FileData fileData;
 
