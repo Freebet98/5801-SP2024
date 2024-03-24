@@ -43,7 +43,7 @@ public class ExtractDataCPL extends ExtractData {
     protected void formatBallotInformation(ArrayList<ArrayList<Object>> partyVotes,
             ArrayList<ArrayList<Object>> candidateVotes, HashMap<String, ArrayList<String>> partyCandidates)
             throws IOException {
-        String line = validFile.readLine();
+        String line;
         char[] splitLine;
         int index = -1;
         int count = 0;
@@ -51,7 +51,7 @@ public class ExtractDataCPL extends ExtractData {
         while ((line = validFile.readLine()) != null) {
             line.trim();
             splitLine = line.toCharArray();
-            if (splitLine[0] != '1' && splitLine[0] != ',') {
+            if (line.indexOf('1') == -1 || line.indexOf(',') == -1) {
                 throw new IOException("File format is not in the correct format");
             }
 
@@ -63,10 +63,6 @@ public class ExtractDataCPL extends ExtractData {
                     partyVotes.get(index).set(1, count);
                 }
             }
-        }
-
-        if(validFile.ready()){
-            throw new IOException("File has more infomation that wasn't read");
         }
     }
 }
