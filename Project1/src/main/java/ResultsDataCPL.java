@@ -5,6 +5,7 @@
  */
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 
 public class ResultsDataCPL extends ResultsData {
     ArrayList<ArrayList<Object>> finalWinOrder;
@@ -75,8 +76,7 @@ public class ResultsDataCPL extends ResultsData {
         output.append(
                 "----------------------------------------------------------------------------------------------------------------------------------\n\n");
 
-        //List of Winners
-
+        // List of Winners
 
         return output.toString();
 
@@ -114,6 +114,7 @@ public class ResultsDataCPL extends ResultsData {
 
     /**
      * This creates the formatted election results for the toString()
+     * 
      * @return a string
      */
     private String electionResultsSetUp() {
@@ -175,6 +176,7 @@ public class ResultsDataCPL extends ResultsData {
 
     /**
      * This calculates the percents for vote and seats for the given index
+     * 
      * @param index used to indicate what party or candidate is being calculated for
      * @return an int[] for electionResultsSetUp to us to convert values to a string
      */
@@ -214,10 +216,39 @@ public class ResultsDataCPL extends ResultsData {
     }
 
     /**
-     * TODO
+     * This will take the ArrayList<String> winOrder that contains just partyNames
+     * and format it to an ArrayList<ArrayList<Object>> with the partyName,
+     * candidateName, and which seat they won
      */
     @Override
     protected void computeWinOrder() {
+        // This is a set of allocatedCandidates, might need to change
+        HashSet<String> allocatedCandidates = new HashSet<>();
+        ArrayList<String> currPartyArrayList;
+        ArrayList<Object> innerList;
+        String candidate;
+        int index;
+        int seat = 1;
 
+        for (String party : partyWinOrder) {
+            currPartyArrayList = partyCandidates.get(party);
+            innerList = new ArrayList<>();
+            index = 0;
+            while (true) {
+                candidate = currPartyArrayList.get(index);
+                if (!allocatedCandidates.contains(candidate)) {
+                    allocatedCandidates.add(candidate);
+                    innerList.add(party);
+                    innerList.add(candidate);
+                    innerList.add(seat);
+                    finalWinOrder.add(innerList);
+
+                    seat++;
+                    break;
+                } else {
+                    index += 1;
+                }
+            }
+        }
     }
 }
