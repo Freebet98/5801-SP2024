@@ -77,6 +77,12 @@ public class ResultsDataCPL extends ResultsData {
                 "----------------------------------------------------------------------------------------------------------------------------------\n\n");
 
         // List of Winners
+        output.append("---------------------------------------------------\n");
+        output.append("     Winning     |      Seat       |     Seat\n");
+        output.append("     Parties     |     Winners     |      Won\n");
+        output.append("---------------------------------------------------\n");
+        output.append(winnerSetUp());
+        output.append("---------------------------------------------------");
 
         return output.toString();
 
@@ -168,6 +174,43 @@ public class ResultsDataCPL extends ResultsData {
             maxSpace = 9;
             output.append(String.join("", Collections.nCopies(maxSpace - votePer.length(), " ")));
             output.append(votePer + "/" + seatPer + "\n");
+        }
+
+        return output.toString();
+
+    }
+
+    /**
+     * Format a string with the finalWinOrder information
+     * 
+     * @return a string with the formatted winner information
+     */
+    private String winnerSetUp() {
+        StringBuilder output = new StringBuilder();
+        int maxLength;
+        String partyName;
+        String candidateName;
+
+        for (int i = 0; i < finalWinOrder.size(); i++) {
+            // Party name
+            maxLength = 12;
+            partyName = (String) finalWinOrder.get(i).get(0);
+            output.append("    " + (partyName));
+            output.append(String.join("", Collections.nCopies((maxLength - partyName.length()), " ")));
+
+            // Candidate name
+            maxLength = 11;
+            output.append("|      ");
+            candidateName = (String) finalWinOrder.get(i).get(1);
+            output.append(candidateName);
+            output.append(String.join("", Collections.nCopies((maxLength - candidateName.length()), " ")));
+            output.append("|");
+
+            // Seat won
+            maxLength = 8;
+            String seatNumber = String.valueOf(finalWinOrder.get(i).get(2));
+            output.append(String.join("", Collections.nCopies((maxLength - seatNumber.length()), " ")));
+            output.append(seatNumber + "\n");
         }
 
         return output.toString();
