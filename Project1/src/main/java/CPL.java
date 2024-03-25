@@ -3,7 +3,7 @@ import java.util.ArrayList;
 /**
  * This class is used to run a CPL election
  * 
- * @author
+ * @author Rock Zgutowicz
  */
 public class CPL extends Election {
     /**

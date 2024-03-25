@@ -30,7 +30,7 @@ public class ResultsDataOPL extends ResultsData {
     public String toString() {
         StringBuilder output = new StringBuilder();
 
-        //Header Portion
+        // Header Portion
         output.append(electionType + " Election\n");
         output.append(partyCandidates.size() + " Parties\n");
         output.append(numberBallots + " Ballots Cast\n");
