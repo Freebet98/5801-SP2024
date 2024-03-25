@@ -16,6 +16,7 @@ public class ResultsDataCPLTest {
     ArrayList<ArrayList<Object>> remainVotes;
     ArrayList<String> partyWinOrder;
     ResultsDataCPL test;
+    FileData testFile;
 
     @Before
     public void setUp() {
@@ -35,7 +36,7 @@ public class ResultsDataCPLTest {
         candidateVotes.add(new ArrayList<>(Arrays.asList("Craig", 0)));
         candidateVotes.add(new ArrayList<>(Arrays.asList("Klein", 0)));
 
-        FileData testFile = new FileData("CPL", 3, 1000, 2, partyCandidates, partyVotes, candidateVotes);
+        testFile = new FileData("CPL", 3, 1000, 2, partyCandidates, partyVotes, candidateVotes);
 
         // ResultsData setup
         seatAlloc = new ArrayList<>();
@@ -54,26 +55,40 @@ public class ResultsDataCPLTest {
     @Test
     public void testGetSeatAllocation() {
         //Test 1.a
-        
+        assertEquals(seatAlloc, test.getSeatAllocation());
     }
 
     @Test
     public void testGetRemainingVotes() {
-        // TODO
+        //Test 2.a
+        assertEquals(remainVotes, test.getRemainingVotes());
     }
 
     @Test
     public void testGetFinalWinOrder() {
-        // TODO
+        ArrayList<ArrayList<Object>> finalWinOrder = new ArrayList<>();
+        finalWinOrder.add(new ArrayList<>(Arrays.asList("Dem", "Sarah", 1)));
+        finalWinOrder.add(new ArrayList<>(Arrays.asList("Dem", "Bob", 2)));
+        finalWinOrder.add(new ArrayList<>(Arrays.asList("Rep", "Craig", 3)));
+
+        //Test 3.a
+        assertEquals(finalWinOrder, test.getFinalWinOrder());
     }
 
     @Test
     public void testGetPartyWinOrder() {
-        // TODO
+        //Test 4.a
+        assertEquals(partyWinOrder, test.getPartyWinOrder());
     }
 
     @Test
     public void testGetToString() {
-        // TODO
+        StringBuilder expected = new StringBuilder();
+        expected.append(testFile.getElectionType() + " Election\n");
+        expected.append(testFile.getNumberParties() + " Parties\n");
+        expected.append(testFile.getNumberBallots() + " Ballots Cast\n");
+        expected.append(testFile.getNumberSeats() + " Seats Avaliable\n");
+
+        assertEquals("", test.toString()); //I expect this to be wrong
     }
 }
