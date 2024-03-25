@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -22,6 +23,7 @@ abstract public class Election {
      * 
      * @return returns the ResultsData object created and populated within the
      *         method containing the election results
+     * @throws IOException 
      */
     abstract public ResultsData runElection();
 

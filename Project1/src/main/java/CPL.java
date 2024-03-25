@@ -1,9 +1,10 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
  * This class is used to run a CPL election
  * 
- * @author
+ * @author Rock Zgutowicz
  */
 public class CPL extends Election {
     /**
@@ -28,6 +29,7 @@ public class CPL extends Election {
      * TODO
      * 
      * @return
+     * @throws IOException 
      */
     @Override
     public ResultsData runElection() {

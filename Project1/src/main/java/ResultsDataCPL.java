@@ -3,6 +3,7 @@
  * This class is used to store all the information obtained after running the election in a CPL election
  * @author Bethany Freeman
  */
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -31,6 +32,7 @@ public class ResultsDataCPL extends ResultsData {
      *                       help determine which candidates get a seat
      * @param fileData       this is the data from the original extraction from the
      *                       file
+     * @throws IOException 
      */
     ResultsDataCPL(ArrayList<ArrayList<Object>> seatAllocation, ArrayList<ArrayList<Object>> remainingVotes,
             ArrayList<String> partyWinOrder, FileData fileData) {

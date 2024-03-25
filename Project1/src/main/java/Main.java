@@ -20,14 +20,14 @@ public class Main {
         Election election;
         ResultsData results;
         AuditFile fileCreation;
-        
-        if(args.length == 0){
+
+        if (args.length == 0) {
             System.out.println("Please enter the name of the ballot file: ");
             fileName = scan.nextLine();
-            
-        }else if(args.length == 1){
+
+        } else if (args.length == 1) {
             fileName = args[0];
-        }else{
+        } else {
             System.out.println("Too many arguments, cannot run program.");
             System.exit(0);
         }

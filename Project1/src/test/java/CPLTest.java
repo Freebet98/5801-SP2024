@@ -2,6 +2,7 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -84,7 +85,7 @@ public class CPLTest{
     // Test starts here
 
     @Test
-    public void testPartyWinOrder() {
+    public void testPartyWinOrder() throws IOException {
         // Test 1.a
         assertEquals("Rep", cpl01.runElection().getPartyWinOrder().get(0));
 

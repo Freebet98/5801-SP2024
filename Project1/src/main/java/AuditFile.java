@@ -7,7 +7,7 @@ import java.io.IOException;
  * This class is used to print all the information obtained after running the
  * election to a file
  * 
- * @author
+ * @author Bethany Freeman
  */
 public class AuditFile {
     private final ResultsData results;
@@ -15,19 +15,19 @@ public class AuditFile {
     /**
      * This creates a new AuditFile object
      * 
-     * @param results is a ResultsData object, has all the information 
-     * from extraction and the run of the election
+     * @param results is a ResultsData object, has all the information
+     *                from extraction and the run of the election
      */
     AuditFile(ResultsData results) {
         this.results = results;
     }
 
     /**
-     * This will print the results.toString() to a new file 
+     * This will print the results.toString() to a new file
      * The file will be saved in a directory called AuditFiles
      * 
      * @throws IOException if an error occurs anywhere
-     * These are handled in the main.java file
+     *                     These are handled in the main.java file
      */
     public void printToFile() throws IOException {
         // Directory stuff
