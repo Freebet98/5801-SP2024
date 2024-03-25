@@ -1,4 +1,5 @@
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Comparator;
@@ -33,6 +34,7 @@ public class OPL extends Election {
      * @return ResultsData which contains all the information from FileData
      *         as well as all the information from running the Election for
      *         an OPL system
+     * @throws IOException 
      */
     @Override
     public ResultsData runElection() {

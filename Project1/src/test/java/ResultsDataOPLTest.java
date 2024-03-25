@@ -3,6 +3,7 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -24,7 +25,7 @@ public class ResultsDataOPLTest {
     ArrayList<ArrayList<Object>> candidateVotes;
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         // FileData setup
         partyCandidates = new HashMap<>();
         partyCandidates.put("Pluto", new ArrayList<>(Arrays.asList(" Becky", " Mariah")));
@@ -62,6 +63,128 @@ public class ResultsDataOPLTest {
         finalWinOrder.add(new ArrayList<>(Arrays.asList("Green", " Radius", 3)));
     }
 
+    public String partySetUp(){
+        StringBuilder output = new StringBuilder();
+        int width = 26;
+        for (int i = 0; i < partyVotes.size(); i++) {
+            String partyName = (String) partyVotes.get(i).get(0);
+
+            String format = String.format("  %-" + width + "s  |  ", partyName);
+            output.append(format);
+
+            ArrayList<String> innerList = partyCandidates.get(partyName);
+            for (int k = 0; k < innerList.size(); k++) {
+                String candidateName = innerList.get(k);
+                if (k == innerList.size() - 1) {
+                    output.append(candidateName + "\n");
+                } else {
+                    output.append(candidateName + ", ");
+                }
+            }
+        }
+
+        return output.toString();
+    }
+
+    public String electionResultsSetUp(){
+        StringBuilder output = new StringBuilder();
+        int width;
+
+        for (int i = 0; i < partyVotes.size(); i++) {
+            // Party Name
+            String partyName = (String) partyVotes.get(i).get(0);
+            width = 13;
+            String format = String.format("  %-" + width + "s  |", partyName);
+            output.append(format);
+
+            // Votes
+            String votes = String.valueOf((int) partyVotes.get(i).get(1));
+            width = 7;
+            format = String.format("  %-" + width + "s  |", votes);
+            output.append(format);
+
+            // Seats (1st alloc)
+            int[] alloc = (int[]) this.seatAlloc.get(i).get(1);
+            String firstAlloc = String.valueOf(alloc[0]);
+            width = 10;
+            format = String.format("  %-" + width + "s  |", firstAlloc);
+            output.append(format);
+
+            // RemainingVotes
+            width = 9;
+            String remainVotes = String.valueOf((int) this.remainVotes.get(i).get(1));
+            format = String.format("  %-" + width + "s  |", remainVotes);
+            output.append(format);
+
+            // Seats (2nd alloc)
+            width = 10;
+            String secAlloc = String.valueOf(alloc[1]);
+            format = String.format("  %-" + width + "s  |", secAlloc);
+            output.append(format);
+
+            // Final seat
+            width = 5;
+            String finalAlloc = String.valueOf(alloc[0] + alloc[1]);
+            format = String.format("  %-" + width + "s  |", finalAlloc);
+            output.append(format);
+
+            // %vote to %seat
+            int[] percents = getPercents(i);
+            String votePer = String.valueOf(percents[0]) + "%";
+            String seatPer = String.valueOf(percents[1] + "%");
+            String out = votePer + "/" + seatPer;
+            width = 10;
+            format = String.format("  %-" + width + "s", out);
+            output.append(format + "\n");
+        }
+
+        return output.toString();
+    }
+
+    public int[] getPercents(int index){
+        int[] seatAlloc = (int[]) this.seatAlloc.get(index).get(1);
+        int totalSeats = seatAlloc[0] + seatAlloc[1];
+        int[] percents = new int[2];
+
+        int votes = (int) partyVotes.get(index).get(1);
+        double perVote = ((double) votes / (double) testFile.getNumberBallots()) * 100;
+        percents[0] = (int) Math.round(perVote);
+
+        double perSeats = ((double) totalSeats / (double) testFile.getNumberSeats()) * 100;
+        percents[1] = (int) Math.round(perSeats);
+
+        return percents;
+    }
+
+    public String winnerSetUp(){
+        StringBuilder output = new StringBuilder();
+        int width;
+        String partyName;
+        String candidateName;
+
+        for (int i = 0; i < finalWinOrder.size(); i++) {
+            // Party name
+            width = 13;
+            partyName = (String) finalWinOrder.get(i).get(0);
+            String format = String.format("  %-" + width + "s  |", partyName);
+            output.append(format);
+
+            // Candidate name
+            width = 13;
+            candidateName = (String) finalWinOrder.get(i).get(1);
+            format = String.format("  %-" + width + "s  |", candidateName);
+            output.append(format);
+
+            // Seat won
+            width = 5;
+            String seatNumber = String.valueOf(finalWinOrder.get(i).get(2));
+            format = String.format("  %-" + width + "s", seatNumber);
+            output.append(format + "\n");
+        }
+
+        return output.toString();
+    }
+
     @Test
     public void testGetSeatAllocation() {
         //Test 1.a
@@ -84,6 +207,47 @@ public class ResultsDataOPLTest {
     public void testGetPartyWinOrder() {
         // Test 4.a
         assertEquals(partyWinOrder, test.getPartyWinOrder());
+    }
+
+    @Test
+    public void testComputeWinOrder() {
+        //Test 5.a
+        ArrayList<ArrayList <Object>> expected = new ArrayList<>();
+        ArrayList<String> winOrder = new ArrayList<>(Arrays.asList("Pluto", "Pluto", "Green"));
+
+        expected.add(new ArrayList<>(Arrays.asList("Pluto", " Becky", 1, 20105)));
+        expected.add(new ArrayList<>(Arrays.asList("Pluto", " Mariah", 2, 19943)));
+        expected.add(new ArrayList<>(Arrays.asList("Green", " Jonah", 3, 19943)));
+        ResultsData test01 = new ResultsDataOPL(seatAlloc, remainVotes, winOrder, test);
+
+        assertEquals(expected, test01.getFinalWinOrder());
+
+    }
+
+    @Test
+    public void testToString(){
+        StringBuilder output = new StringBuilder();
+
+        // Header Portion
+        output.append(testFile.getElectionType() + " Election\n");
+        output.append(partyCandidates.size() + " Parties\n");
+        output.append(testFile.getNumberBallots() + " Ballots Cast\n");
+        output.append(testFile.getNumberSeats() + " Seats Avaliable\n");
+
+        // Party and Candidate List
+        output.append("----------------------------------------------------------------------\n");
+        output.append("  Party                       |  Candidates\n");
+        output.append("----------------------------------------------------------------------\n");
+        output.append(partySetUp());
+        output.append("----------------------------------------------------------------------\n\n");
+
+        //Winner List
+        output.append("---------------------------------------------------\n");
+        output.append("  Winning        |  Seat           |  Seat\n");
+        output.append("  Parties        |  Winners        |  Won\n");
+        output.append("---------------------------------------------------\n");
+        output.append(winnerSetUp());
+        output.append("---------------------------------------------------\n");
     }
 
 }

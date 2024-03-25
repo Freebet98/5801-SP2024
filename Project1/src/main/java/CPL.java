@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -28,6 +29,7 @@ public class CPL extends Election {
      * TODO
      * 
      * @return
+     * @throws IOException 
      */
     @Override
     public ResultsData runElection() {

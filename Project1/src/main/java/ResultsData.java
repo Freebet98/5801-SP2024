@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -36,9 +37,10 @@ abstract public class ResultsData extends FileData {
      *                       help determine which candidates get a seat
      * @param fileDate       this is the data from the original extraction from the
      *                       file
+     * @throws IOException 
      */
     ResultsData(ArrayList<ArrayList<Object>> seatAllocation, ArrayList<ArrayList<Object>> remainingVotes,
-            ArrayList<String> partyWinOrder, FileData fileDate) {
+            ArrayList<String> partyWinOrder, FileData fileDate){
         super(fileDate.electionType, fileDate.numberSeats, fileDate.numberBallots, fileDate.numberParties,
                 fileDate.partyCandidates, fileDate.partyVotes, fileDate.candidateVotes);
         this.seatAllocation = seatAllocation;
@@ -86,6 +88,7 @@ abstract public class ResultsData extends FileData {
      * Allocates finalWinOrder based on winOrder and partyCandidates candidate
      * order. Uses a set to ensure that
      * no candidates are repeated
+     * @throws IOException 
      */
     abstract protected void computeWinOrder();
 }
