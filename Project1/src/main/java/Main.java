@@ -2,17 +2,16 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Scanner;
 
 /**
  * Runs the program
  * 
- * @author
- * @author
- * @author
- * 
+ * @author Bethany Freeman
  */
 public class Main {
     public static void main(String[] args) throws IOException {
+        Scanner scan = new Scanner(System.in);
         String fileName = "";
         String header;
         BufferedReader validFile;
@@ -21,7 +20,17 @@ public class Main {
         Election election;
         ResultsData results;
         AuditFile fileCreation;
-        // get a valid file from the command line or user input
+        
+        if(args.length == 0){
+            System.out.println("Please enter the name of the ballot file: ");
+            fileName = scan.nextLine();
+            
+        }else if(args.length == 1){
+            fileName = args[0];
+        }else{
+            System.out.println("Too many arguments, cannot run program.");
+            System.exit(0);
+        }
 
         /*
          * While the user has not inputted a valid file name, continue to prompt them
@@ -34,8 +43,10 @@ public class Main {
                 File file = new File(fileName);
 
                 if (fileName.equals("q")) {
+                    scan.close();
                     System.exit(0);
                 } else if (file.exists() && !file.isDirectory()) {
+                    System.out.println("Generating Results...");
                     FileReader fileR = new FileReader(file);
                     validFile = new BufferedReader(fileR);
                     header = validFile.readLine();
@@ -49,9 +60,11 @@ public class Main {
                         break;
                     }
                 } else {
-                    // prompt for new file name or "q"
+                    System.out.println("Error: Invalid file. Input file must be a valid CSV");
+                    System.out.println("Please enter another file name or the letter \"q\" to quit");
                 }
             }
+            scan.close();
 
             // Extracts information into fileData
             fileData = extraction.extractFromFile();
