@@ -29,6 +29,7 @@ public class OPL extends Election {
         this.seatAllocation = new ArrayList<ArrayList<Object>>();
         this.winOrder = new ArrayList<String>();
         int ballots = fileData.getNumberBallots();
+        // assuming this does not need to be error checked as it was stated in clas there will never be an election run if no seats are availabke
         this.largestRemainder = ballots / availableSeats;
     }
 

@@ -80,12 +80,7 @@ public class OPLTest{
         opl02 = new OPL(new FileData("CPL", 0, 1000, 2, partyCandidates02, partyVotes02, candidateVotes02));
         opl03 = new OPL(new FileData("CPL", 10, 2000, 1, partyCandidates03, partyVotes03, candidateVotes03));
 
-        ArrayList<ArrayList<Object>> remainingVotes01 = new ArrayList<>();
-        remainingVotes01.add(new ArrayList<>(Arrays.asList("Sarah", 10)));
-        remainingVotes01.add(new ArrayList<>(Arrays.asList("Bob", 9)));
-        remainingVotes01.add(new ArrayList<>(Arrays.asList("Jon", 6)));
-        remainingVotes01.add(new ArrayList<>(Arrays.asList("Craig", 5)));
-        remainingVotes01.add(new ArrayList<>(Arrays.asList("Klein", 9)));
+
 
         int RVlargestRemainder01 = 5;
         int RVindex01 = 2;
@@ -95,6 +90,9 @@ public class OPLTest{
 
     @Test
     public void testAdjustRemainingVotes() {
+        excpected = 
+        opl01.adjustRemainingVotes(1);
+
 
     }
 
