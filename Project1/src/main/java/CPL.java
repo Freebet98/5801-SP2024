@@ -14,7 +14,7 @@ public class CPL extends Election {
      */
     CPL(FileData fileData) {
         this.fileData = fileData;
-        availableSeats = fileData.getNumberSeats();
+        this.availableSeats = fileData.getNumberSeats();
 
         this.remainingVotes = new ArrayList<ArrayList<Object>>();
         this.seatAllocation = new ArrayList<ArrayList<Object>>();

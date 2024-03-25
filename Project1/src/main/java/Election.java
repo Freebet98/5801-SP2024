@@ -35,8 +35,10 @@ abstract public class Election {
      * @param index
      */
     protected void adjustRemainingVotes(int index) {
-        if (index < 0) {
+        if (index < 0 || index >= this.remainingVotes.size()) {
             // error, invalid index
+            System.out.println("invalid index passed into adjustRemainingVotes");
+            return;
         }
         int val = (int) this.remainingVotes.get(index).get(1);
         val -= this.largestRemainder;

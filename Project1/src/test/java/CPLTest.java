@@ -100,4 +100,11 @@ public class CPLTest{
         // cpl02
         // cpl03
     }
+
+    @Test
+    public void testFirstAllocation() {
+
+        
+
+    }
 }

@@ -1,3 +1,7 @@
+/**
+ * This class is used to run an OPL election
+ * @Derrick 
+ */
 
 import java.io.IOException;
 import java.util.ArrayList;
