@@ -1,6 +1,12 @@
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * This is the abstract class for Elections opl and cpl to inherit
+ * 
+ * @author Rock Zgutowicz
+ * @author Derrick Dischinger
+ */
 abstract public class Election {
     protected FileData fileData;
     protected ResultsData results;

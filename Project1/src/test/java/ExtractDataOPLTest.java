@@ -75,7 +75,7 @@ public class ExtractDataOPLTest {
 
                 assertEquals(expected, partyCandidates);
 
-                // Test 2.b numPatries = 0 which is the wrong number
+                // Test 2.b numParties = 0 which is the wrong number
                 validFile = new BufferedReader(new FileReader(new File("src/test/java/InputFiles/OPLPartyInfo01.txt")));
                 test01 = new ExtractDataOPL(validFile, "OPL");
                 partyCandidates = test01.formatPartyInformation(0, partyVotes, candidateVotes);
