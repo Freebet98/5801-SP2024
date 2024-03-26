@@ -20,6 +20,9 @@ public class Main {
         Election election;
         ResultsData results;
         AuditFile fileCreation;
+        // Ballot files must be placed in a folder named BallotFiles within the
+        // Documents folder of a users directory
+        String directoryPath = System.getProperty("user.home") + "Documents/BallotFiles/";
 
         if (args.length == 0) {
             System.out.println("Please enter the name of the ballot file: ");
@@ -40,7 +43,7 @@ public class Main {
          */
         try {
             while (true) {
-                File file = new File(fileName);
+                File file = new File(directoryPath, fileName);
 
                 if (fileName.equals("q")) {
                     scan.close();
@@ -62,6 +65,7 @@ public class Main {
                 } else {
                     System.out.println("Error: Invalid file. Input file must be a valid CSV");
                     System.out.println("Please enter another file name or the letter \"q\" to quit");
+                    fileName = scan.nextLine();
                 }
             }
             scan.close();
