@@ -54,28 +54,30 @@ abstract public class Election {
      */
 
     protected ArrayList<ArrayList<Object>> deepCopyVotes(ArrayList<ArrayList<Object>> votes){
-        ArrayList<ArrayList<Object>> copy = new ArrayList<ArrayList<Object>>();
+        ArrayList<ArrayList<Object>> copy = new ArrayList<ArrayList<Object>>(votes.size());
         for (ArrayList<Object> innerList : votes) {
-            ArrayList<Object> innerListCopy = new ArrayList<Object>();
-            innerListCopy.set(0, new String((String) innerList.get(0))); // this is the string containing the party name
-            innerListCopy.set(1, new Integer((Integer) innerList.get(0))); // this is the int representing num votes
+            ArrayList<Object> innerListCopy = new ArrayList<Object>(2);
+            innerListCopy.add(new String((String) innerList.get(0))); // this is the string containing the party name
+            innerListCopy.add(new Integer((Integer) innerList.get(1))); // this is the int representing num votes
             copy.add(innerListCopy);
         }
         return copy;
     }
 
     /**
-     * initializes the seat allcation array to have default havlues of 0
+     * initializes the seat allocation array to have default values of 0
      * 
      * @return returns initialized ArrayList<ArrayList<Object>>
      */
 
     protected ArrayList<ArrayList<Object>> initializeSeatAllocation(){
         ArrayList<ArrayList<Object>> initialized = new ArrayList<ArrayList<Object>>();
-        for(int i=0; i<this.fileData.getNumberSeats(); i++){
+        for(int i=0; i<this.fileData.getNumberParties(); i++){
             ArrayList<Object> innerList = new ArrayList<Object>();
-            innerList.add(new Integer(0));
-            innerList.add(new Integer(0));
+            String partyName = (String) this.fileData.getPartyVotes().get(i).get(0);
+            innerList.add(partyName);
+            innerList.add(new int[2]);
+            initialized.add(innerList);
         }
         return initialized;
     }
@@ -233,6 +235,9 @@ abstract public class Election {
      * @return returns the index of the winner
      */
     protected int breakTie(int numTie) {
+        if(numTie<=0 || numTie>this.fileData.getNumberParties()){
+            return -1;
+        }
         // the number used to determine the winner
         float compval = generateRandom();
         // an array
