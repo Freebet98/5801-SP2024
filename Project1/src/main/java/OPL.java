@@ -1,3 +1,7 @@
+/**
+ * This class is used to run an OPL election
+ * @Derrick 
+ */
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,10 +25,11 @@ public class OPL extends Election {
     OPL(FileData fileData) {
         this.fileData = fileData;
         this.availableSeats = fileData.getNumberSeats();
-        this.remainingVotes = new ArrayList<ArrayList<Object>>();
-        this.seatAllocation = new ArrayList<ArrayList<Object>>();
+        this.remainingVotes = this.deepCopyVotes(fileData.getCandidateVotes());
+        this.seatAllocation = initializeSeatAllocation();
         this.winOrder = new ArrayList<String>();
         int ballots = fileData.getNumberBallots();
+        // assuming this does not need to be error checked as it was stated in clas there will never be an election run if no seats are availabke
         this.largestRemainder = ballots / availableSeats;
     }
 

@@ -36,13 +36,53 @@ abstract public class Election {
      * @throws IOException 
      */
     protected void adjustRemainingVotes(int index) throws IOException {
-        if (index < 0) {
+        if (index < 0 || index >= this.remainingVotes.size()) {
             throw new IOException("Index less than 0");
+            System.out.println("invalid index passed into adjustRemainingVotes");
+            return;
         }
         int val = (int) this.remainingVotes.get(index).get(1);
         val -= this.largestRemainder;
         this.remainingVotes.get(index).set(1, val);
     }
+
+    /**
+     * creates a deep copy of a votes ArrayList to create a modifiable version
+     * used to set remainingVotes
+     * 
+     * @param votes the ArrayList<ArrayList<Object>> to be copied
+     * @return returns the deep copied ArrayList<ArrayList<Object>>
+     */
+
+    protected ArrayList<ArrayList<Object>> deepCopyVotes(ArrayList<ArrayList<Object>> votes){
+        ArrayList<ArrayList<Object>> copy = new ArrayList<ArrayList<Object>>(votes.size());
+        for (ArrayList<Object> innerList : votes) {
+            ArrayList<Object> innerListCopy = new ArrayList<Object>(2);
+            innerListCopy.add(new String((String) innerList.get(0))); // this is the string containing the party name
+            innerListCopy.add(new Integer((Integer) innerList.get(1))); // this is the int representing num votes
+            copy.add(innerListCopy);
+        }
+        return copy;
+    }
+
+    /**
+     * initializes the seat allocation array to have default values of 0
+     * 
+     * @return returns initialized ArrayList<ArrayList<Object>>
+     */
+
+    protected ArrayList<ArrayList<Object>> initializeSeatAllocation(){
+        ArrayList<ArrayList<Object>> initialized = new ArrayList<ArrayList<Object>>();
+        for(int i=0; i<this.fileData.getNumberParties(); i++){
+            ArrayList<Object> innerList = new ArrayList<Object>();
+            String partyName = (String) this.fileData.getPartyVotes().get(i).get(0);
+            innerList.add(partyName);
+            innerList.add(new int[2]);
+            initialized.add(innerList);
+        }
+        return initialized;
+    }
+
 
     /**
      * This will access into the given index of the arraylist
@@ -53,11 +93,11 @@ abstract public class Election {
      * @param firstRound true if allocating for the firstRound, false otherwise
      * @throws IOException 
      */
-    protected void adjustSeatAllocation(int index, boolean firstRound) throws IOException {
-        if (index < 0) {
-            throw new IOException("Index less than 0");
+    protected void adjustSeatAllocation(int index, boolean firstRound) {
+        if(index<0 || index>seatAllocation.size()){
+            System.out.println("invalid index passed into adjustSeatAllocation");
+            return;
         }
-
         int[] val = (int[]) this.seatAllocation.get(index).get(1);
 
         if (firstRound) {
@@ -77,11 +117,11 @@ abstract public class Election {
      * @param index
      * @throws IOException 
      */
-    protected void addWinner(int index) throws IOException {
-        if (index < 0) {
-            throw new IOException("Index less than 0");
+    protected void addWinner(int index) {
+        if(index>this.seatAllocation.size() || index<0){
+            System.out.println("invalid index in addWinner");
+            return;
         }
-        
         String winner = (String) this.seatAllocation.get(index).get(0);
         this.winOrder.add(winner);
     }
@@ -208,6 +248,9 @@ abstract public class Election {
      * @return returns the index of the winner
      */
     protected int breakTie(int numTie) {
+        if(numTie<=0 || numTie>this.fileData.getNumberParties()){
+            return -1;
+        }
         // the number used to determine the winner
         float compval = generateRandom();
         // an array
