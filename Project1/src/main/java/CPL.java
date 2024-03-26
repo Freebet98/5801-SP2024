@@ -32,7 +32,7 @@ public class CPL extends Election {
      * @throws IOException 
      */
     @Override
-    public ResultsData runElection() {
+    public ResultsData runElection() throws IOException {
         firstAllocation();
         secondAllocation();
         this.results = new ResultsDataCPL(this.seatAllocation, this.remainingVotes,

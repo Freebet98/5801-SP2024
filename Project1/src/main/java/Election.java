@@ -25,7 +25,7 @@ abstract public class Election {
      *         method containing the election results
      * @throws IOException 
      */
-    abstract public ResultsData runElection();
+    abstract public ResultsData runElection() throws IOException;
 
     /**
      * This will access into the given index of the arraylist remainingvotes
@@ -33,12 +33,11 @@ abstract public class Election {
      * returns void
      * 
      * @param index
+     * @throws IOException 
      */
-    protected void adjustRemainingVotes(int index) {
-        if (index < 0 || index >= this.remainingVotes.size()) {
-            // error, invalid index
-            System.out.println("invalid index passed into adjustRemainingVotes");
-            return;
+    protected void adjustRemainingVotes(int index) throws IOException {
+        if (index < 0) {
+            throw new IOException("Index less than 0");
         }
         int val = (int) this.remainingVotes.get(index).get(1);
         val -= this.largestRemainder;
@@ -90,12 +89,13 @@ abstract public class Election {
      * 
      * @param index      which index this references in seatAllocation
      * @param firstRound true if allocating for the firstRound, false otherwise
+     * @throws IOException 
      */
-    protected void adjustSeatAllocation(int index, boolean firstRound) {
-        if(index<0 || index>seatAllocation.size()){
-            System.out.println("invalid index passed into adjustSeatAllocation");
-            return;
+    protected void adjustSeatAllocation(int index, boolean firstRound) throws IOException {
+        if (index < 0) {
+            throw new IOException("Index less than 0");
         }
+
         int[] val = (int[]) this.seatAllocation.get(index).get(1);
 
         if (firstRound) {
@@ -113,12 +113,13 @@ abstract public class Election {
      * returns void
      * 
      * @param index
+     * @throws IOException 
      */
-    protected void addWinner(int index) {
-        if(index>this.seatAllocation.size() || index<0){
-            System.out.println("invalid index in addWinner");
-            return;
+    protected void addWinner(int index) throws IOException {
+        if (index < 0) {
+            throw new IOException("Index less than 0");
         }
+        
         String winner = (String) this.seatAllocation.get(index).get(0);
         this.winOrder.add(winner);
     }
@@ -147,8 +148,9 @@ abstract public class Election {
      * remainder.
      * Adds winners if votes>=largestRemainder otherwise increments the number under
      * the remainder
+     * @throws IOException 
      */
-    protected void firstAllocation() {
+    protected void firstAllocation() throws IOException {
         int i = 0;
         int underRemain = 0;
         // run until there are no more seats to allocate or all parties are under the
@@ -183,8 +185,9 @@ abstract public class Election {
      * Iterates through a list of remaining votes and allocates seats
      * based on the votes associated with each candidate.
      * Resolves ties if multiple candidates have the same highest score.
+     * @throws IOException 
      */
-    protected void secondAllocation() {
+    protected void secondAllocation() throws IOException {
         // creates a new ArrayList<ArrayList<Object>> which is a copy of remainingVote
         ArrayList<ArrayList<Object>> remainVotesNew = new ArrayList<>();
         for (int i = 0; i < remainingVotes.size(); i++) {
