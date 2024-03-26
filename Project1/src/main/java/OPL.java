@@ -37,7 +37,7 @@ public class OPL extends Election {
      * @throws IOException 
      */
     @Override
-    public ResultsData runElection() {
+    public ResultsData runElection() throws IOException {
         firstAllocation();
         secondAllocation();
         candidateRankings(fileData.getPartyCandidates(), fileData.getCandidateVotes());
