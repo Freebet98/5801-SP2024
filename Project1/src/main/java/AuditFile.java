@@ -52,6 +52,8 @@ public class AuditFile {
         String filename = results.getElectionType() + "_Election_Results_" + currentTimeMillis + ".txt";
         File file = new File(directoryPath, filename);
 
+        // TODO creating this object doesn't actually create it for some reason... 
+        // figure it out
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             writer.write(results.toString());
 
