@@ -8,6 +8,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
+import java.beans.Transient;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -241,5 +242,23 @@ public class ExtractDataCPLTest {
         candidateVotes.add(new ArrayList<>(Arrays.asList(" Mike", 0)));
 
         assertEquals(candidateVotes, test.getCandidateVotes());
+    }
+
+    @Test 
+    public void testExtractDataCPLInput02(){
+        validFile01 = new BufferedReader(new FileReader(new File("src\\test\\java\\InputFiles\\CPLInput02.txt")));
+        String header = validFile01.readLine();
+        test01 = new ExtractDataCPL(validFile01, header);
+        
+        assertThrows(IOException.class, () -> test01.extractFromFile());
+    } 
+
+    @Test
+    public void testExtractDataCPLInput03(){
+        validFile01 = new BufferedReader(new FileReader(new File("src\\test\\java\\InputFiles\\CPLInput03.txt")));
+        String header = validFile01.readLine();
+        test01 = new ExtractDataCPL(validFile01, header);
+
+        assertThrows(IOException.class, ()-> test01.extractFromFile());
     }
 }
