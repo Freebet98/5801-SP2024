@@ -92,6 +92,10 @@ abstract public class Election {
      * @param firstRound true if allocating for the firstRound, false otherwise
      */
     protected void adjustSeatAllocation(int index, boolean firstRound) {
+        if(index<0 || index>seatAllocation.size()){
+            System.out.println("invalid index passed into adjustSeatAllocation");
+            return;
+        }
         int[] val = (int[]) this.seatAllocation.get(index).get(1);
 
         if (firstRound) {
@@ -111,6 +115,10 @@ abstract public class Election {
      * @param index
      */
     protected void addWinner(int index) {
+        if(index>this.seatAllocation.size() || index<0){
+            System.out.println("invalid index in addWinner");
+            return;
+        }
         String winner = (String) this.seatAllocation.get(index).get(0);
         this.winOrder.add(winner);
     }

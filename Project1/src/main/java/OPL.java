@@ -26,7 +26,7 @@ public class OPL extends Election {
         this.fileData = fileData;
         this.availableSeats = fileData.getNumberSeats();
         this.remainingVotes = this.deepCopyVotes(fileData.getCandidateVotes());
-        this.seatAllocation = new ArrayList<ArrayList<Object>>();
+        this.seatAllocation = initializeSeatAllocation();
         this.winOrder = new ArrayList<String>();
         int ballots = fileData.getNumberBallots();
         // assuming this does not need to be error checked as it was stated in clas there will never be an election run if no seats are availabke
