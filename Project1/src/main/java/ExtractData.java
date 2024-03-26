@@ -30,7 +30,7 @@ abstract public class ExtractData {
         // it
         line = validFile.readLine();
         if (!verifyLineIsDigit(line)) {
-            return null;
+            throw new IOException("Not enough digits");
         }
         int numSeats = Integer.parseInt(line);
 
@@ -38,7 +38,7 @@ abstract public class ExtractData {
         // it
         line = validFile.readLine();
         if (!verifyLineIsDigit(line)) {
-            return null;
+            throw new IOException("Not enough digits");
         }
         int numBallots = Integer.parseInt(line);
 
@@ -46,7 +46,7 @@ abstract public class ExtractData {
         // to it
         line = validFile.readLine();
         if (!verifyLineIsDigit(line)) {
-            return null;
+            throw new IOException("Not enough digits");
         }
         int numParties = Integer.parseInt(line);
 
