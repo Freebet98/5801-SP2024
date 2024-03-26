@@ -96,7 +96,7 @@ public class ExtractDataOPLTest {
         @Test
         public void testFormatBallotInformation() throws IOException {
 
-                // Test 4.a correct formatting
+                // Test 3.a correct formatting
                 partyVotes = new ArrayList<ArrayList<Object>>();
                 candidateVotes = new ArrayList<ArrayList<Object>>();
                 validFile = new BufferedReader(
@@ -119,7 +119,7 @@ public class ExtractDataOPLTest {
                 assertEquals(expectedPartyVotes, partyVotes);
                 assertEquals(expectedCandidateVotes, candidateVotes);
 
-                // Test 4.b incorrect formatting on one of the votes
+                // Test 3.b incorrect formatting on one of the votes
                 partyVotes = new ArrayList<ArrayList<Object>>();
                 candidateVotes = new ArrayList<ArrayList<Object>>();
                 validFile = new BufferedReader(
@@ -131,7 +131,7 @@ public class ExtractDataOPLTest {
                                 () -> test01.formatBallotInformation(partyVotes, candidateVotes,
                                                 partyCandidates));
 
-                // Test 4.c line is null
+                // Test 3.c line is null
                 partyVotes = new ArrayList<ArrayList<Object>>();
                 candidateVotes = new ArrayList<ArrayList<Object>>();
                 validFile = new BufferedReader(
@@ -151,7 +151,7 @@ public class ExtractDataOPLTest {
                 expectedCandidateVotes.add(new ArrayList<>(Arrays.asList(" Radius", 0)));
                 expectedCandidateVotes.add(new ArrayList<>(Arrays.asList(" Louis", 0)));
 
-                // Test 4.d no votes technically
+                // Test 3.d no votes technically
                 partyVotes = new ArrayList<ArrayList<Object>>();
                 candidateVotes = new ArrayList<ArrayList<Object>>();
                 validFile = new BufferedReader(
@@ -164,7 +164,7 @@ public class ExtractDataOPLTest {
                                 () -> test01.formatBallotInformation(partyVotes, candidateVotes,
                                                 partyCandidates));
 
-                // Test 4.e correct formatting two
+                // Test 3.e correct formatting two
                 partyVotes = new ArrayList<ArrayList<Object>>();
                 candidateVotes = new ArrayList<ArrayList<Object>>();
                 validFile = new BufferedReader(
