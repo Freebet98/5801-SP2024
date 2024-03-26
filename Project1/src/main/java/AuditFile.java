@@ -50,12 +50,14 @@ public class AuditFile {
         // Create a File Object with a FileName
         // electionType_Election_Results_Systime.ext
         String filename = results.getElectionType() + "_Election_Results_" + currentTimeMillis + ".txt";
-        File file = new File(directoryPath, filename);
+        File file = new File(auditFileDir, filename);
+        if(!file.exists()){
+            file.createNewFile();
+        }
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             writer.write(results.toString());
-
-            // BufferedWrite is automatically closed at the end of the try-block
+           // BufferedWrite is automatically closed at the end of the try-block
         } catch (IOException e) {
             throw new IOException("Something went wrong while trying to write to the file");
         }
@@ -83,3 +85,5 @@ public class AuditFile {
     }
 
 }
+
+       
