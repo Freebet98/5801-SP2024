@@ -32,10 +32,10 @@ public class ResultsDataCPL extends ResultsData {
      *                       help determine which candidates get a seat
      * @param fileData       this is the data from the original extraction from the
      *                       file
-     * @throws IOException 
+     * @throws IOException
      */
     ResultsDataCPL(ArrayList<ArrayList<Object>> seatAllocation, ArrayList<ArrayList<Object>> remainingVotes,
-            ArrayList<String> partyWinOrder, FileData fileData) {
+            ArrayList<String> partyWinOrder, FileData fileData) throws IOException {
         super(seatAllocation, remainingVotes, partyWinOrder, fileData);
     }
 
@@ -235,9 +235,11 @@ public class ResultsDataCPL extends ResultsData {
      * This will take the ArrayList<String> winOrder that contains just partyNames
      * and format it to an ArrayList<ArrayList<Object>> with the partyName,
      * candidateName, and which seat they won
+     * 
+     * @throws IOException
      */
     @Override
-    protected void computeWinOrder() {
+    protected void computeWinOrder() throws IOException {
         // This is a set of allocatedCandidates, might need to change
         HashSet<String> allocatedCandidates = new HashSet<>();
         ArrayList<String> currPartyArrayList;
@@ -245,26 +247,30 @@ public class ResultsDataCPL extends ResultsData {
         String candidate;
         int index;
         int seat = 1;
+        try {
+            for (String party : partyWinOrder) {
+                currPartyArrayList = partyCandidates.get(party);
+                innerList = new ArrayList<>();
+                index = 0;
+                while (true) {
+                    candidate = currPartyArrayList.get(index);
+                    if (!allocatedCandidates.contains(candidate)) {
+                        allocatedCandidates.add(candidate);
+                        innerList.add(party);
+                        innerList.add(candidate);
+                        innerList.add(seat);
+                        finalWinOrder.add(innerList);
 
-        for (String party : partyWinOrder) {
-            currPartyArrayList = partyCandidates.get(party);
-            innerList = new ArrayList<>();
-            index = 0;
-            while (true) {
-                candidate = currPartyArrayList.get(index);
-                if (!allocatedCandidates.contains(candidate)) {
-                    allocatedCandidates.add(candidate);
-                    innerList.add(party);
-                    innerList.add(candidate);
-                    innerList.add(seat);
-                    finalWinOrder.add(innerList);
-
-                    seat++;
-                    break;
-                } else {
-                    index += 1;
+                        seat++;
+                        break;
+                    } else {
+                        index += 1;
+                    }
                 }
             }
+        } catch (IndexOutOfBoundsException e) {
+            throw new IOException("Parties did not get added to win order correctly");
         }
+
     }
 }
