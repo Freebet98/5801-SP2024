@@ -18,7 +18,7 @@ import java.util.*;
  */
 public class OPLTest{
 
-    // Create CPL input files
+    // Create OPL input files
     OPL opl01;
     OPL opl02;
     OPL opl03;
@@ -26,10 +26,10 @@ public class OPLTest{
     @Before
     public void setUp() {
 
-        // Create 4 ResultsDataCPL objects, 3 of which with proper outcomes for each cplInput,
+        // Create 4 ResultsDataOPL objects, 3 of which with proper outcomes for each cplInput,
         // and 1 with incorrect outcomes for all 3. 
 
-        // create partyCandidate lists for CPL file
+        // create partyCandidate lists for OPL file
         HashMap<String, ArrayList<String>> partyCandidates01 = new HashMap<>();
         partyCandidates01.put("Dem", new ArrayList<>(Arrays.asList("Sarah", "Bob", "Jon")));
         partyCandidates01.put("Rep", new ArrayList<>(Arrays.asList("Craig", "Klein")));
@@ -190,11 +190,6 @@ public class OPLTest{
             assertEquals(expected1.get(i).get(0), result1.get(i).get(0));
             assertArrayEquals((int[])expected1.get(i).get(1), (int[])result1.get(i).get(1));
         }
-
-
-
-
-
     }
 
     @Test
@@ -252,19 +247,16 @@ public class OPLTest{
                 between9and10++;
             }
         }
-        assertTrue("at least 800 should be in the range 0 to 1", between0and1>=900);
-        assertTrue("at least 800 should be in the range 1 to 2", between1and2>=900);
-        assertTrue("at least 800 should be in the range 2 to 3", between2and3>=900);
-        assertTrue("at least 800 should be in the range 3 to 4", between3and4>=900);
-        assertTrue("at least 800 should be in the range 4 to 5", between4and5>=900);
-        assertTrue("at least 800 should be in the range 5 to 6", between5and6>=900);
-        assertTrue("at least 800 should be in the range 6 to 7", between6and7>=900);
-        assertTrue("at least 800 should be in the range 7 to 8", between7and8>=900);
-        assertTrue("at least 800 should be in the range 8 to 9", between8and9>=900);
-        assertTrue("at least 800 should be in the range 9 to 10", between9and10>=900);
-
-
-
+        assertTrue("at least 900 should be in the range 0 to 1", between0and1>=900);
+        assertTrue("at least 900 should be in the range 1 to 2", between1and2>=900);
+        assertTrue("at least 900 should be in the range 2 to 3", between2and3>=900);
+        assertTrue("at least 900 should be in the range 3 to 4", between3and4>=900);
+        assertTrue("at least 900 should be in the range 4 to 5", between4and5>=900);
+        assertTrue("at least 900 should be in the range 5 to 6", between5and6>=900);
+        assertTrue("at least 900 should be in the range 6 to 7", between6and7>=900);
+        assertTrue("at least 900 should be in the range 7 to 8", between7and8>=900);
+        assertTrue("at least 900 should be in the range 8 to 9", between8and9>=900);
+        assertTrue("at least 900 should be in the range 9 to 10", between9and10>=900);
     }
 
     @Test
@@ -306,7 +298,7 @@ public class OPLTest{
     @Test
     public void testAddWinner(){
 
-        // test 5.a tests to see wether the list is empty on start and if calling it with a winner adds the correct winner
+        // test 5.a tests to see whether the list is empty on start and if calling it with a winner adds the correct winner
 
         ArrayList<String> winOrderExcpected = new ArrayList<String>();
         assertEquals(winOrderExcpected, opl01.winOrder); // ensure they are equal before adding a winner
@@ -331,7 +323,7 @@ public class OPLTest{
     public void testAdjustSeatAllocation() {
 
 
-        // test 6.a test wether adding a seat at a specified index updates value to 1 from empty seat allocation array
+        // test 6.a test whether adding a seat at a specified index updates value to 1 from empty seat allocation array
 
         boolean firstRound = true;
         int index01 = 1;
@@ -345,9 +337,9 @@ public class OPLTest{
 
         assertEquals(expected1.size(), expected1.size());
         for (int i = 0; i < expected1.size(); i++) {
-            assertEquals(expected1.get(i).size(), expected1.get(i).size());
-            assertEquals(expected1.get(i).get(0), expected1.get(i).get(0));
-            assertArrayEquals((int[])expected1.get(i).get(1), (int[])expected1.get(i).get(1));
+            assertEquals(opl01.seatAllocation.get(i).size(), expected1.get(i).size());
+            assertEquals(opl01.seatAllocation.get(i).get(0), expected1.get(i).get(0));
+            assertArrayEquals((int[])opl01.seatAllocation.get(i).get(1), (int[])expected1.get(i).get(1));
         }
 
 

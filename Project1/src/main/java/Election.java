@@ -18,6 +18,7 @@ abstract public class Election {
     protected ArrayList<String> winOrder;
 
     /**
+<<<<<<< Updated upstream
      * Runs the election and populates a ResultsData object, will be implemented by
      * classes that inherit from this abstract class
      * 
@@ -34,6 +35,23 @@ abstract public class Election {
      * 
      * @param index
      * @throws IOException 
+=======
+     *  Runs the election and populates a ResultsData object, will be implemented by
+     *  classes that inherit from this abstract class
+     *  
+     *  @return the ResultsData object created and populated within the
+     *          method containing the election results
+     */ 
+    abstract public ResultsData runElection();
+
+    /**
+     *  Accesses the given index of the arraylist remainingVotes
+     *  and subtract largestRemainder from the integer value at 
+     *  this index
+     *  
+     *  @param index    The index in which remainingVotes will be
+     *                  adjusted at
+>>>>>>> Stashed changes
      */
     protected void adjustRemainingVotes(int index) {
         if (index < 0 || index >= this.remainingVotes.size()) {
@@ -52,11 +70,12 @@ abstract public class Election {
     }
 
     /**
-     * creates a deep copy of a votes ArrayList to create a modifiable version
-     * used to set remainingVotes
-     * 
-     * @param votes the ArrayList<ArrayList<Object>> to be copied
-     * @return returns the deep copied ArrayList<ArrayList<Object>>
+     *  Creates a deep copy of a votes ArrayList to create a modifiable version
+     *  sed to set remainingVotes
+     *  
+     *  @param votes the ArrayList<ArrayList<Object>> to be copied
+     *  
+     *  @return returns the deep copied ArrayList<ArrayList<Object>>
      */
 
     protected ArrayList<ArrayList<Object>> deepCopyVotes(ArrayList<ArrayList<Object>> votes){
@@ -71,11 +90,10 @@ abstract public class Election {
     }
 
     /**
-     * initializes the seat allocation array to have default values of 0
-     * 
-     * @return returns initialized ArrayList<ArrayList<Object>>
+     *  Initializes the seat allocation array to have default values of 0
+     *  
+     *  @return returns initialized ArrayList<ArrayList<Object>>
      */
-
     protected ArrayList<ArrayList<Object>> initializeSeatAllocation(){
         ArrayList<ArrayList<Object>> initialized = new ArrayList<ArrayList<Object>>();
         for(int i=0; i<this.fileData.getNumberParties(); i++){
@@ -88,8 +106,8 @@ abstract public class Election {
         return initialized;
     }
 
-
     /**
+<<<<<<< Updated upstream
      * creates a deep copy of a votes ArrayList to create a modifiable version
      * used to set remainingVotes
      * 
@@ -136,6 +154,17 @@ abstract public class Election {
      * @param firstRound true if allocating for the firstRound, false otherwise
      * @throws IOException 
      */
+=======
+     *  This will access into the given index of the arraylist seatAllocation
+     *  and add 1 to the seat total
+     *  
+     *  @param index        The index in the array seatAllocation which will 
+     *                      be adjusted
+     *  
+     *  @param firstRound   Boolean representing whether this is the first round
+     *                      of allocation (true) or not (false)
+     */ 
+>>>>>>> Stashed changes
     protected void adjustSeatAllocation(int index, boolean firstRound) {
         if(index<0 || index>seatAllocation.size()){
             System.out.println("invalid index passed into adjustSeatAllocation");
@@ -157,6 +186,7 @@ abstract public class Election {
     }
 
     /**
+<<<<<<< Updated upstream
      * This will add the string of the party from seatAllocation
      * at the given index to finalWinOrder
      * returns void
@@ -164,6 +194,14 @@ abstract public class Election {
      * @param index
      * @throws IOException 
      */
+=======
+     *  Add the name of the winner from the given index seatAllocation
+     *  to finalWinOrder
+     *  
+     *  @param index    The index in the array seatAllocation in which
+     *                  the name of the winner resides
+     */ 
+>>>>>>> Stashed changes
     protected void addWinner(int index) {
         if(index>this.seatAllocation.size() || index<0){
             System.out.println("invalid index in addWinner");
@@ -178,11 +216,11 @@ abstract public class Election {
     }
 
     /**
-     * Generates 1000 random floats and takes the 1001th as the return value to
-     * circumvent the pseudorandomness of the Random object
-     * 
-     * @return returns the 1001th float
-     */
+     *  Generates 1000 random floats and takes the 1001th as the return value to
+     *  circumvent the pseudorandomness of the Random object
+     *  
+     *  @return returns the 1001th float generated
+     */ 
     protected float generateRandom() {
         Random rand = new Random();
         // generates 100 random floats before the retval is calculated to eliminate some
@@ -196,6 +234,7 @@ abstract public class Election {
     }
 
     /**
+<<<<<<< Updated upstream
      * Preforms the first round of seat allocation.
      * Runs a while loop until all seat are allocated or all parties are under the
      * remainder.
@@ -204,6 +243,17 @@ abstract public class Election {
      * @throws IOException 
      */
     protected void firstAllocation() throws IOException {
+=======
+     *  Preforms the first round of seat allocation
+     *  
+     *  Runs a while loop until all seat are allocated or all parties are under the
+     *  remainder
+     *   
+     *  Adds winners if votes>=largestRemainder, otherwise increments the number under
+     *  the remainder
+     */ 
+    protected void firstAllocation() {
+>>>>>>> Stashed changes
         int i = 0;
         int underRemain = 0;
         // run until there are no more seats to allocate or all parties are under the
@@ -234,6 +284,7 @@ abstract public class Election {
     }
 
     /**
+<<<<<<< Updated upstream
      * Preforms the second round of allocation.
      * Iterates through a list of remaining votes and allocates seats
      * based on the votes associated with each candidate.
@@ -241,6 +292,17 @@ abstract public class Election {
      * @throws IOException 
      */
     protected void secondAllocation() throws IOException {
+=======
+     *  Performs the second round of allocation
+     *  
+     *  Iterates through a list of remaining votes and allocates seats
+     *  based on the votes associated with each candidate
+     *  
+     *  Resolves ties if multiple candidates have the same highest score
+     *  using the breakTie(int) method
+     */ 
+    protected void secondAllocation() {
+>>>>>>> Stashed changes
         // creates a new ArrayList<ArrayList<Object>> which is a copy of remainingVote
         ArrayList<ArrayList<Object>> remainVotesNew = new ArrayList<>();
         for (int i = 0; i < remainingVotes.size(); i++) {
@@ -287,16 +349,19 @@ abstract public class Election {
     }
 
     /**
-     * Breaks the tie based on a number of tied people, if there is a tie in the tie
-     * break
-     * it will rerun breakTie. Determines the winner by generating a random number
-     * via generateRandom()
-     * method and comparing to numTie random numbers (also generated via
-     * generateRandom()). The closest
-     * number to the compare value is the winner
-     * 
-     * @param numTie the number of tied candidates/parties
-     * @return returns the index of the winner
+     *  Breaks the tie based on a number of tied people
+     *  
+     *  If there is a tie in the tie break, it will rerun breakTie(int)
+     *  
+     *  Determines the winner by generating a random number via the generateRandom()
+     *  method and comparing to numTie random numbers (also generated via
+     *  generateRandom())
+     *  
+     *  The closest number to the compare value is the winner
+     *  
+     *  @param numTie   the number of tied candidates/parties
+     *  
+     *  @return         The index of the winner
      */
     protected int breakTie(int numTie) {
         if(numTie<=0 || numTie>this.fileData.getNumberParties()){
