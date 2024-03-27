@@ -210,7 +210,7 @@ public class ResultsDataOPLTest {
     }
 
     @Test
-    public void testComputeWinOrder() {
+    public void testComputeWinOrder() throws IOException {
         //Test 5.a
         ArrayList<ArrayList <Object>> expected = new ArrayList<>();
         ArrayList<String> winOrder = new ArrayList<>(Arrays.asList("Pluto", "Pluto", "Green"));

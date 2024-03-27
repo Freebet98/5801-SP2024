@@ -17,7 +17,7 @@ public class AuditFileTest {
     AuditFile auditTest;
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         // FileData setup
         HashMap<String, ArrayList<String>> partyCandidates = new HashMap<>();
         partyCandidates.put("Dem", new ArrayList<>(Arrays.asList("Sarah", "Bob", "Jon")));
@@ -60,7 +60,7 @@ public class AuditFileTest {
     @Test
     public void testPrintToFile() throws IOException {
         //Test 1.a
-        auditTest.printToFile();
+        auditTest.printToFile(); 
     }
 
 }
