@@ -196,11 +196,7 @@ abstract public class Election {
      */
     protected void secondAllocation() throws IOException {
         // creates a new ArrayList<ArrayList<Object>> which is a copy of remainingVote
-        ArrayList<ArrayList<Object>> remainVotesNew = new ArrayList<>();
-        for (int i = 0; i < remainingVotes.size(); i++) {
-            ArrayList<Object> innerList = new ArrayList<>(remainingVotes.get(i));
-            remainVotesNew.add(innerList);
-        }
+        ArrayList<ArrayList<Object>> remainVotesNew = deepCopyVotes(remainingVotes);
         while (availableSeats > 0) {
             int max = (int) remainVotesNew.get(0).get(1);
             int index = 0;
@@ -240,9 +236,9 @@ abstract public class Election {
             // allocate seat to the candidate with the highest score
             adjustSeatAllocation(index, false);
             addWinner(index);
-            int value = (int) remainingVotes.get(index).get(1);
+            int value = (int) remainVotesNew.get(index).get(1);
             value -= largestRemainder;
-            remainingVotes.get(index).set(1, value);
+            remainVotesNew.get(index).set(1, value);
             availableSeats--; // a winner was added so a seat should be removed
         }
     }

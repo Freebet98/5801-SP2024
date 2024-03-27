@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * This class is used to run a CPL election
@@ -16,9 +17,10 @@ public class CPL extends Election {
         this.fileData = fileData;
         this.availableSeats = fileData.getNumberSeats();
 
-        this.remainingVotes = new ArrayList<ArrayList<Object>>();
-        this.seatAllocation = new ArrayList<ArrayList<Object>>();
+        this.remainingVotes = this.deepCopyVotes(fileData.getPartyVotes());
+        this.seatAllocation = initializeSeatAllocation();
         this.winOrder = new ArrayList<String>();
+        this.noCandidates = new HashSet<>();
 
         // largestRemainder calculation
         int ballots = fileData.getNumberBallots();

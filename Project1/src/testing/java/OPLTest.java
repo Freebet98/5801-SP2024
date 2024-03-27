@@ -26,6 +26,7 @@ public class OPLTest {
 	OPL opl06;
 	OPL opl07;
 	FileData testFile;
+	FileData testFile02;
 
 	@Before
 	public void setUp() {
@@ -145,6 +146,7 @@ public class OPLTest {
     	opl05 = new OPL(new FileData("OPL", 1, 2000, 3, partyCandidates05, partyVotes05, candidateVotes05));
     	opl06 = new OPL(new FileData("OPL", 2, 1002, 3, partyCandidates06, partyVotes06, candidateVotes06));
     	testFile = new FileData("OPL", 2, 1400, 3, partyCandidates07, partyVotes07, candidateVotes07);
+		testFile02 = new FileData("OPL", 1, 1000, 5, partyCandidates02, partyVotes02, candidateVotes02);
 
 	}
 
@@ -527,8 +529,32 @@ public class OPLTest {
 	}
 
 	@Test
-	public void testRunElection(){
-		// test 9.a
+	public void testRunElection() throws IOException{
+		// test 9.a normal opl election with one seat to allocate, no ties
+		OPL opl1 = new OPL(testFile02);
+		ResultsData result1 = opl1.runElection();
+
+		ArrayList<String> winOrder = new ArrayList<>();
+		winOrder.add("Dem");
+		assertEquals(winOrder, result1.getPartyWinOrder());
+
+		ArrayList<ArrayList<Object>> remainingVotes = new ArrayList<>();
+		remainingVotes.add(new ArrayList<Object>(Arrays.asList("Dem", 700)));
+		remainingVotes.add(new ArrayList<Object>(Arrays.asList("Rep", 300)));
+		assertEquals(remainingVotes, result1.getRemainingVotes());
+
+		ArrayList<ArrayList<Object>> seatAllocation = new ArrayList<>();
+		seatAllocation.add(new ArrayList<Object>(Arrays.asList(" Dem", new int[] {0,1})));
+		seatAllocation.add(new ArrayList<Object>(Arrays.asList(" Rep", new int[] {0,0}))); 
+		int[] temp = (int[]) result1.getSeatAllocation().get(0).get(1);
+		int[] temp2 = (int[]) seatAllocation.get(0).get(1);
+		assertEquals(Arrays.toString(temp2), Arrays.toString(temp));
+
+		// HashMap partyOrder = new HashMap<String, 
+
+		// test 9.b normal opl election with one seat to allocate, no ties
+
+
 	}
 
 }
