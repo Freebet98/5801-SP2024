@@ -151,37 +151,40 @@ public class ResultsDataOPL extends ResultsData {
      *                     in main
      */
     @Override
-    protected void computeWinOrder() { //Runtime O(n^2 + k)
+    protected void computeWinOrder() throws IOException{ //Runtime O(n^2 + k)
         // This is a set of allocatedCandidates, might need to change
         HashSet<String> allocatedCandidates = new HashSet<>();
         ArrayList<String> currPartyArrayList;
         int seat = 1;
-
-        for (String party : partyWinOrder) { //O(n)
-            currPartyArrayList = partyCandidates.get(party);
-            int index = 0;
-            while (true) { //O(k) where k is equal to the index
-                String candidate = currPartyArrayList.get(index);
-                ArrayList<Object> innerList = new ArrayList<>();
-                if (!allocatedCandidates.contains(candidate)) {
-                    allocatedCandidates.add(candidate);
-                    innerList.add(party);
-                    innerList.add(candidate);
-                    innerList.add(seat);
-                    // Find the candidate votes by name
-                    for(ArrayList<Object> candidateInfo: candidateVotes){ //O(n) worst case
-                        if(candidateInfo.get(0).equals(candidate)){
-                            innerList.add(candidateInfo.get(1));
-                            break;
+        try {
+            for (String party : partyWinOrder) { //O(n)
+                currPartyArrayList = partyCandidates.get(party);
+                int index = 0;
+                while (true) { //O(k) where k is equal to the index
+                    String candidate = currPartyArrayList.get(index);
+                    ArrayList<Object> innerList = new ArrayList<>();
+                    if (!allocatedCandidates.contains(candidate)) {
+                        allocatedCandidates.add(candidate);
+                        innerList.add(party);
+                        innerList.add(candidate);
+                        innerList.add(seat);
+                        // Find the candidate votes by name
+                        for(ArrayList<Object> candidateInfo: candidateVotes){ //O(n) worst case
+                            if(candidateInfo.get(0).equals(candidate)){
+                                innerList.add(candidateInfo.get(1));
+                                break;
+                            }
                         }
+                        finalWinOrder.add(innerList);
+                        seat++;
+                        break;
+                    } else {
+                        index += 1;
                     }
-                    finalWinOrder.add(innerList);
-                    seat++;
-                    break;
-                } else {
-                    index += 1;
                 }
             }
+        }catch (IndexOutOfBoundsException e) {
+            throw new IOException("Parties did not get added to win order correctly");
         }
     }
 }

@@ -3,7 +3,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
- * This class is used to run a CPL election
+ * Performs computations specific to CPL elections. Inherits from Election
+ * to provide base information which is carried through each type of election. 
+ * Main interacts with this class in order to pass a FileData object into it 
+ * for it to perform calculations on in order to produce election results.
  * 
  * @author Rock Zgutowicz
  */
