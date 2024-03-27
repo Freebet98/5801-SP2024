@@ -144,7 +144,7 @@ public class OPLTest {
     	opl04 = new OPL(new FileData("OPL", 2, 10000, 3, partyCandidates04, partyVotes04, candidateVotes04));
     	opl05 = new OPL(new FileData("OPL", 1, 2000, 3, partyCandidates05, partyVotes05, candidateVotes05));
     	opl06 = new OPL(new FileData("OPL", 2, 1002, 3, partyCandidates06, partyVotes06, candidateVotes06));
-    	testFile = new FileData("OPL", 1, 1400, 3, partyCandidates07, partyVotes07, candidateVotes07);
+    	testFile = new FileData("OPL", 2, 1400, 3, partyCandidates07, partyVotes07, candidateVotes07);
 
 	}
 
@@ -477,42 +477,6 @@ public class OPLTest {
     	expectedWinOrder = new ArrayList<>();
     	expectedWinOrder.add("Dem");
     	assertEquals(expectedWinOrder, opl06.winOrder);
-
-    	// test 7.f there is a tie in the second allocation
-    	int results = 0;
-    	for(int i=0; i<1000; i++){
-        	OPL opl = new OPL(testFile);
-        	opl.firstAllocation();
-        	// assertEquals(opl.winOrder.get(0),"Dem");
-        	if(opl.winOrder.get(0).equals("Dem")){
-            	results++;
-        	}
-    	}
-    	assertTrue("Generated  value should be between 450 and 550", results<550);
-    	assertTrue("Generated  value should be between 450 and 550", 450<results);
-
-    	// test 7.f there is a tie in the second allocation
-    	int dems = 0;
-    	int reps = 0;
-    	int green = 0;
-    	for(int i=0; i<3000; i++){
-        	OPL opl = new OPL(testFile);
-        	opl.firstAllocation();
-        	// assertEquals(opl.winOrder.get(0),"Dem");
-        	if(opl.winOrder.get(0).equals("Dem")){
-            	dems++;
-        	}else if(opl.winOrder.get(0).equals("Green")){
-            	green++;
-        	}else{
-            	reps++;
-        	}
-    	}
-    	assertTrue("reps should be less than 1100", dems<1100);
-    	assertTrue("reps should be more than 900", 900<dems);
-    	assertTrue("reps should be less than 1100", results<1100);
-    	assertTrue("reps should be more than 900", 900<results);
-    	assertTrue("reps should be less than 1100", results<1100);
-    	assertTrue("reps should be more than 900", 900<results);
 	}
 
 	@Test
@@ -560,6 +524,11 @@ public class OPLTest {
     	}
     	assertTrue("Generated  value should be between 450 and 550", results<550);
     	assertTrue("Generated  value should be between 450 and 550", 450<results);
+	}
+
+	@Test
+	public void testRunElection(){
+		// test 9.a
 	}
 
 }

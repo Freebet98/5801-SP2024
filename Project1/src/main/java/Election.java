@@ -25,7 +25,7 @@ abstract public class Election {
      * 
      * @return returns the ResultsData object created and populated within the
      *         method containing the election results
-     * @throws IOException 
+     * @throws IOException
      */
     abstract public ResultsData runElection() throws IOException;
 
@@ -35,10 +35,10 @@ abstract public class Election {
      * returns void
      * 
      * @param index
-     * @throws IOException 
+     * @throws IOException
      */
     protected void adjustRemainingVotes(int index) throws IOException {
-        if (index < 0 || index>=this.remainingVotes.size()) {
+        if (index < 0 || index >= this.remainingVotes.size()) {
             throw new IOException("Index less than 0");
         }
         int val = (int) this.remainingVotes.get(index).get(1);
@@ -54,7 +54,7 @@ abstract public class Election {
      * @return returns the deep copied ArrayList<ArrayList<Object>>
      */
 
-    protected ArrayList<ArrayList<Object>> deepCopyVotes(ArrayList<ArrayList<Object>> votes){
+    protected ArrayList<ArrayList<Object>> deepCopyVotes(ArrayList<ArrayList<Object>> votes) {
         ArrayList<ArrayList<Object>> copy = new ArrayList<ArrayList<Object>>(votes.size());
         for (ArrayList<Object> innerList : votes) {
             ArrayList<Object> innerListCopy = new ArrayList<Object>(2);
@@ -71,9 +71,9 @@ abstract public class Election {
      * @return returns initialized ArrayList<ArrayList<Object>>
      */
 
-    protected ArrayList<ArrayList<Object>> initializeSeatAllocation(){
+    protected ArrayList<ArrayList<Object>> initializeSeatAllocation() {
         ArrayList<ArrayList<Object>> initialized = new ArrayList<ArrayList<Object>>();
-        for(int i=0; i<this.fileData.getPartyVotes().size(); i++){
+        for (int i = 0; i < this.fileData.getPartyVotes().size(); i++) {
             ArrayList<Object> innerList = new ArrayList<Object>();
             String partyName = (String) this.fileData.getPartyVotes().get(i).get(0);
             innerList.add(partyName);
@@ -83,7 +83,6 @@ abstract public class Election {
         return initialized;
     }
 
-
     /**
      * This will access into the given index of the arraylist
      * seatAllocation and add 1 to the seat total
@@ -91,10 +90,10 @@ abstract public class Election {
      * 
      * @param index      which index this references in seatAllocation
      * @param firstRound true if allocating for the firstRound, false otherwise
-     * @throws IOException 
+     * @throws IOException
      */
     protected void adjustSeatAllocation(int index, boolean firstRound) throws IOException {
-        if (index < 0 || index>=this.seatAllocation.size()) {
+        if (index < 0 || index >= this.seatAllocation.size()) {
             throw new IOException("Index less than 0");
         }
 
@@ -115,34 +114,33 @@ abstract public class Election {
      * returns void
      * 
      * @param index
-     * @throws IOException 
+     * @throws IOException
      */
     protected void addWinner(int index) throws IOException {
-        if (index < 0 || index>=this.seatAllocation.size()) {
+        if (index < 0 || index >= this.seatAllocation.size()) {
             throw new IOException("Index less than 0");
         }
-        
+
         String winner = (String) this.seatAllocation.get(index).get(0);
         this.winOrder.add(winner);
     }
 
     /**
-     * This checks if 
+     * This checks if
      */
-	protected void checkNoCandidates(int index) throws IOException {
-    	if (index < 0 || index >= this.remainingVotes.size()) {
-        	throw new IOException("Index less than 0");
-    	}
+    protected void checkNoCandidates(int index) throws IOException {
+        if (index < 0 || index >= this.remainingVotes.size()) {
+            throw new IOException("Index less than 0");
+        }
 
-    	int[] currentAmt = (int[]) this.seatAllocation.get(index).get(1);
-    	String party = (String) this.seatAllocation.get(index).get(0);
-    	ArrayList<String> inner = this.fileData.getPartyCandidates().get(party);
+        int[] currentAmt = (int[]) this.seatAllocation.get(index).get(1);
+        String party = (String) this.seatAllocation.get(index).get(0);
+        ArrayList<String> inner = this.fileData.getPartyCandidates().get(party);
 
-    	if (currentAmt[0] == inner.size()) {
-        	noCandidates.add(party);
-    	}
-	}
-
+        if (currentAmt[0] == inner.size()) {
+            noCandidates.add(party);
+        }
+    }
 
     /**
      * Preforms the first round of seat allocation.
@@ -150,7 +148,8 @@ abstract public class Election {
      * remainder.
      * Adds winners if votes>=largestRemainder otherwise increments the number under
      * the remainder
-     * @throws IOException 
+     * 
+     * @throws IOException
      */
     protected void firstAllocation() throws IOException {
         int i = 0;
@@ -159,16 +158,16 @@ abstract public class Election {
         // remainder
         while (true) {
             int votes = (int) this.remainingVotes.get(i).get(1);
-        	String party= (String) this.remainingVotes.get(i).get(0);
-        	if(noCandidates.contains(party)){
+            String party = (String) this.remainingVotes.get(i).get(0);
+            if (noCandidates.contains(party)) {
                 underRemain++;
-            }
-            else if (votes >= largestRemainder) {
+            } else if (votes >= largestRemainder) {
                 adjustRemainingVotes(i);
                 adjustSeatAllocation(i, true);
                 addWinner(i);
                 checkNoCandidates(i);
                 availableSeats--; // a winner was added so a seat should be removed
+
             } else {
                 underRemain++; // underRemain is a number that indicates how many parties are currently under
                                // the largest remainder
@@ -192,7 +191,8 @@ abstract public class Election {
      * Iterates through a list of remaining votes and allocates seats
      * based on the votes associated with each candidate.
      * Resolves ties if multiple candidates have the same highest score.
-     * @throws IOException 
+     * 
+     * @throws IOException
      */
     protected void secondAllocation() throws IOException {
         // creates a new ArrayList<ArrayList<Object>> which is a copy of remainingVote
@@ -205,8 +205,8 @@ abstract public class Election {
             int max = (int) remainVotesNew.get(0).get(1);
             int index = 0;
             String party = (String) remainVotesNew.get(0).get(0);
-        	if(noCandidates.contains(party)){
-            	max = -1;
+            if (noCandidates.contains(party)) {
+                max = -1;
             }
             // finds the candidate with the highest number of votes
             for (int i = 1; i < remainingVotes.size(); i++) {
@@ -220,11 +220,10 @@ abstract public class Election {
             // check to see if there are any ties
             ArrayList<Integer> indexTie = new ArrayList<>();
             for (int i = 0; i < remainingVotes.size(); i++) {
-                if (i == index){
+                if (i == index) {
                     indexTie.add(i);
                     continue;
                 }
-                    
 
                 int current = (int) remainingVotes.get(i).get(1);
                 if (current == max) {
@@ -279,7 +278,7 @@ abstract public class Election {
      * @return returns the index of the winner
      */
     protected int breakTie(int numTie) {
-        if(numTie<=0 || numTie>this.fileData.getNumberParties()){
+        if (numTie <= 0 || numTie > this.fileData.getNumberParties()) {
             return -1;
         }
         // the number used to determine the winner
