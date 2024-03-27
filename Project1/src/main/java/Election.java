@@ -206,7 +206,7 @@ abstract public class Election {
             }
             // finds the candidate with the highest number of votes
             for (int i = 1; i < remainingVotes.size(); i++) {
-                int current = (int) remainingVotes.get(i).get(1);
+                int current = (int) remainVotesNew.get(i).get(1);
 
                 if (current > max) {
                     max = current;
@@ -221,7 +221,7 @@ abstract public class Election {
                     continue;
                 }
 
-                int current = (int) remainingVotes.get(i).get(1);
+                int current = (int) remainVotesNew.get(i).get(1);
                 if (current == max) {
                     indexTie.add(i);
                 }

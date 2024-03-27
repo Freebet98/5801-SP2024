@@ -527,4 +527,28 @@ public class CPLTest {
     	assertTrue("Generated  value should be between 450 and 550", results<550);
     	assertTrue("Generated  value should be between 450 and 550", 450<results);
 	}
+	
+	@Test
+	public void testRunElection() throws IOException{
+		CPL cpl1 = new CPL(testFile02);
+		ResultsData result1 = cpl1.runElection();
+
+		ArrayList<String> winOrder = new ArrayList<>();
+		winOrder.add("Dem");
+		assertEquals(winOrder, result1.getPartyWinOrder());
+
+		ArrayList<ArrayList<Object>> remainingVotes = new ArrayList<>();
+		remainingVotes.add(new ArrayList<Object>(Arrays.asList("Dem", 700)));
+		remainingVotes.add(new ArrayList<Object>(Arrays.asList("Rep", 300)));
+		assertEquals(remainingVotes, result1.getRemainingVotes());
+
+		ArrayList<ArrayList<Object>> seatAllocation = new ArrayList<>();
+		seatAllocation.add(new ArrayList<Object>(Arrays.asList(" Dem", new int[] {0,1})));
+		seatAllocation.add(new ArrayList<Object>(Arrays.asList(" Rep", new int[] {0,0}))); 
+		int[] temp = (int[]) result1.getSeatAllocation().get(0).get(1);
+		int[] temp2 = (int[]) seatAllocation.get(0).get(1);
+		assertEquals(Arrays.toString(temp2), Arrays.toString(temp));
+
+
+	}
 }

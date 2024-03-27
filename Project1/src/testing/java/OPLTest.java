@@ -27,6 +27,8 @@ public class OPLTest {
 	OPL opl07;
 	FileData testFile;
 	FileData testFile02;
+	FileData testFile03;
+	FileData testFile04;
 
 	@Before
 	public void setUp() {
@@ -147,6 +149,8 @@ public class OPLTest {
     	opl06 = new OPL(new FileData("OPL", 2, 1002, 3, partyCandidates06, partyVotes06, candidateVotes06));
     	testFile = new FileData("OPL", 2, 1400, 3, partyCandidates07, partyVotes07, candidateVotes07);
 		testFile02 = new FileData("OPL", 1, 1000, 5, partyCandidates02, partyVotes02, candidateVotes02);
+		testFile03 = new FileData("OPL", 4, 380, 10, partyCandidates01, partyVotes01, candidateVotes01);
+		//testFile04 = new FileData();
 
 	}
 
@@ -514,7 +518,7 @@ public class OPLTest {
     	expectedWinOrder.add("Rep");
     	assertEquals(expectedWinOrder, opl06.winOrder);
 
-    	// test 8.c there is a tie in the second allocation
+    	// test 8.e there is a tie in the second allocation
     	int results = 0;
     	for(int i=0; i<1000; i++){
         	OPL opl = new OPL(testFile);
@@ -530,7 +534,7 @@ public class OPLTest {
 
 	@Test
 	public void testRunElection() throws IOException{
-		// test 9.a normal opl election with one seat to allocate, no ties
+		// test 9.a normal opl election with one seat to allocate, no ties, 2 parties. 5 candidates
 		OPL opl1 = new OPL(testFile02);
 		ResultsData result1 = opl1.runElection();
 
@@ -550,9 +554,56 @@ public class OPLTest {
 		int[] temp2 = (int[]) seatAllocation.get(0).get(1);
 		assertEquals(Arrays.toString(temp2), Arrays.toString(temp));
 
-		// HashMap partyOrder = new HashMap<String, 
+		HashMap<String, ArrayList<String>> partyCandidatesTest = new HashMap<>();
+		partyCandidatesTest.put("Dem", new ArrayList<>(Arrays.asList("Sarah", "Bob", "Jon")));
+    	partyCandidatesTest.put("Rep", new ArrayList<>(Arrays.asList("Klein", "Craig")));
 
-		// test 9.b normal opl election with one seat to allocate, no ties
+		assertEquals(partyCandidatesTest, result1.fileData.getPartyCandidates());
+
+		// test 9.b normal opl election with 3 seats to allocate, no ties, 4 parties, 10 candidates
+
+		OPL opl2;
+		winOrder = new ArrayList<>(Arrays.asList("Dem", "Green", "Dem", "Lib"));
+
+		int libWonTie = 0;
+		int demWonTie = 0;
+		for(int i = 0; i<10000; i++){
+			opl2 = new OPL(testFile03);
+			result1 = opl2.runElection();
+			if(result1.getPartyWinOrder().get(2) == "Lib"){
+				libWonTie++;
+			}else if(result1.getPartyWinOrder().get(2) == "Dem"){
+				demWonTie++;
+			}
+		}
+    	assertTrue("Generated value should be between 4500 and 5500", libWonTie<5500);
+    	assertTrue("Generated value should be between 4500 and 5500", 4500<libWonTie);
+    	assertTrue("Generated value should be between 4500 and 5500", demWonTie<5500);
+    	assertTrue("Generated value should be between 4500 and 5500", 4500<demWonTie);
+
+		remainingVotes = new ArrayList<>();
+		remainingVotes.add(new ArrayList<Object>(Arrays.asList("Dem", 75)));
+		remainingVotes.add(new ArrayList<Object>(Arrays.asList("Rep", 36)));
+		remainingVotes.add(new ArrayList<Object>(Arrays.asList("Green", 4)));
+		remainingVotes.add(new ArrayList<Object>(Arrays.asList("Lib", 75)));
+		assertEquals(remainingVotes, result1.getRemainingVotes());
+
+		seatAllocation = new ArrayList<>();
+		seatAllocation.add(new ArrayList<Object>(Arrays.asList(" Dem", new int[] {1,1})));
+		seatAllocation.add(new ArrayList<Object>(Arrays.asList(" Rep", new int[] {0,0}))); 
+		seatAllocation.add(new ArrayList<Object>(Arrays.asList(" Green", new int[] {1,0}))); 
+		seatAllocation.add(new ArrayList<Object>(Arrays.asList(" Lib", new int[] {0,1}))); 
+		temp = (int[]) result1.getSeatAllocation().get(0).get(1);
+		temp2 = (int[]) seatAllocation.get(0).get(1);
+		assertEquals(Arrays.toString(temp2), Arrays.toString(temp));
+
+		partyCandidatesTest = new HashMap<>();
+		partyCandidatesTest.put("Dem", new ArrayList<>(Arrays.asList("Bob","Sarah", "Jon")));
+    	partyCandidatesTest.put("Rep", new ArrayList<>(Arrays.asList("Craig", "Klein")));
+    	partyCandidatesTest.put("Green", new ArrayList<>(Arrays.asList("Water", "Grass", "Rain")));
+    	partyCandidatesTest.put("Lib", new ArrayList<>(Arrays.asList("Matt", "Ash")));
+
+		assertEquals(partyCandidatesTest, result1.fileData.getPartyCandidates());
 
 
 	}
