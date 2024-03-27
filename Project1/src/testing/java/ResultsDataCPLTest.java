@@ -120,7 +120,7 @@ public class ResultsDataCPLTest {
         partyWinOrder = new ArrayList<>(Arrays.asList("Dem", "Rep"));
         test = new ResultsDataCPL(seatAlloc, remainVotes, partyWinOrder, testFile);
         finalWinOrder = new ArrayList<>();
-        finalWinOrder.add(Arrays.asList("Dem"))
+        //finalWinOrder.add(Arrays.asList("Dem"));
     }
 
 

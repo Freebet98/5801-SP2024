@@ -36,7 +36,7 @@ abstract public class Election {
      * @throws IOException 
      */
     protected void adjustRemainingVotes(int index) throws IOException {
-        if (index < 0) {
+        if (index < 0 || index>=this.remainingVotes.size()) {
             throw new IOException("Index less than 0");
         }
         int val = (int) this.remainingVotes.get(index).get(1);
@@ -71,7 +71,7 @@ abstract public class Election {
 
     protected ArrayList<ArrayList<Object>> initializeSeatAllocation(){
         ArrayList<ArrayList<Object>> initialized = new ArrayList<ArrayList<Object>>();
-        for(int i=0; i<this.fileData.getNumberParties(); i++){
+        for(int i=0; i<this.fileData.getPartyVotes().size(); i++){
             ArrayList<Object> innerList = new ArrayList<Object>();
             String partyName = (String) this.fileData.getPartyVotes().get(i).get(0);
             innerList.add(partyName);
@@ -92,7 +92,7 @@ abstract public class Election {
      * @throws IOException 
      */
     protected void adjustSeatAllocation(int index, boolean firstRound) throws IOException {
-        if (index < 0) {
+        if (index < 0 || index>=this.seatAllocation.size()) {
             throw new IOException("Index less than 0");
         }
 
@@ -116,7 +116,7 @@ abstract public class Election {
      * @throws IOException 
      */
     protected void addWinner(int index) throws IOException {
-        if (index < 0) {
+        if (index < 0 || index>=this.seatAllocation.size()) {
             throw new IOException("Index less than 0");
         }
         
@@ -209,7 +209,9 @@ abstract public class Election {
             // check to see if there are any ties
             ArrayList<Integer> indexTie = new ArrayList<>();
             for (int i = 0; i < remainingVotes.size(); i++) {
-                if (i == index)
+                if (i == index){
+                    
+                }
                     continue;
 
                 int current = (int) remainingVotes.get(i).get(1);

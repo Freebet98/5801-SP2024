@@ -25,7 +25,7 @@ public class OPL extends Election {
     OPL(FileData fileData) {
         this.fileData = fileData;
         this.availableSeats = fileData.getNumberSeats();
-        this.remainingVotes = this.deepCopyVotes(fileData.getCandidateVotes());
+        this.remainingVotes = this.deepCopyVotes(fileData.getPartyVotes());
         this.seatAllocation = initializeSeatAllocation();
         this.winOrder = new ArrayList<String>();
         int ballots = fileData.getNumberBallots();
