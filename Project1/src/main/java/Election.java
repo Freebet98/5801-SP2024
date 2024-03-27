@@ -293,6 +293,7 @@ abstract public class Election {
         float curSmallest = Math.abs(compval - ties[0]);
         int index = 0;
         boolean isSame = false;
+        // compares to find the index of the number closest to the compVal
         for (int i = 1; i < ties.length; i++) {
             if (Math.abs(compval - ties[i]) < curSmallest) {
                 curSmallest = Math.abs(compval - ties[i]);
@@ -302,6 +303,7 @@ abstract public class Election {
                 isSame = true;
             }
         }
+        // if there are 2 of the same, run breakTie again
         if (isSame) {
             return breakTie(numTie);
         }
