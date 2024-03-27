@@ -14,13 +14,13 @@ abstract public class ExtractData {
     protected String header;
 
     /**
-     * This is used to extract data from the File, assumes all checks done within
-     * functions called work
-     *
-     * @return fileData, this is a FileData object containing the information from
-     *         the extracted file
-     * @throws IOException
-     * @throws Exception
+     *  This is used to extract data from the File, assumes all checks done within
+     *  functions called work
+     *  
+     *  @return fileData, this is a FileData object containing the information from
+     *          the extracted file
+     *  
+     *  @throws IOException
      */
     protected FileData extractFromFile() throws IOException {
         // represents the string obtained from the BufferedReader while reading a line
@@ -66,13 +66,13 @@ abstract public class ExtractData {
     }
 
     /**
-     * This will look through the given string, if it finds a character that is not
-     * a digit a message will
-     * be given to the user and the program will close with a system.exit()
-     *
-     * @param line represents a string of the line from the file. This line should
+     *  This will look through the given string, if it finds a character that is not
+     *  a digit a message will
+     *  be given to the user and the program will close with a system.exit()
+     *  
+     *  @param line represents a string of the line from the file. This line should
      *             only be digits
-     */
+     */ 
     protected boolean verifyLineIsDigit(String line) {
         if (line == "" || line == null) {
             return false;

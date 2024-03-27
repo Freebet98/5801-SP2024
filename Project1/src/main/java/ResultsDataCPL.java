@@ -20,6 +20,7 @@ public class ResultsDataCPL extends ResultsData {
      *                       allocation [1]. the actual
      *                       ArrayList will be of type ArrayList<ArrayList<String,
      *                       int[2]>>
+     *  
      * @param remainingVotes This is a mapping of the name of each party to an int
      *                       that represents how many votes the
      *                       party has, this is only representative of how many
@@ -27,12 +28,13 @@ public class ResultsDataCPL extends ResultsData {
      *                       first round of allocation. the actual ArrayList will be
      *                       of type
      *                       ArrayList<ArrayList<String, int>>
+     * 
      * @param partyWinOrder  This is an Arraylist showing the ordered list of when a
      *                       party won a seat, this will
      *                       help determine which candidates get a seat
+     * 
      * @param fileData       this is the data from the original extraction from the
      *                       file
-     * @throws IOException
      */
     ResultsDataCPL(ArrayList<ArrayList<Object>> seatAllocation, ArrayList<ArrayList<Object>> remainingVotes,
             ArrayList<String> partyWinOrder, FileData fileData) throws IOException {
