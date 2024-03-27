@@ -167,6 +167,7 @@ abstract public class Election {
                 adjustRemainingVotes(i);
                 adjustSeatAllocation(i, true);
                 addWinner(i);
+                checkNoCandidates(i);
                 availableSeats--; // a winner was added so a seat should be removed
             } else {
                 underRemain++; // underRemain is a number that indicates how many parties are currently under
@@ -203,6 +204,10 @@ abstract public class Election {
         while (availableSeats > 0) {
             int max = (int) remainVotesNew.get(0).get(1);
             int index = 0;
+            String party = (String) remainVotesNew.get(0).get(0);
+        	if(noCandidates.contains(party)){
+            	max = -1;
+            }
             // finds the candidate with the highest number of votes
             for (int i = 1; i < remainingVotes.size(); i++) {
                 int current = (int) remainingVotes.get(i).get(1);
