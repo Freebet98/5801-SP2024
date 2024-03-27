@@ -66,7 +66,7 @@ public class ExtractDataOPLTest {
 
                 // Test 2.a numParties = 6 which is the right number
                 validFile = new BufferedReader(new FileReader(new File(
-                                "src/testing/java/InputFiles/OPLPartyInfo01.txt")));
+                                "src/test/java/InputFiles/OPLPartyInfo01.txt")));
                 test01 = new ExtractDataOPL(validFile, "OPL");
                 partyCandidates = test01.formatPartyInformation(5, partyVotes, candidateVotes);
                 HashMap<String, ArrayList<String>> expected = new HashMap<String, ArrayList<String>>();
@@ -76,7 +76,7 @@ public class ExtractDataOPLTest {
                 assertEquals(expected, partyCandidates);
 
                 // Test 2.b numParties = 0 which is the wrong number
-                validFile = new BufferedReader(new FileReader(new File("src/testing/java/InputFiles/OPLPartyInfo01.txt")));
+                validFile = new BufferedReader(new FileReader(new File("src/test/java/InputFiles/OPLPartyInfo01.txt")));
                 test01 = new ExtractDataOPL(validFile, "OPL");
                 partyCandidates = test01.formatPartyInformation(0, partyVotes, candidateVotes);
                 expected = new HashMap<String, ArrayList<String>>();
@@ -85,7 +85,7 @@ public class ExtractDataOPLTest {
 
                 // Test 2.c Pluto has no candidates
                 validFile = new BufferedReader(
-                                new FileReader(new File("src\\testing\\java\\InputFiles\\OPLPartyInfo02.txt")));
+                                new FileReader(new File("src\\test\\java\\InputFiles\\OPLPartyInfo02.txt")));
                 test01 = new ExtractDataOPL(validFile, "OPL");
 
                 assertThrows(IOException.class,
@@ -100,7 +100,7 @@ public class ExtractDataOPLTest {
                 partyVotes = new ArrayList<ArrayList<Object>>();
                 candidateVotes = new ArrayList<ArrayList<Object>>();
                 validFile = new BufferedReader(
-                                new FileReader(new File("src/testing/java/InputFiles/OPLBallotTest01.txt")));
+                                new FileReader(new File("src/test/java/InputFiles/OPLBallotTest01.txt")));
                 test01 = new ExtractDataOPL(validFile, "OPL");
                 partyCandidates = test01.formatPartyInformation(5, partyVotes,
                                 candidateVotes);
@@ -123,7 +123,7 @@ public class ExtractDataOPLTest {
                 partyVotes = new ArrayList<ArrayList<Object>>();
                 candidateVotes = new ArrayList<ArrayList<Object>>();
                 validFile = new BufferedReader(
-                                new FileReader(new File("src\\testing\\java\\InputFiles\\OPLBallotTest02.txt")));
+                                new FileReader(new File("src\\test\\java\\InputFiles\\OPLBallotTest02.txt")));
                 test01 = new ExtractDataOPL(validFile, "OPL");
                 partyCandidates = test01.formatPartyInformation(5, partyVotes, candidateVotes);
 
@@ -135,7 +135,7 @@ public class ExtractDataOPLTest {
                 partyVotes = new ArrayList<ArrayList<Object>>();
                 candidateVotes = new ArrayList<ArrayList<Object>>();
                 validFile = new BufferedReader(
-                                new FileReader(new File("src\\testing\\java\\InputFiles\\OPLBallotTest03.txt")));
+                                new FileReader(new File("src\\test\\java\\InputFiles\\OPLBallotTest03.txt")));
                 test01 = new ExtractDataOPL(validFile, "OPL");
                 partyCandidates = test01.formatPartyInformation(5, partyVotes,
                                 candidateVotes);
@@ -148,7 +148,7 @@ public class ExtractDataOPLTest {
                 partyVotes = new ArrayList<ArrayList<Object>>();
                 candidateVotes = new ArrayList<ArrayList<Object>>();
                 validFile = new BufferedReader(
-                                new FileReader(new File("src\\testing\\java\\InputFiles\\OPLBallotTest04.txt")));
+                                new FileReader(new File("src\\test\\java\\InputFiles\\OPLBallotTest04.txt")));
                 test01 = new ExtractDataOPL(validFile, "OPL");
                 partyCandidates = test01.formatPartyInformation(5, partyVotes,
                                 candidateVotes);
@@ -173,7 +173,7 @@ public class ExtractDataOPLTest {
                 partyCandidates = new HashMap<String, ArrayList<String>>();
                 partyVotes = new ArrayList<ArrayList<Object>>();
                 candidateVotes = new ArrayList<ArrayList<Object>>();
-                validFile = new BufferedReader(new FileReader(new File("src\\testing\\java\\InputFiles\\OPLInput01.txt")));
+                validFile = new BufferedReader(new FileReader(new File("src\\test\\java\\InputFiles\\OPLInput01.txt")));
                 String header = validFile.readLine();
                 test01 = new ExtractDataOPL(validFile, header);
                 FileData test = test01.extractFromFile();
