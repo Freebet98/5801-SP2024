@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Comparator;
 import java.util.Collections;
+import java.util.HashSet;
 
 /**
  * This class is used to run an OPL election
@@ -27,6 +28,7 @@ public class OPL extends Election {
         this.availableSeats = fileData.getNumberSeats();
         this.remainingVotes = this.deepCopyVotes(fileData.getPartyVotes());
         this.seatAllocation = initializeSeatAllocation();
+        this.noCandidate = new HashSet<>();
         this.winOrder = new ArrayList<String>();
         int ballots = fileData.getNumberBallots();
         // assuming this does not need to be error checked as it was stated in clas there will never be an election run if no seats are availabke

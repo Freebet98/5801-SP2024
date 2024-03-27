@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
 
 /**
@@ -13,6 +14,7 @@ abstract public class Election {
     protected ResultsData results;
     protected int largestRemainder;
     protected int availableSeats;
+    protected HashSet<String> noCandidates;
     protected ArrayList<ArrayList<Object>> remainingVotes;
     protected ArrayList<ArrayList<Object>> seatAllocation;
     protected ArrayList<String> winOrder;
@@ -125,22 +127,22 @@ abstract public class Election {
     }
 
     /**
-     * Generates 1000 random floats and takes the 1001th as the return value to
-     * circumvent the pseudorandomness of the Random object
-     * 
-     * @return returns the 1001th float
+     * This checks if 
      */
-    protected float generateRandom() {
-        Random rand = new Random();
-        // generates 100 random floats before the retval is calculated to eliminate some
-        // psuedo randomness
-        for (int i = 0; i <= 1000; i++) {
-            rand.nextFloat();
-        }
-        // calculates a random float and makes in a range of
-        float retVal = rand.nextFloat() * 10;
-        return retVal;
-    }
+	protected void checkNoCandidates(int index) throws IOException {
+    	if (index < 0 || index >= this.remainingVotes.size()) {
+        	throw new IOException("Index less than 0");
+    	}
+
+    	int[] currentAmt = (int[]) this.seatAllocation.get(index).get(1);
+    	String party = (String) this.seatAllocation.get(index).get(0);
+    	ArrayList<String> inner = this.fileData.getPartyCandidates().get(party);
+
+    	if (currentAmt[0] == inner.size()) {
+        	noCandidates.add(party);
+    	}
+	}
+
 
     /**
      * Preforms the first round of seat allocation.
@@ -157,7 +159,11 @@ abstract public class Election {
         // remainder
         while (true) {
             int votes = (int) this.remainingVotes.get(i).get(1);
-            if (votes >= largestRemainder) {
+        	String party= (String) this.remainingVotes.get(i).get(0);
+        	if(noCandidates.contains(party)){
+                underRemain++;
+            }
+            else if (votes >= largestRemainder) {
                 adjustRemainingVotes(i);
                 adjustSeatAllocation(i, true);
                 addWinner(i);
@@ -235,6 +241,24 @@ abstract public class Election {
             remainingVotes.get(index).set(1, value);
             availableSeats--; // a winner was added so a seat should be removed
         }
+    }
+
+    /**
+     * Generates 1000 random floats and takes the 1001th as the return value to
+     * circumvent the pseudorandomness of the Random object
+     * 
+     * @return returns the 1001th float
+     */
+    protected float generateRandom() {
+        Random rand = new Random();
+        // generates 100 random floats before the retval is calculated to eliminate some
+        // psuedo randomness
+        for (int i = 0; i <= 1000; i++) {
+            rand.nextFloat();
+        }
+        // calculates a random float and makes in a range of
+        float retVal = rand.nextFloat() * 10;
+        return retVal;
     }
 
     /**
