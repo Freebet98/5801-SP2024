@@ -210,9 +210,10 @@ abstract public class Election {
             ArrayList<Integer> indexTie = new ArrayList<>();
             for (int i = 0; i < remainingVotes.size(); i++) {
                 if (i == index){
-                    
-                }
+                    indexTie.add(i);
                     continue;
+                }
+                    
 
                 int current = (int) remainingVotes.get(i).get(1);
                 if (current == max) {
@@ -221,13 +222,14 @@ abstract public class Election {
             }
 
             // resolve ties if any
-            if (!indexTie.isEmpty()) {
+            if (!(indexTie.size() == 1)) {
                 int location = breakTie(indexTie.size());
                 index = indexTie.get(location);
             }
 
             // allocate seat to the candidate with the highest score
             adjustSeatAllocation(index, false);
+            addWinner(index);
             int value = (int) remainingVotes.get(index).get(1);
             value -= largestRemainder;
             remainingVotes.get(index).set(1, value);
