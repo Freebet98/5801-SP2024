@@ -35,11 +35,11 @@ abstract public class Election {
      * returns void
      * 
      * @param index
-     * @throws IOException
+     * @throws IOException 
      */
     protected void adjustRemainingVotes(int index) throws IOException {
         if (index < 0 || index >= this.remainingVotes.size()) {
-            throw new IOException("Index less than 0");
+            throw new IOException("invalid index passed into adjustRemainingVotes");
         }
         int val = (int) this.remainingVotes.get(index).get(1);
         val -= this.largestRemainder;
@@ -47,6 +47,44 @@ abstract public class Election {
     }
 
     /**
+     *  Creates a deep copy of a votes ArrayList to create a modifiable version
+     *  sed to set remainingVotes
+     *  
+     *  @param votes the ArrayList<ArrayList<Object>> to be copied
+     *  
+     *  @return returns the deep copied ArrayList<ArrayList<Object>>
+     */
+
+    protected ArrayList<ArrayList<Object>> deepCopyVotes(ArrayList<ArrayList<Object>> votes){
+        ArrayList<ArrayList<Object>> copy = new ArrayList<ArrayList<Object>>(votes.size());
+        for (ArrayList<Object> innerList : votes) {
+            ArrayList<Object> innerListCopy = new ArrayList<Object>(2);
+            innerListCopy.add(new String((String) innerList.get(0))); // this is the string containing the party name
+            innerListCopy.add(new Integer((Integer) innerList.get(1))); // this is the int representing num votes
+            copy.add(innerListCopy);
+        }
+        return copy;
+    }
+
+    /**
+     *  Initializes the seat allocation array to have default values of 0
+     *  
+     *  @return returns initialized ArrayList<ArrayList<Object>>
+     */
+    protected ArrayList<ArrayList<Object>> initializeSeatAllocation(){
+        ArrayList<ArrayList<Object>> initialized = new ArrayList<ArrayList<Object>>();
+        for(int i=0; i<this.fileData.getNumberParties(); i++){
+            ArrayList<Object> innerList = new ArrayList<Object>();
+            String partyName = (String) this.fileData.getPartyVotes().get(i).get(0);
+            innerList.add(partyName);
+            innerList.add(new int[2]);
+            initialized.add(innerList);
+        }
+        return initialized;
+    }
+
+    /**
+<<<<<<< Updated upstream
      * creates a deep copy of a votes ArrayList to create a modifiable version
      * used to set remainingVotes
      * 
@@ -97,7 +135,6 @@ abstract public class Election {
         if (index < 0 || index >= this.seatAllocation.size()) {
             throw new IOException("Index less than 0");
         }
-
         int[] val = (int[]) this.seatAllocation.get(index).get(1);
 
         if (firstRound) {
@@ -114,23 +151,26 @@ abstract public class Election {
      * at the given index to finalWinOrder
      * returns void
      * 
-     * @param index
+     * @param index index to determine which party to check in seatAllocation 
      * @throws IOException
      */
     protected void addWinner(int index) throws IOException {
         if (index < 0 || index >= this.seatAllocation.size()) {
             throw new IOException("Index less than 0");
         }
-
         String winner = (String) this.seatAllocation.get(index).get(0);
         this.winOrder.add(winner);
     }
 
     /**
-     * This checks if
+     * Checks whether there are no candidates in a party given an index
+     * Adds them to the noCandidates hashset if true
+     * 
+     * @param index index to determine which party to check in seatAllocation 
+     * 
      */
     protected void checkNoCandidates(int index) throws IOException {
-        if (index < 0 || index >= this.remainingVotes.size()) {
+        if (index < 0 || index >= this.seatAllocation.size()) {
             throw new IOException("Index less than 0");
         }
 
@@ -276,6 +316,9 @@ abstract public class Election {
      */
     protected int breakTie(int numTie) {
         if (numTie <= 0 || numTie > this.fileData.getNumberParties()) {
+            return -1;
+        }
+        if(numTie<=0 || numTie>this.fileData.getNumberParties()){
             return -1;
         }
         // the number used to determine the winner

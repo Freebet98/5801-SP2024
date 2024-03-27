@@ -4,20 +4,21 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- * This class is used to print all the information obtained after running the
- * election to a file
- * 
- * @author Bethany Freeman
- */
+ *  This class is used to print all the information obtained after running the
+ *  election to a file
+ *  
+ *  @author Bethany Freeman
+ */ 
 public class AuditFile {
     private final ResultsData results;
     private File file;
 
     /**
-     * This creates a new AuditFile object
-     * 
-     * @param results is a ResultsData object, has all the information
-     *                from extraction and the run of the election
+     *  This creates a new AuditFile object
+     *  
+     *  @param results   ResultsData object which contains all of the 
+     *                  information from extraction and the results of 
+     *                  the election
      */
     AuditFile(ResultsData results) {
         this.results = results;
@@ -28,11 +29,12 @@ public class AuditFile {
     }
 
     /**
-     * This will print the results.toString() to a new file
-     * The file will be saved in a directory called AuditFiles
-     * 
-     * @throws IOException if an error occurs anywhere
-     *                     These are handled in the main.java file
+     *  Print the results of an election to a newly generated file
+     *  
+     *  The file will be saved in a directory called 'AuditFiles'
+     *  
+     *  @throws IOException If an error occurs anywhere. This would
+     *                      be handled in Main.java
      */
     public void printToFile() throws IOException {
         // Directory stuff
@@ -61,6 +63,8 @@ public class AuditFile {
             file.createNewFile();
         }
 
+        // TODO creating this object doesn't actually create it for some reason... 
+        // figure it out
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             writer.write(results.toString());
            // BufferedWrite is automatically closed at the end of the try-block
@@ -71,10 +75,11 @@ public class AuditFile {
     }
 
     /**
-     * This checks to see if a directory path exists
-     * 
-     * @param directory the File object representing the directory for audit files
-     * @return a boolean to indicate if it was successful or unneccesary
+     *  Checks to see if a directory path exists
+     *  
+     *  @param directory File object representing the directory for audit files
+     *  
+     *  @return a boolean to indicate if it was successful or unneccesary
      */
     private boolean checkDirectory(File directory) {
         if (!directory.exists()) { // If the directory doesn't exist
