@@ -12,10 +12,13 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
     
+<<<<<<< HEAD
     <build>
         <testSourceDirectory>src/test/java</testSourceDirectory>
     </build>
 
+=======
+>>>>>>> main
     <dependencies>
         <dependency>
             <groupId>junit</groupId>

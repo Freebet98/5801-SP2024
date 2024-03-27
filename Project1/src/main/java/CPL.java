@@ -3,9 +3,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
- * This class is used to run a CPL election
+ * Performs computations specific to CPL elections. Inherits from Election
+ * to provide base information which is carried through each type of election. 
+ * Main interacts with this class in order to pass a FileData object into it 
+ * for it to perform calculations on in order to produce election results.
  * 
  * @author Rock Zgutowicz
  */
@@ -56,9 +60,13 @@ public class CPL extends Election {
     CPL(FileData fileData) {
         this.fileData = fileData;
         this.availableSeats = fileData.getNumberSeats();
-        this.remainingVotes = this.deepCopyVotes(fileData.getCandidateVotes());
-        this.seatAllocation = this.initializeSeatAllocation();
+
+        this.remainingVotes = this.deepCopyVotes(fileData.getPartyVotes());
+        this.seatAllocation = initializeSeatAllocation();
         this.winOrder = new ArrayList<String>();
+        this.noCandidates = new HashSet<>();
+
+        // largestRemainder calculation
         int ballots = fileData.getNumberBallots();
         // assuming this does not need to be error checked as it was stated in class there will never be an election run if no seats are availabke
         try {

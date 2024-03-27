@@ -2,6 +2,7 @@
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class ResultsDataOPLTest {
     ArrayList<ArrayList<Object>> seatAlloc;
     ArrayList<ArrayList<Object>> remainVotes;
     ArrayList<String> partyWinOrder;
-    ResultsDataCPL test;
+    ResultsDataOPL test;
     FileData testFile;
     ArrayList<ArrayList<Object>> finalWinOrder;
     ArrayList<ArrayList<Object>> partyVotes;
@@ -55,12 +56,12 @@ public class ResultsDataOPLTest {
 
         partyWinOrder = new ArrayList<>(Arrays.asList("Green", "Pluto", "Green"));
 
-        test = new ResultsDataCPL(seatAlloc, remainVotes, partyWinOrder, testFile);
+        test = new ResultsDataOPL(seatAlloc, remainVotes, partyWinOrder, testFile);
 
         finalWinOrder = new ArrayList<>();
-        finalWinOrder.add(new ArrayList<>(Arrays.asList("Green", " Jonah", 1)));
-        finalWinOrder.add(new ArrayList<>(Arrays.asList("Pluto", " Becky", 2)));
-        finalWinOrder.add(new ArrayList<>(Arrays.asList("Green", " Radius", 3)));
+        finalWinOrder.add(new ArrayList<>(Arrays.asList("Green", " Jonah", 1, 19943)));
+        finalWinOrder.add(new ArrayList<>(Arrays.asList("Pluto", " Becky", 2, 20105)));
+        finalWinOrder.add(new ArrayList<>(Arrays.asList("Green", " Radius", 3, 20020)));
     }
 
     public String partySetUp(){
@@ -211,16 +212,38 @@ public class ResultsDataOPLTest {
 
     @Test
     public void testComputeWinOrder() throws IOException {
-        //Test 5.a
+        //Test 5.a partyWinOrder is empty
+
+        partyWinOrder = new ArrayList<>();
+        ArrayList<ArrayList<Object>> finalWinOrder = new ArrayList<>();
+        test = new ResultsDataOPL(seatAlloc, remainVotes, partyWinOrder, testFile);
+
+        assertEquals(finalWinOrder, test.getFinalWinOrder());
+
+        //Test 5.b one party has more votes then supposed to
         ArrayList<ArrayList <Object>> expected = new ArrayList<>();
+
+        expected.add(new ArrayList<>(Arrays.asList("Pluto", " Becky", 1, 20105)));
+        expected.add(new ArrayList<>(Arrays.asList("Pluto", " Mariah", 2, 19943)));
+        expected.add(new ArrayList<>(Arrays.asList("Green", " Jonah", 3, 19943)));
+
+        assertThrows(IOException.class, () -> test = new ResultsDataOPL(seatAlloc, remainVotes, new ArrayList<>(Arrays.asList("Pluto", "Pluto", "Pluto")), testFile));
+
+        //Test 5.c partyWinOrder is normal
+        expected = new ArrayList<>();
         ArrayList<String> winOrder = new ArrayList<>(Arrays.asList("Pluto", "Pluto", "Green"));
 
         expected.add(new ArrayList<>(Arrays.asList("Pluto", " Becky", 1, 20105)));
         expected.add(new ArrayList<>(Arrays.asList("Pluto", " Mariah", 2, 19943)));
         expected.add(new ArrayList<>(Arrays.asList("Green", " Jonah", 3, 19943)));
-        ResultsData test01 = new ResultsDataOPL(seatAlloc, remainVotes, winOrder, test);
+        test = new ResultsDataOPL(seatAlloc, remainVotes, winOrder, test);
 
-        assertEquals(expected, test01.getFinalWinOrder());
+        assertEquals(expected, test.getFinalWinOrder());
+
+        //Test 5.d partyWinOrder is has duplicate names in different parties
+
+        
+        
 
     }
 
