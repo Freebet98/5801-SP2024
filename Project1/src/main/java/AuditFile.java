@@ -51,6 +51,7 @@ public class AuditFile {
         // electionType_Election_Results_Systime.ext
         String filename = results.getElectionType() + "_Election_Results_" + currentTimeMillis + ".txt";
         File file = new File(auditFileDir, filename);
+        
         if(!file.exists()){
             file.createNewFile();
         }

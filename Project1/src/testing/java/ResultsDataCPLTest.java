@@ -1,7 +1,9 @@
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -23,7 +25,7 @@ public class ResultsDataCPLTest {
     ArrayList<ArrayList<Object>> candidateVotes;
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         // FileData setup
         partyCandidates = new HashMap<>();
         partyCandidates.put("Dem", new ArrayList<>(Arrays.asList("Sarah", "Bob", "Jon")));
@@ -99,6 +101,28 @@ public class ResultsDataCPLTest {
         // Test 4.a
         assertEquals(partyWinOrder, test.getPartyWinOrder());
     }
+
+    @Test
+    public void computeWinOrder() throws IOException{
+        //Test 5.a partyWinOrder is empty
+        partyWinOrder = new ArrayList<>();
+        ArrayList<ArrayList<Object>> finalWinOrder = new ArrayList<>();
+        test = new ResultsDataCPL(seatAlloc, remainVotes, partyWinOrder, testFile);
+
+        assertEquals(finalWinOrder, test.getFinalWinOrder());
+
+        //Test 5.b one party has more votes then supposed to
+        partyWinOrder = new ArrayList<>(Arrays.asList("Rep", "Rep", "Rep"));
+        
+        assertThrows(IOException.class, () -> test = new ResultsDataCPL(seatAlloc, remainVotes, partyWinOrder, testFile));
+
+        //Test 5.c partyWinOrder is normal
+        partyWinOrder = new ArrayList<>(Arrays.asList("Dem", "Rep"));
+        test = new ResultsDataCPL(seatAlloc, remainVotes, partyWinOrder, testFile);
+        finalWinOrder = new ArrayList<>();
+        finalWinOrder.add(Arrays.asList("Dem"))
+    }
+
 
     @Test
     public void testGetToString() {
@@ -216,6 +240,7 @@ public class ResultsDataCPLTest {
         }
         expected.append("---------------------------------------------------\n");
 
+        //Test 6.a
         assertEquals(expected.toString(), test.toString());
     }
 }

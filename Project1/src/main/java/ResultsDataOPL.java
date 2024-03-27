@@ -36,7 +36,7 @@ public class ResultsDataOPL extends ResultsData {
      * @throws IOException
      */
     ResultsDataOPL(ArrayList<ArrayList<Object>> seatAllocation, ArrayList<ArrayList<Object>> remainingVotes,
-            ArrayList<String> partyWinOrder, FileData fileDate) {
+            ArrayList<String> partyWinOrder, FileData fileDate) throws IOException {
         super(seatAllocation, remainingVotes, partyWinOrder, fileDate);
     }
 
