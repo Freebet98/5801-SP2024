@@ -157,7 +157,7 @@ public class ResultsDataOPLTest {
         return percents;
     }
 
-    public String winnerSetUp(){
+    private String winnerSetUp() {
         StringBuilder output = new StringBuilder();
         int width;
         String partyName;
@@ -177,13 +177,20 @@ public class ResultsDataOPLTest {
             output.append(format);
 
             // Seat won
-            width = 5;
+            width = 4;
             String seatNumber = String.valueOf(finalWinOrder.get(i).get(2));
-            format = String.format("  %-" + width + "s", seatNumber);
-            output.append(format + "\n");
+            format = String.format("  %-" + width + "s  |", seatNumber);
+            output.append(format);
+
+            // Votes per candidate
+            width = 6;
+            String voteNumber = String.valueOf(finalWinOrder.get(i).get(3));
+            format = String.format("  %-" + width + "s", voteNumber);
+            output.append(voteNumber + "\n");
         }
 
         return output.toString();
+
     }
 
     @Test
@@ -200,7 +207,37 @@ public class ResultsDataOPLTest {
 
     @Test
     public void testGetFinalWinOrder() {
-        // Test 3.a
+        // Test 3.a private String winnerSetUp() {
+        StringBuilder output = new StringBuilder();
+        int width;
+        String partyName;
+        String candidateName;
+
+        for (int i = 0; i < finalWinOrder.size(); i++) {
+            // Party name
+            width = 13;
+            partyName = (String) finalWinOrder.get(i).get(0);
+            String format = String.format("  %-" + width + "s  |", partyName);
+            output.append(format);
+
+            // Candidate name
+            width = 13;
+            candidateName = (String) finalWinOrder.get(i).get(1);
+            format = String.format("  %-" + width + "s  |", candidateName);
+            output.append(format);
+
+            // Seat won
+            width = 4;
+            String seatNumber = String.valueOf(finalWinOrder.get(i).get(2));
+            format = String.format("  %-" + width + "s  |", seatNumber);
+            output.append(format);
+
+            // Votes per candidate
+            width = 6;
+            String voteNumber = String.valueOf(finalWinOrder.get(i).get(3));
+            format = String.format("  %-" + width + "s", voteNumber);
+            output.append(voteNumber + "\n");
+        }
         assertEquals(finalWinOrder, test.getFinalWinOrder());
     }
 
@@ -239,12 +276,6 @@ public class ResultsDataOPLTest {
         test = new ResultsDataOPL(seatAlloc, remainVotes, winOrder, test);
 
         assertEquals(expected, test.getFinalWinOrder());
-
-        //Test 5.d partyWinOrder is has duplicate names in different parties
-
-        
-        
-
     }
 
     @Test
@@ -252,10 +283,10 @@ public class ResultsDataOPLTest {
         StringBuilder output = new StringBuilder();
 
         // Header Portion
-        output.append(testFile.getElectionType() + " Election\n");
+        output.append(test.fileData.getElectionType() + " Election\n");
         output.append(partyCandidates.size() + " Parties\n");
-        output.append(testFile.getNumberBallots() + " Ballots Cast\n");
-        output.append(testFile.getNumberSeats() + " Seats Avaliable\n");
+        output.append(test.fileData.numberBallots + " Ballots Cast\n");
+        output.append(test.fileData.getNumberSeats() + " Seats Avaliable\n");
 
         // Party and Candidate List
         output.append("----------------------------------------------------------------------\n");
@@ -264,13 +295,29 @@ public class ResultsDataOPLTest {
         output.append(partySetUp());
         output.append("----------------------------------------------------------------------\n\n");
 
-        //Winner List
-        output.append("---------------------------------------------------\n");
-        output.append("  Winning        |  Seat           |  Seat\n");
-        output.append("  Parties        |  Winners        |  Won\n");
-        output.append("---------------------------------------------------\n");
+        // Election Output
+        output.append(
+                "-------------------------------------------------------------------------------------------------\n");
+        output.append(
+                "                 |           |    First     |  Remaining  |    Second    |  Final  |  % of Vote\n");
+        output.append("  Parties        |  Votes    |  Allocation  |    Votes    |  Allocation  |  Seat   |     to\n");
+        output.append(
+                "                 |           |   Of Seats   |             |              |  Total  |  % of Seats\n");
+        output.append(
+                "-------------------------------------------------------------------------------------------------\n");
+        output.append(electionResultsSetUp());
+        output.append(
+                "-------------------------------------------------------------------------------------------------\n\n");
+
+        // Winner List
+        output.append("----------------------------------------------------------\n");
+        output.append("  Winning        |  Seat           |  Seat  |   Number\n");
+        output.append("  Parties        |  Winners        |  Won   |  Of Votes\n");
+        output.append("----------------------------------------------------------\n");
         output.append(winnerSetUp());
-        output.append("---------------------------------------------------\n");
+        output.append("----------------------------------------------------------\n");
+
+        assertEquals(output.toString(), test.toString());
     }
 
 }

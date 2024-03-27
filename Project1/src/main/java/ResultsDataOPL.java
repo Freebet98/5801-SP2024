@@ -87,6 +87,20 @@ public class ResultsDataOPL extends ResultsData {
         return output.toString();
     }
 
+    protected String display() {
+        StringBuilder output = new StringBuilder();
+
+         // Winner List
+         output.append("----------------------------------------------------------\n");
+         output.append("  Winning        |  Seat           |  Seat  |   Number\n");
+         output.append("  Parties        |  Winners        |  Won   |  Of Votes\n");
+         output.append("----------------------------------------------------------\n");
+         output.append(winnerSetUp());
+         output.append("----------------------------------------------------------\n");
+ 
+         return output.toString();
+    }
+
     /**
      * Formats the party candidates section of the output
      * 
@@ -217,8 +231,7 @@ public class ResultsDataOPL extends ResultsData {
 
     }
 
-    
-     /**
+    /**
      * This calculates the percents for vote and seats for the given index
      * 
      * @param index used to indicate what party or candidate is being calculated for
@@ -239,7 +252,6 @@ public class ResultsDataOPL extends ResultsData {
         return percents;
     }
 
-
     /**
      * This will take the ArrayList<String> winOrder that contains just partyNames
      * and format it to an ArrayList<ArrayList<Object>> with the partyName,
@@ -249,16 +261,16 @@ public class ResultsDataOPL extends ResultsData {
      *                     in main
      */
     @Override
-    protected void computeWinOrder() throws IOException{ //Runtime O(n^2 + k)
+    protected void computeWinOrder() throws IOException { // Runtime O(n^2 + k)
         // This is a set of allocatedCandidates, might need to change
         HashSet<String> allocatedCandidates = new HashSet<>();
         ArrayList<String> currPartyArrayList;
         int seat = 1;
         try {
-            for (String party : partyWinOrder) { //O(n)
+            for (String party : partyWinOrder) { // O(n)
                 currPartyArrayList = partyCandidates.get(party);
                 int index = 0;
-                while (true) { //O(k) where k is equal to the index
+                while (true) { // O(k) where k is equal to the index
                     String candidate = currPartyArrayList.get(index);
                     ArrayList<Object> innerList = new ArrayList<>();
                     if (!allocatedCandidates.contains(candidate)) {
@@ -267,8 +279,8 @@ public class ResultsDataOPL extends ResultsData {
                         innerList.add(candidate);
                         innerList.add(seat);
                         // Find the candidate votes by name
-                        for(ArrayList<Object> candidateInfo: candidateVotes){ //O(n) worst case
-                            if(candidateInfo.get(0).equals(candidate)){
+                        for (ArrayList<Object> candidateInfo : candidateVotes) { // O(n) worst case
+                            if (candidateInfo.get(0).equals(candidate)) {
                                 innerList.add(candidateInfo.get(1));
                                 break;
                             }
@@ -281,7 +293,7 @@ public class ResultsDataOPL extends ResultsData {
                     }
                 }
             }
-        }catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             throw new IOException("Parties did not get added to win order correctly");
         }
     }

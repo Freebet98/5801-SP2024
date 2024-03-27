@@ -134,9 +134,9 @@ public class ResultsDataCPLTest {
         finalWinOrder = new ArrayList<>();
         test = new ResultsDataCPL(seatAlloc, remainVotes, partyWinOrder, testFile);
         finalWinOrder.add(new ArrayList<Object>(Arrays.asList("Dem", "Sarah", 1)));
-        finalWinOrder.add(new ArrayList<Object>(Arrays.asList("Rep", "Sarah", 1)));
+        finalWinOrder.add(new ArrayList<Object>(Arrays.asList("Rep", "Sarah", 2)));
 
-        //assertEquals(finalWinOrder, test.getFinalWinOrder()); //This is meant to fail
+        assertEquals(finalWinOrder, test.getFinalWinOrder()); //This is meant to fail
         
         
 

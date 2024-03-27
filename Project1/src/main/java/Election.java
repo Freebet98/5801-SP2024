@@ -92,6 +92,7 @@ abstract public class Election {
      * @return returns the deep copied ArrayList<ArrayList<Object>>
      */
 
+    @SuppressWarnings("removal")
     protected ArrayList<ArrayList<Object>> deepCopyVotes(ArrayList<ArrayList<Object>> votes) {
         ArrayList<ArrayList<Object>> copy = new ArrayList<ArrayList<Object>>(votes.size());
         for (ArrayList<Object> innerList : votes) {
