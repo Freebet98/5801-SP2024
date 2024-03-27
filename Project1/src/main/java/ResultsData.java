@@ -84,6 +84,8 @@ abstract public class ResultsData extends FileData {
      */
     abstract public String toString();
 
+    abstract protected String display();
+
     /**
      * Allocates finalWinOrder based on winOrder and partyCandidates candidate
      * order. Uses a set to ensure that

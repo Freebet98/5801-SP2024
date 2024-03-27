@@ -11,6 +11,7 @@ import java.io.IOException;
  */
 public class AuditFile {
     private final ResultsData results;
+    private File file;
 
     /**
      * This creates a new AuditFile object
@@ -20,6 +21,10 @@ public class AuditFile {
      */
     AuditFile(ResultsData results) {
         this.results = results;
+    }
+
+    public String getFileName(){
+        return file.getAbsolutePath();
     }
 
     /**
@@ -50,7 +55,7 @@ public class AuditFile {
         // Create a File Object with a FileName
         // electionType_Election_Results_Systime.ext
         String filename = results.getElectionType() + "_Election_Results_" + currentTimeMillis + ".txt";
-        File file = new File(auditFileDir, filename);
+        file = new File(auditFileDir, filename);
         
         if(!file.exists()){
             file.createNewFile();

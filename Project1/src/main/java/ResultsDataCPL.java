@@ -175,6 +175,20 @@ public class ResultsDataCPL extends ResultsData {
 
     }
 
+    protected String display(){
+        StringBuilder output = new StringBuilder();
+        
+        // Winner Output
+        output.append("---------------------------------------------------\n");
+        output.append("  Winning        |  Seat           |  Seat\n");
+        output.append("  Parties        |  Winners        |  Won\n");
+        output.append("---------------------------------------------------\n");
+        output.append(winnerSetUp());
+        output.append("---------------------------------------------------\n");
+
+        return output.toString();
+    }
+
     /**
      * Format a string with the finalWinOrder information
      * 

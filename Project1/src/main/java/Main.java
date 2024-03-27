@@ -21,8 +21,7 @@ public class Main {
         ResultsData results;
         AuditFile fileCreation;
         // Ballot files must be placed in a folder named BallotFiles within the
-        // Documents folder of a users directory
-        String directoryPath = System.getProperty("user.home") + "Documents/BallotFiles/";
+        // Project1/src
 
         if (args.length == 0) {
             System.out.println("Please enter the name of the ballot file: ");
@@ -35,6 +34,8 @@ public class Main {
             System.exit(0);
         }
 
+        String relativePath = "Project1/src/BallotFile/" + fileName;
+
         /*
          * While the user has not inputted a valid file name, continue to prompt them
          * for a new
@@ -43,7 +44,7 @@ public class Main {
          */
         try {
             while (true) {
-                File file = new File(directoryPath, fileName);
+                File file = new File(relativePath);
 
                 if (fileName.equals("q")) {
                     scan.close();
@@ -88,6 +89,8 @@ public class Main {
             fileCreation.printToFile();
 
             // Display the results to the user
+            results.display();
+            System.out.println("Audit File Saved: " + fileCreation.getFileName());
         } catch (IOException e) {
             System.out.println(e.getMessage());
             System.exit(0);
