@@ -1,5 +1,7 @@
 CPL
-4
+3
+100000
+6
 Democratic, Mary, Jane, Kim
 Republican, Allen, Joe, Sarah
 Green, Sally, Nikki

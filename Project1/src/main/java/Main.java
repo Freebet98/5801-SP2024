@@ -34,8 +34,6 @@ public class Main {
             System.exit(0);
         }
 
-        String relativePath = "Project1/src/BallotFile/" + fileName;
-
         /*
          * While the user has not inputted a valid file name, continue to prompt them
          * for a new
@@ -44,6 +42,7 @@ public class Main {
          */
         try {
             while (true) {
+                String relativePath = "Project1/src/BallotFile/" + fileName;
                 File file = new File(relativePath);
 
                 if (fileName.equals("q")) {
@@ -89,12 +88,11 @@ public class Main {
             fileCreation.printToFile();
 
             // Display the results to the user
-            results.display();
+            System.out.println(results.display());
             System.out.println("Audit File Saved: " + fileCreation.getFileName());
         } catch (IOException e) {
             System.out.println(e.getMessage());
             System.exit(0);
         }
     }
-
 }
