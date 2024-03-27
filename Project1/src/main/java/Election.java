@@ -67,44 +67,6 @@ abstract public class Election {
     }
 
     /**
-     *  Initializes the seat allocation array to have default values of 0
-     *  
-     *  @return returns initialized ArrayList<ArrayList<Object>>
-     */
-    protected ArrayList<ArrayList<Object>> initializeSeatAllocation(){
-        ArrayList<ArrayList<Object>> initialized = new ArrayList<ArrayList<Object>>();
-        for(int i=0; i<this.fileData.getNumberParties(); i++){
-            ArrayList<Object> innerList = new ArrayList<Object>();
-            String partyName = (String) this.fileData.getPartyVotes().get(i).get(0);
-            innerList.add(partyName);
-            innerList.add(new int[2]);
-            initialized.add(innerList);
-        }
-        return initialized;
-    }
-
-    /**
-<<<<<<< Updated upstream
-     * creates a deep copy of a votes ArrayList to create a modifiable version
-     * used to set remainingVotes
-     * 
-     * @param votes the ArrayList<ArrayList<Object>> to be copied
-     * @return returns the deep copied ArrayList<ArrayList<Object>>
-     */
-
-    @SuppressWarnings("removal")
-    protected ArrayList<ArrayList<Object>> deepCopyVotes(ArrayList<ArrayList<Object>> votes) {
-        ArrayList<ArrayList<Object>> copy = new ArrayList<ArrayList<Object>>(votes.size());
-        for (ArrayList<Object> innerList : votes) {
-            ArrayList<Object> innerListCopy = new ArrayList<Object>(2);
-            innerListCopy.add(new String((String) innerList.get(0))); // this is the string containing the party name
-            innerListCopy.add(new Integer((Integer) innerList.get(1))); // this is the int representing num votes
-            copy.add(innerListCopy);
-        }
-        return copy;
-    }
-
-    /**
      * initializes the seat allocation array to have default values of 0
      * 
      * @return returns initialized ArrayList<ArrayList<Object>>
