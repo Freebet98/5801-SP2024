@@ -40,7 +40,7 @@ abstract public class ResultsData extends FileData {
      * @throws IOException 
      */
     ResultsData(ArrayList<ArrayList<Object>> seatAllocation, ArrayList<ArrayList<Object>> remainingVotes,
-            ArrayList<String> partyWinOrder, FileData fileDate){
+            ArrayList<String> partyWinOrder, FileData fileDate) throws IOException{
         super(fileDate.electionType, fileDate.numberSeats, fileDate.numberBallots, fileDate.numberParties,
                 fileDate.partyCandidates, fileDate.partyVotes, fileDate.candidateVotes);
         this.seatAllocation = seatAllocation;
@@ -90,5 +90,5 @@ abstract public class ResultsData extends FileData {
      * no candidates are repeated
      * @throws IOException 
      */
-    abstract protected void computeWinOrder();
+    abstract protected void computeWinOrder() throws IOException;
 }
