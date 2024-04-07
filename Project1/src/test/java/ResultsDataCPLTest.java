@@ -130,16 +130,48 @@ public class ResultsDataCPLTest {
         partyCandidates.put("Dem", new ArrayList<>(Arrays.asList("Sarah", "Bob", "Jon")));
         partyCandidates.put("Rep", new ArrayList<>(Arrays.asList("Sarah", "Klein")));
 
+        partyVotes = new ArrayList<>();
+        partyVotes.add(new ArrayList<>(Arrays.asList("Dem", 750)));
+        partyVotes.add(new ArrayList<>(Arrays.asList("Rep", 250)));
+
+        candidateVotes = new ArrayList<>();
+        candidateVotes.add(new ArrayList<>(Arrays.asList("Sarah", 0)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList("Bob", 0)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList("Jon", 0)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList("Sarah", 0)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList("Klein", 0)));
+
+        testFile = new FileData("CPL", 3, 1000, 2, partyCandidates, partyVotes, candidateVotes);
+
         partyWinOrder = new ArrayList<>(Arrays.asList("Dem", "Rep"));
         finalWinOrder = new ArrayList<>();
         test = new ResultsDataCPL(seatAlloc, remainVotes, partyWinOrder, testFile);
         finalWinOrder.add(new ArrayList<Object>(Arrays.asList("Dem", "Sarah", 1)));
         finalWinOrder.add(new ArrayList<Object>(Arrays.asList("Rep", "Sarah", 2)));
 
-        assertEquals(finalWinOrder, test.getFinalWinOrder()); //This is meant to fail
+        assertEquals(finalWinOrder, test.getFinalWinOrder()); 
         
+        //Test 5.e partyWinOrder has duplicate names in the same party
+        partyCandidates = new HashMap<>();
+        partyCandidates.put("Dem", new ArrayList<>(Arrays.asList("Sarah", "Sarah", "Jon")));
+        partyCandidates.put("Rep", new ArrayList<>(Arrays.asList("Sarah", "Klein")));
         
+        candidateVotes = new ArrayList<>();
+        candidateVotes.add(new ArrayList<>(Arrays.asList("Sarah", 0)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList("Sarah", 0)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList("Jon", 0)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList("Sarah", 0)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList("Klein", 0)));
 
+        testFile = new FileData("CPL", 3, 1000, 2, partyCandidates, partyVotes, candidateVotes);
+
+        partyWinOrder = new ArrayList<>(Arrays.asList("Dem", "Dem"));
+        finalWinOrder = new ArrayList<>();
+        test = new ResultsDataCPL(seatAlloc, remainVotes, partyWinOrder, testFile);
+        finalWinOrder.add(new ArrayList<Object>(Arrays.asList("Dem", "Sarah", 1)));
+        finalWinOrder.add(new ArrayList<Object>(Arrays.asList("Dem", "Sarah", 2)));
+
+        assertEquals(finalWinOrder, test.getFinalWinOrder());
     }
 
 
