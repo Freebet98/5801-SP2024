@@ -19,8 +19,8 @@ public class ExtractDataOPL extends ExtractData {
      *                  is. This is found in the Main class and passed in
      * @throws IOException will happen if there is an error in reading the file
      */
-    ExtractDataOPL(BufferedReader validFile, String header) {
-        this.validFile = validFile;
+    ExtractDataOPL(ArrayList<BufferedReader> validFiles, String header) {
+        this.validFiles = validFiles;
         this.header = header;
     }
 

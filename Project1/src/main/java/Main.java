@@ -59,8 +59,8 @@ public class Main {
         /*
          * While the user has not inputted a valid file name, continue to prompt them
          * for a new
-         * filename or for the letter 'q', the letter 'q' if entered will quit the
-         * entire system
+         * filename, for the letter 'q', the letter 'q' if entered will quit the
+         * entire system, or for the letter 'd', the letter 'd' if entered will let the system know the user has not finished entering fileNames
          */
         try {                     
             while (true) {
@@ -85,12 +85,15 @@ public class Main {
                             }
                         }
 
+                        //Create an object ExtractData of the header type
                         if (header.equals("OPL")) {
                             extraction = new ExtractDataOPL(files, header);
                             break;
                         } else if (header.equals("CPL")) {
                             extraction = new ExtractDataCPL(files, header);
                             break;
+                        }else{
+                            throw new IOException("Header does not correspond to a Election type");
                         }
                     }
                     else{
@@ -104,7 +107,7 @@ public class Main {
                     files.add(validFile);
                 } else {
                     System.out.println("Error: Invalid file. Input file must be a valid CSV");
-                    System.out.println("Please enter another file name or the letter \"q\" to quit");
+                    System.out.println("Please enter another file name, the letter \"q\" to quit, or the letter \"d\" to indidicate you have no more files to input");
                     fileName = scan.nextLine();
                 }
             }

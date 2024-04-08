@@ -13,10 +13,10 @@ public class ExtractDataCPL extends ExtractData {
     /**
      * This creates an object of the ExtractDataCPL class
      *
-     * @param validFile this the bufferedReader used to parse through the given
-     *                  file
-     * @param header    this is the header depicting which type of election it
-     *                  is. This is found in the Main class and passed in
+     * @param validFiles this is an ArrayList of BufferedReader Objects representing
+     *                   the multiple files given by the user
+     * @param header     this is the header depicting which type of election it
+     *                   is. This is found in the Main class and passed in
      * @throws IOException will happen if there is an error in reading the file
      */
     ExtractDataCPL(ArrayList<BufferedReader> validFiles, String header) throws IOException {
