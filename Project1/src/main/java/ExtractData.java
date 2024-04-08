@@ -9,22 +9,27 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 abstract public class ExtractData {
+    protected ArrayList<BufferedReader> validFiles;
     protected BufferedReader validFile;
     protected FileData fileData;
     protected String header;
+    protected ArrayList<ArrayList<Object>> partyVotes = new ArrayList<>();
+    protected ArrayList<ArrayList<Object>> candidateVotes = new ArrayList<>();
+    private HashMap<String, ArrayList<String>> partyCandidates = null;
 
     /**
-     *  This is used to extract data from the File, assumes all checks done within
-     *  functions called work
-     *  
-     *  @return fileData, this is a FileData object containing the information from
-     *          the extracted file
-     *  
-     *  @throws IOException
+     * This is used to extract data from the File, assumes all checks done within
+     * functions called work
+     * 
+     * @return fileData, this is a FileData object containing the information from
+     *         the extracted file
+     * 
+     * @throws IOException
      */
     protected FileData extractFromFile() throws IOException {
         // represents the string obtained from the BufferedReader while reading a line
         String line;
+        validFile = validFiles.get(0);
 
         // Looks at the second line of the file, if it's an integer, numSeats is set to
         // it
@@ -50,29 +55,30 @@ abstract public class ExtractData {
         }
         int numParties = Integer.parseInt(line);
 
-        // Create two new ArrayList<ArrayList<Object>> to store partyVotes and
-        // candidateVotes
         // Initialize partyCandidates with formatPartyInformation
-        ArrayList<ArrayList<Object>> partyVotes = new ArrayList<>();
-        ArrayList<ArrayList<Object>> candidateVotes = new ArrayList<>();
-        HashMap<String, ArrayList<String>> partyCandidates = formatPartyInformation(numParties, partyVotes,
-                candidateVotes);
+        partyCandidates = formatPartyInformation(numParties, partyVotes, candidateVotes);
 
-        // Values for these get set in formatBallotInformation
-        formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
+        for (int i = 0; i < validFiles.size(); i++) {
+            validFile = validFiles.get(i);
+            for(int k = 0; k < (4 + numParties); k++){
+                validFile.readLine(); //Get to votes
+            }
+
+            formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
+        }
 
         fileData = new FileData(header, numSeats, numBallots, numParties, partyCandidates, partyVotes, candidateVotes);
         return fileData;
     }
 
     /**
-     *  This will look through the given string, if it finds a character that is not
-     *  a digit a message will
-     *  be given to the user and the program will close with a system.exit()
-     *  
-     *  @param line represents a string of the line from the file. This line should
+     * This will look through the given string, if it finds a character that is not
+     * a digit a message will
+     * be given to the user and the program will close with a system.exit()
+     * 
+     * @param line represents a string of the line from the file. This line should
      *             only be digits
-     */ 
+     */
     protected boolean verifyLineIsDigit(String line) {
         if (line == "" || line == null) {
             return false;

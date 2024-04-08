@@ -248,9 +248,8 @@ public class ResultsDataOPL extends ResultsData {
         int location = adjustIndexForPartyOrder(party);
         int additionalSame = checkFinalWinOrder(candidate, party);
 
-        //Should never be greater than the total size of candidateVotes
-        //Should never be less than 0
         int totalIndex = location + additionalSame;
+        
         if(totalIndex >= candidateVotes.size() || totalIndex < 0){
             throw new IOException("Incorrect location calculation in checkForRepeatName");
         }
