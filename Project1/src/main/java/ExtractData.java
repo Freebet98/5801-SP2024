@@ -18,7 +18,7 @@ abstract public class ExtractData {
     private HashMap<String, ArrayList<String>> partyCandidates = null;
 
     /**
-     * This is used to extract data from the File, assumes all checks done within
+     * This is used to extract data from Multiple Files, assumes all checks done within
      * functions called work
      * 
      * @return fileData, this is a FileData object containing the information from
