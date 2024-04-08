@@ -19,8 +19,8 @@ public class ExtractDataCPL extends ExtractData {
      *                  is. This is found in the Main class and passed in
      * @throws IOException will happen if there is an error in reading the file
      */
-    ExtractDataCPL(BufferedReader validFile, String header) throws IOException {
-        this.validFile = validFile;
+    ExtractDataCPL(ArrayList<BufferedReader> validFiles, String header) throws IOException {
+        this.validFiles = validFiles;
         this.header = header;
     }
 

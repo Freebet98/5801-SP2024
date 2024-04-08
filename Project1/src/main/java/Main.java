@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -11,8 +12,10 @@ import java.util.Scanner;
  */
 public class Main {
     public static void main(String[] args) throws IOException {
+        String relativePath = "Project1/src/BallotFile/";
         Scanner scan = new Scanner(System.in);
         String fileName = "";
+        String filePath = "";
         String header;
         BufferedReader validFile;
         ExtractData extraction;
@@ -20,6 +23,7 @@ public class Main {
         Election election;
         ResultsData results;
         AuditFile fileCreation;
+        ArrayList<BufferedReader> files = new ArrayList<>();
         // Ballot files must be placed in a folder named BallotFiles within the
         // Project1/src
 
@@ -27,10 +31,28 @@ public class Main {
             System.out.println("Please enter the name of the ballot file: ");
             fileName = scan.nextLine();
 
-        } else if (args.length == 1) {
-            fileName = args[0];
+        } else if (args.length > 0) {
+            for(int i = 0; i < args.length; i++){
+                fileName = relativePath + args[i];
+
+                //Create a new file Object
+                File tempFile = new File(fileName);
+                if(!tempFile.exists() || tempFile.isDirectory()){
+                    System.out.println("One of the files entered was incorrect, cannot finish running program");
+                    System.exit(0);
+                }
+                else{
+                    FileReader tempFileR = new FileReader(tempFile);
+                    BufferedReader tempFileB = new BufferedReader(tempFileR);
+                    files.add(tempFileB);
+                }
+            }
+
+            System.out.println("If you have more ballot files to add please add them");
+            System.out.println("Otherwise type \"q\" to quit or \"d\" to indicate you are done entering files");
+            fileName = scan.nextLine();
         } else {
-            System.out.println("Too many arguments, cannot run program.");
+            System.out.println("Error, cannot run program.");
             System.exit(0);
         }
 
@@ -40,28 +62,46 @@ public class Main {
          * filename or for the letter 'q', the letter 'q' if entered will quit the
          * entire system
          */
-        try {
+        try {                     
             while (true) {
-                String relativePath = "Project1/src/BallotFile/" + fileName;
-                File file = new File(relativePath);
+                filePath = relativePath + fileName;
+                File file = new File(filePath);
 
                 if (fileName.equals("q")) {
                     scan.close();
                     System.exit(0);
-                } else if (file.exists() && !file.isDirectory()) {
+                } else if(fileName.equals("d")){
                     System.out.println("Generating Results...");
+
+                    if(!files.isEmpty()){
+                        validFile = files.get(0);
+                        header = validFile.readLine();
+
+                        //Check for matching headers
+                        for(int i = 1; i < files.size(); i++){
+                            validFile = files.get(i);
+                            if(!header.equals(validFile.readLine())){
+                                throw new IOException("Two or more files given with non-matching headers");
+                            }
+                        }
+
+                        if (header.equals("OPL")) {
+                            extraction = new ExtractDataOPL(files, header);
+                            break;
+                        } else if (header.equals("CPL")) {
+                            extraction = new ExtractDataCPL(files, header);
+                            break;
+                        }
+                    }
+                    else{
+                        throw new IOException("Empty files ArrayList, no valid files given");
+                    }
+                    
+                }
+                else if (file.exists() && !file.isDirectory()) {
                     FileReader fileR = new FileReader(file);
                     validFile = new BufferedReader(fileR);
-                    header = validFile.readLine();
-
-                    // finish creating extraction depending on which type of election it is
-                    if (header.equals("OPL")) {
-                        extraction = new ExtractDataOPL(validFile, header);
-                        break;
-                    } else if (header.equals("CPL")) {
-                        extraction = new ExtractDataCPL(validFile, header);
-                        break;
-                    }
+                    files.add(validFile);
                 } else {
                     System.out.println("Error: Invalid file. Input file must be a valid CSV");
                     System.out.println("Please enter another file name or the letter \"q\" to quit");
