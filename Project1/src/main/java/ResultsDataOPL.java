@@ -87,107 +87,24 @@ public class ResultsDataOPL extends ResultsData {
         return output.toString();
     }
 
+    /**
+     * This formats the winner information into a StringBuilder object to
+     * display to the user
+     * 
+     * @return a string to display
+     */
     protected String display() {
         StringBuilder output = new StringBuilder();
 
-         // Winner List
-         output.append("----------------------------------------------------------\n");
-         output.append("  Winning        |  Seat           |  Seat  |   Number\n");
-         output.append("  Parties        |  Winners        |  Won   |  Of Votes\n");
-         output.append("----------------------------------------------------------\n");
-         output.append(winnerSetUp());
-         output.append("----------------------------------------------------------\n");
- 
-         return output.toString();
-    }
-
-    /**
-     * Formats the party candidates section of the output
-     * 
-     * @return a string to be appended to the toString()
-     */
-    private String partySetUp() {
-        StringBuilder output = new StringBuilder();
-        int width = 26;
-        for (int i = 0; i < partyVotes.size(); i++) {
-            String partyName = (String) partyVotes.get(i).get(0);
-
-            String format = String.format("  %-" + width + "s  |  ", partyName);
-            output.append(format);
-
-            ArrayList<String> innerList = partyCandidates.get(partyName);
-            for (int k = 0; k < innerList.size(); k++) {
-                String candidateName = innerList.get(k);
-                if (k == innerList.size() - 1) {
-                    output.append(candidateName + "\n");
-                } else {
-                    output.append(candidateName + ", ");
-                }
-            }
-        }
+        // Winner List
+        output.append("----------------------------------------------------------\n");
+        output.append("  Winning        |  Seat           |  Seat  |   Number\n");
+        output.append("  Parties        |  Winners        |  Won   |  Of Votes\n");
+        output.append("----------------------------------------------------------\n");
+        output.append(winnerSetUp());
+        output.append("----------------------------------------------------------\n");
 
         return output.toString();
-    }
-
-    /**
-     * This creates the formatted election results for the toString()
-     * 
-     * @return a string
-     */
-    private String electionResultsSetUp() {
-        StringBuilder output = new StringBuilder();
-        int width;
-
-        for (int i = 0; i < partyVotes.size(); i++) {
-            // Party Name
-            String partyName = (String) partyVotes.get(i).get(0);
-            width = 13;
-            String format = String.format("  %-" + width + "s  |", partyName);
-            output.append(format);
-
-            // Votes
-            String votes = String.valueOf((int) partyVotes.get(i).get(1));
-            width = 7;
-            format = String.format("  %-" + width + "s  |", votes);
-            output.append(format);
-
-            // Seats (1st alloc)
-            int[] alloc = (int[]) this.seatAllocation.get(i).get(1);
-            String firstAlloc = String.valueOf(alloc[0]);
-            width = 10;
-            format = String.format("  %-" + width + "s  |", firstAlloc);
-            output.append(format);
-
-            // RemainingVotes
-            width = 9;
-            String remainVotes = String.valueOf((int) remainingVotes.get(i).get(1));
-            format = String.format("  %-" + width + "s  |", remainVotes);
-            output.append(format);
-
-            // Seats (2nd alloc)
-            width = 10;
-            String secAlloc = String.valueOf(alloc[1]);
-            format = String.format("  %-" + width + "s  |", secAlloc);
-            output.append(format);
-
-            // Final seat
-            width = 5;
-            String finalAlloc = String.valueOf(alloc[0] + alloc[1]);
-            format = String.format("  %-" + width + "s  |", finalAlloc);
-            output.append(format);
-
-            // %vote to %seat
-            int[] percents = getPercents(i);
-            String votePer = String.valueOf(percents[0]) + "%";
-            String seatPer = String.valueOf(percents[1] + "%");
-            String out = votePer + "/" + seatPer;
-            width = 10;
-            format = String.format("  %-" + width + "s", out);
-            output.append(format + "\n");
-        }
-
-        return output.toString();
-
     }
 
     /**
@@ -195,7 +112,8 @@ public class ResultsDataOPL extends ResultsData {
      * 
      * @return a string with the formatted winner information
      */
-    private String winnerSetUp() {
+    @Override
+    protected String winnerSetUp() {
         StringBuilder output = new StringBuilder();
         int width;
         String partyName;
@@ -232,60 +150,34 @@ public class ResultsDataOPL extends ResultsData {
     }
 
     /**
-     * This calculates the percents for vote and seats for the given index
-     * 
-     * @param index used to indicate what party or candidate is being calculated for
-     * @return an int[] for electionResultsSetUp to us to convert values to a string
-     */
-    private int[] getPercents(int index) {
-        int[] seatAlloc = (int[]) this.seatAllocation.get(index).get(1);
-        int totalSeats = seatAlloc[0] + seatAlloc[1];
-        int[] percents = new int[2];
-
-        int votes = (int) partyVotes.get(index).get(1);
-        double perVote = ((double) votes / (double) numberBallots) * 100;
-        percents[0] = (int) Math.round(perVote);
-
-        double perSeats = ((double) totalSeats / (double) numberSeats) * 100;
-        percents[1] = (int) Math.round(perSeats);
-
-        return percents;
-    }
-
-    /**
      * This will take the ArrayList<String> winOrder that contains just partyNames
      * and format it to an ArrayList<ArrayList<Object>> with the partyName,
      * candidateName, which seat they won, and how many votes the candidate had
+     * 
+     * This can handle duplicate names in both opposing parties and the same party
      * 
      * @throws IOException if a candidate cannot be found in candidateVotes, handled
      *                     in main
      */
     @Override
-    protected void computeWinOrder() throws IOException { // Runtime O(n^2 + k)
-        // This is a set of allocatedCandidates, might need to change
+    protected void computeWinOrder() throws IOException {
+        // This is a set of allocatedCandidates
         HashSet<String> allocatedCandidates = new HashSet<>();
         ArrayList<String> currPartyArrayList;
+        String candName;
         int seat = 1;
         try {
-            for (String party : partyWinOrder) { // O(n)
+            // Go through every party in the winOrder
+            for (String party : partyWinOrder) {
                 currPartyArrayList = partyCandidates.get(party);
                 int index = 0;
-                while (true) { // O(k) where k is equal to the index
+                // Infinite loop that breaks at specific points
+                while (true) {
                     String candidate = currPartyArrayList.get(index);
-                    ArrayList<Object> innerList = new ArrayList<>();
-                    if (!allocatedCandidates.contains(candidate)) {
-                        allocatedCandidates.add(candidate);
-                        innerList.add(party);
-                        innerList.add(candidate);
-                        innerList.add(seat);
-                        // Find the candidate votes by name
-                        for (ArrayList<Object> candidateInfo : candidateVotes) { // O(n) worst case
-                            if (candidateInfo.get(0).equals(candidate)) {
-                                innerList.add(candidateInfo.get(1));
-                                break;
-                            }
-                        }
-                        finalWinOrder.add(innerList);
+                    candName = candidate + party + Integer.toString(index); // This ensures that candidates can have the
+                                                                            // same name
+                    if (!allocatedCandidates.contains(candName)) {
+                        addCandidateToFinalWinOrder(allocatedCandidates, index, party, seat, candName, candidate);
                         seat++;
                         break;
                     } else {
@@ -296,5 +188,136 @@ public class ResultsDataOPL extends ResultsData {
         } catch (IndexOutOfBoundsException e) {
             throw new IOException("Parties did not get added to win order correctly");
         }
+    }
+
+    /**
+     * Only gets called if a candidate is not already contained in the HashSet
+     * will add that candidate to a new Inner ArrayList to add to finalWinOrder,
+     * this will
+     * contain the party name, candidates name, and how many votes they got.
+     * 
+     * @param allocatedCandidates the Hashset to look at
+     * @param index               What index in the partyWinOrder are we actually
+     *                            looking at
+     * @param party               what party is this candidate in
+     * @param seat                what seat did this candidate win
+     * @param candName            the special string made to differentiate
+     *                            candidates of the same name in the HashSet
+     * @param candidate           the candidates name
+     * @throws IOException 
+     */
+    private void addCandidateToFinalWinOrder(HashSet<String> allocatedCandidates, int index, String party, int seat,
+            String candName, String candidate) throws IOException {
+        ArrayList<Object> innerList = new ArrayList<>();
+
+        // adds to the HashSet the unique identifier
+        allocatedCandidates.add(candName);
+
+        // creates an inner arrayList to add to finalWinOrder
+        innerList.add(party);
+        innerList.add(candidate);
+        innerList.add(seat);
+
+        innerList.add(findCandidateVotes(candidate, party));
+
+        finalWinOrder.add(innerList);
+    }
+
+    /**
+     * This will retrieve the votes for a candidate
+     * 
+     * @param candidate name of the candidate
+     * @param count     At which index of the name you can expect the candidates
+     *                  votes
+     * @return the votes of a candidate, -1 if the candidate name cannot be found
+     * @throws IOException 
+     */
+    private int findCandidateVotes(String candidate, String party) throws IOException {
+        int index = checkForRepeatName(candidate, party);
+        return (int) candidateVotes.get(index).get(1);
+    }
+
+    /**
+     * This will find the index of where to access in candidate votes to obtain the votes for the candidate
+     * @param candidate the name of the candidate 
+     * @param party the name of the party
+     * @return an integer total of what index to retrieve from candidateVotes
+     * @throws IOException
+     */
+    private int checkForRepeatName(String candidate, String party) throws IOException {
+        int location = adjustIndexForPartyOrder(party);
+        int additionalSame = checkFinalWinOrder(candidate, party);
+
+        //Should never be greater than the total size of candidateVotes
+        //Should never be less than 0
+        int totalIndex = location + additionalSame;
+        if(totalIndex >= candidateVotes.size() || totalIndex < 0){
+            throw new IOException("Incorrect location calculation in checkForRepeatName");
+        }
+
+        return totalIndex;
+    }
+
+    /**
+     * This will go through the current finalWinOrder update count if there already
+     * exists a candidate in the same party with the same name
+     * 
+     * @param candidate the name of the candidate
+     * @param party     the name of the party
+     * @return a count
+     */
+    private int checkFinalWinOrder(String candidate, String party) {
+        int count = 0;
+        for (ArrayList<Object> innerList : finalWinOrder) {
+            if (innerList.get(0).equals(party)) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    /**
+     * This will add up the number of spots that are currently taken up in the
+     * candidate Votes array ahead of the candidate we are trying to add to the
+     * final win order
+     * 
+     * @param party this is the string of the party, passed in for
+     *              checkPartyLocation
+     * @return an interger total of how many are ahead
+     */
+    private int adjustIndexForPartyOrder(String party) {
+        int count = checkPartyLocation(party);
+        int tempCount = 0;
+        int location = 0;
+        String partyString;
+
+        while (tempCount != count) {
+            partyString = (String) partyVotes.get(tempCount).get(0);
+            location += (int) partyCandidates.get(partyString).size();
+            tempCount++;
+        }
+
+        return location;
+    }
+
+    /**
+     * This will go through partyVotes and determine how many parties are before the
+     * passed in party in the order
+     * 
+     * @param party this is a string of the partyName
+     * @return an integer representing how many parties are ahead of it in the order
+     */
+    private int checkPartyLocation(String party) {
+        int location = 0;
+        for (ArrayList<Object> partyList : partyVotes) {
+            if (partyList.get(0).equals(party)) {
+                return location;
+            } else {
+                location++;
+            }
+        }
+
+        return location;
     }
 }
