@@ -21,7 +21,7 @@ public class ExtractDataCPLTest {
     ExtractDataCPL test01;
     // ExtractDataCPL test02;
     // ExtractDataCPL test03;
-    BufferedReader validFile01;
+    ArrayList<BufferedReader> validFile01;
     HashMap<String, ArrayList<String>> partyCandidates;
     ArrayList<ArrayList<Object>> partyVotes;
     ArrayList<ArrayList<Object>> candidateVotes;
@@ -60,8 +60,8 @@ public class ExtractDataCPLTest {
         candidateVotes = new ArrayList<ArrayList<Object>>();
 
         // Test 2.a numParties = 6 which is the right number
-        validFile01 = new BufferedReader(new FileReader(new File(
-                "src/test/java/InputFiles/CPLPartyInfo01.txt")));
+        validFile01 = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File(
+            "src/test/java/InputFiles/CPLPartyInfo01.txt")))));
         test01 = new ExtractDataCPL(validFile01, "CPL");
         partyCandidates = test01.formatPartyInformation(6, partyVotes, candidateVotes);
         HashMap<String, ArrayList<String>> expected = new HashMap<String, ArrayList<String>>();
@@ -75,7 +75,7 @@ public class ExtractDataCPLTest {
         assertEquals(expected, partyCandidates);
 
         // Test 2.b numPatries = 0 which is the wrong number
-        validFile01 = new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLPartyInfo02.txt")));
+        validFile01 = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLPartyInfo02.txt")))));
         test01 = new ExtractDataCPL(validFile01, "CPL");
         partyCandidates = test01.formatPartyInformation(0, partyVotes, candidateVotes);
         expected = new HashMap<String, ArrayList<String>>();
@@ -83,7 +83,7 @@ public class ExtractDataCPLTest {
         assertEquals(expected, partyCandidates);
 
         // Test 2.c Independent has no candidates
-        validFile01 = new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLPartyInfo03.txt")));
+        validFile01 = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLPartyInfo03.txt")))));
         test01 = new ExtractDataCPL(validFile01, "CPL");
         partyCandidates = test01.formatPartyInformation(6, partyVotes, candidateVotes);
         expected = new HashMap<String, ArrayList<String>>();
@@ -104,7 +104,7 @@ public class ExtractDataCPLTest {
         candidateVotes = new ArrayList<ArrayList<Object>>();
 
         // Test 3.a correct formatting
-        validFile01 = new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLBallotTest01.txt")));
+        validFile01 = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLBallotTest01.txt")))));
         test01 = new ExtractDataCPL(validFile01, "CPL");
         partyCandidates = test01.formatPartyInformation(3, partyVotes, candidateVotes);
         test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
@@ -118,7 +118,7 @@ public class ExtractDataCPLTest {
         // Test 3.b incorrect formatting on one of the votes
         partyVotes = new ArrayList<ArrayList<Object>>();
         candidateVotes = new ArrayList<ArrayList<Object>>();
-        validFile01 = new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLBallotTest02.txt")));
+        validFile01 = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLBallotTest02.txt")))));
         test01 = new ExtractDataCPL(validFile01, "CPL");
         partyCandidates = test01.formatPartyInformation(3, partyVotes, candidateVotes);
 
@@ -128,7 +128,7 @@ public class ExtractDataCPLTest {
         // 3.c line is null
         partyVotes = new ArrayList<ArrayList<Object>>();
         candidateVotes = new ArrayList<ArrayList<Object>>();
-        validFile01 = new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLPartyInfo01.txt")));
+        validFile01 = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLPartyInfo01.txt")))));
         test01 = new ExtractDataCPL(validFile01, "CPL");
         partyCandidates = test01.formatPartyInformation(3, partyVotes, candidateVotes);
 
@@ -138,7 +138,7 @@ public class ExtractDataCPLTest {
         // 3.d no votes technically
         partyVotes = new ArrayList<ArrayList<Object>>();
         candidateVotes = new ArrayList<ArrayList<Object>>();
-        validFile01 = new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLBallotTest03.txt")));
+        validFile01 = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLBallotTest03.txt")))));
         test01 = new ExtractDataCPL(validFile01, "CPL");
         partyCandidates = test01.formatPartyInformation(3, partyVotes, candidateVotes);
         expectedPartyVotes = new ArrayList<>();
@@ -152,7 +152,7 @@ public class ExtractDataCPLTest {
         // 3.e correct formatting two
         partyVotes = new ArrayList<ArrayList<Object>>();
         candidateVotes = new ArrayList<ArrayList<Object>>();
-        validFile01 = new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLBallotTest04.txt")));
+        validFile01 = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLBallotTest04.txt")))));
         test01 = new ExtractDataCPL(validFile01, "CPL");
         partyCandidates = test01.formatPartyInformation(4, partyVotes, candidateVotes);
         test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
@@ -171,8 +171,8 @@ public class ExtractDataCPLTest {
         partyCandidates = new HashMap<String, ArrayList<String>>();
         partyVotes = new ArrayList<ArrayList<Object>>();
         candidateVotes = new ArrayList<ArrayList<Object>>();
-        validFile01 = new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLInput01.txt")));
-        String header = validFile01.readLine();
+        validFile01 = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLInput01.txt")))));
+        String header = validFile01.get(0).readLine();
         test01 = new ExtractDataCPL(validFile01, header);
         FileData test = test01.extractFromFile();
 
@@ -231,8 +231,8 @@ public class ExtractDataCPLTest {
     @Test
     public void testExtractDataCPLInput02() throws IOException {
         //5.a
-        validFile01 = new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLInput02.txt")));
-        String header = validFile01.readLine();
+        validFile01 = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLInput02.txt")))));
+        String header = validFile01.get(0).readLine();
         test01 = new ExtractDataCPL(validFile01, header);
 
         assertThrows(IOException.class, () -> test01.extractFromFile());
@@ -241,8 +241,8 @@ public class ExtractDataCPLTest {
     @Test
     public void testExtractDataCPLInput03() throws IOException {
         //6.a
-        validFile01 = new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLInput03.txt")));
-        String header = validFile01.readLine();
+        validFile01 = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLInput03.txt")))));
+        String header = validFile01.get(0).readLine();
         test01 = new ExtractDataCPL(validFile01, header);
 
         assertThrows(IOException.class, () -> test01.extractFromFile());
