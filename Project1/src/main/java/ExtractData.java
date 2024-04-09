@@ -30,7 +30,9 @@ abstract public class ExtractData {
         // represents the string obtained from the BufferedReader while reading a line
         String line;
         validFile = validFiles.get(0);
-
+        
+        //Read header
+        validFile.readLine();
         // Looks at the second line of the file, if it's an integer, numSeats is set to
         // it
         line = validFile.readLine();
@@ -60,10 +62,11 @@ abstract public class ExtractData {
 
         for (int i = 0; i < validFiles.size(); i++) {
             validFile = validFiles.get(i);
-            for(int k = 0; k < (4 + numParties); k++){
-                validFile.readLine(); //Get to votes
+            if(i != 0){
+                for(int k = 0; k < (4 + numParties); k++){
+                    validFile.readLine(); //Get to votes
+                }
             }
-
             formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
         }
 
