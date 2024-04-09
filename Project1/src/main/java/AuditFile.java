@@ -63,8 +63,6 @@ public class AuditFile {
             file.createNewFile();
         }
 
-        // TODO creating this object doesn't actually create it for some reason... 
-        // figure it out
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             writer.write(results.toString());
            // BufferedWrite is automatically closed at the end of the try-block

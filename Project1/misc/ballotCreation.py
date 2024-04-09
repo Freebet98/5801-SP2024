@@ -32,7 +32,7 @@ def callCountOnesAtIndex(printBallots, numParties):
 
 
 ballotNum = 120000
-numParties = 50
+numParties = 5
 ballots = createBallots(ballotNum, numParties)
 
 printBallots = createPrintBallots(ballots, numParties, ballotNum)
