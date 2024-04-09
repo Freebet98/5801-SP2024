@@ -245,7 +245,7 @@ public class FileDataTest {
                 assertEquals(true, cplInput02.getPartyCandidates().containsKey("Dem"));
 
                 // Test 6.a2
-                assertEquals("[Sarah, Bob, Jon]", cplInput01.getPartyCandidates().get("Dem").toString());
+                assertEquals("[Sarah, Bob, Jon]", cplInput02.getPartyCandidates().get("Dem").toString());
 
                 // Test 6.b1
                 assertEquals(true, cplInput02.getPartyCandidates().containsKey("Rep"));
@@ -352,47 +352,47 @@ public class FileDataTest {
 
         @Test
         public void testCheckPartyVotes() {
-                // Test 6.a
+                // Test 11.a
                 assertEquals("[[Dem, 2500], [Rep, 3000], [Green, 2100], [Lib, 2400]]",
                                 cplInput01.getPartyVotes().toString());
 
-                // Test 6.b
+                // Test 11.b
                 assertEquals("[[Dem, 750], [Rep, 250]]", cplInput02.getPartyVotes().toString());
 
-                // Test 6.c
+                // Test 11.c
                 assertEquals("[[Dem, 2000]]", cplInput03.getPartyVotes().toString());
 
-                // Test 6.d
+                // Test 11.d
                 assertEquals("[[Dem, 6000], [Rep, 4000]]", oplInput04.getPartyVotes().toString());
 
-                // Test 6.e
+                // Test 11.e
                 assertEquals("[[Dem, 1500], [Grass, 500]]", oplInput05.getPartyVotes().toString());
 
-                // Test 6.f
+                // Test 11.f
                 assertEquals("[[Dem, 1900], [Grass, 100]]", oplInput06.getPartyVotes().toString());
         }
 
         @Test
         public void testCheckCandidateVotes() {
-                // Test 7.a
+                // Test 12.a
                 assertEquals("[[Sarah, 0], [Bob, 0], [Jon, 0], [Craig, 0], [Klein, 0], [Rain, 0], [Water, 0], [Grass, 0], "
                                 +
                                 "[Ash, 0], [Matt, 0]]", cplInput01.getCandidateVotes().toString());
 
-                // Test 7.b
+                // Test 12.b
                 assertEquals("[[Sarah, 0], [Bob, 0], [Jon, 0], [Craig, 0], [Klein, 0]]",
                                 cplInput02.getCandidateVotes().toString());
 
-                // Test 7.c
+                // Test 12.c
                 assertEquals("[[Sarah, 0], [Bob, 0], [Jon, 0]]", cplInput03.getCandidateVotes().toString());
 
-                // Test 7.d
+                // Test 12.d
                 assertEquals("[[Sarah, 4500], [Bob, 2000], [Jon, 3500]]", oplInput04.getCandidateVotes().toString());
 
-                // Test 7.e
+                // Test 12.e
                 assertEquals("[[Sarah, 1500], [Rain, 500]]", oplInput05.getCandidateVotes().toString());
 
-                // Test 7.f
+                // Test 12.f
                 assertEquals("[[Sarah, 1900], [Rain, 100]]", oplInput06.getCandidateVotes().toString());
         }
 

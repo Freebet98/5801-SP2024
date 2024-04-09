@@ -13,14 +13,14 @@ public class ExtractDataCPL extends ExtractData {
     /**
      * This creates an object of the ExtractDataCPL class
      *
-     * @param validFile this the bufferedReader used to parse through the given
-     *                  file
-     * @param header    this is the header depicting which type of election it
-     *                  is. This is found in the Main class and passed in
+     * @param validFiles this is an ArrayList of BufferedReader Objects representing
+     *                   the multiple files given by the user
+     * @param header     this is the header depicting which type of election it
+     *                   is. This is found in the Main class and passed in
      * @throws IOException will happen if there is an error in reading the file
      */
-    ExtractDataCPL(BufferedReader validFile, String header) throws IOException {
-        this.validFile = validFile;
+    ExtractDataCPL(ArrayList<BufferedReader> validFiles, String header) throws IOException {
+        this.validFiles = validFiles;
         this.header = header;
     }
 
@@ -43,7 +43,7 @@ public class ExtractDataCPL extends ExtractData {
     protected void formatBallotInformation(ArrayList<ArrayList<Object>> partyVotes,
             ArrayList<ArrayList<Object>> candidateVotes, HashMap<String, ArrayList<String>> partyCandidates)
             throws IOException {
-        String line = validFile.readLine();
+        String line;
         char[] splitLine;
         int index = -1;
         int count = 0;
@@ -51,7 +51,7 @@ public class ExtractDataCPL extends ExtractData {
         while ((line = validFile.readLine()) != null) {
             line.trim();
             splitLine = line.toCharArray();
-            if (splitLine[0] != '1' && splitLine[0] != ',') {
+            if (line.indexOf('1') == -1 || line.indexOf(',') == -1) {
                 throw new IOException("File format is not in the correct format");
             }
 
@@ -63,10 +63,6 @@ public class ExtractDataCPL extends ExtractData {
                     partyVotes.get(index).set(1, count);
                 }
             }
-        }
-
-        if(validFile.ready()){
-            throw new IOException("File has more infomation that wasn't read");
         }
     }
 }

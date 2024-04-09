@@ -9,28 +9,35 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 abstract public class ExtractData {
+    protected ArrayList<BufferedReader> validFiles;
     protected BufferedReader validFile;
     protected FileData fileData;
     protected String header;
+    protected ArrayList<ArrayList<Object>> partyVotes = new ArrayList<>();
+    protected ArrayList<ArrayList<Object>> candidateVotes = new ArrayList<>();
+    private HashMap<String, ArrayList<String>> partyCandidates = null;
 
     /**
-     * This is used to extract data from the File, assumes all checks done within
+     * This is used to extract data from Multiple Files, assumes all checks done within
      * functions called work
-     *
+     * 
      * @return fileData, this is a FileData object containing the information from
      *         the extracted file
+     * 
      * @throws IOException
-     * @throws Exception
      */
     protected FileData extractFromFile() throws IOException {
         // represents the string obtained from the BufferedReader while reading a line
         String line;
-
+        validFile = validFiles.get(0);
+        
+        //Read header
+        validFile.readLine();
         // Looks at the second line of the file, if it's an integer, numSeats is set to
         // it
         line = validFile.readLine();
         if (!verifyLineIsDigit(line)) {
-            return null;
+            throw new IOException("Not enough digits");
         }
         int numSeats = Integer.parseInt(line);
 
@@ -38,7 +45,7 @@ abstract public class ExtractData {
         // it
         line = validFile.readLine();
         if (!verifyLineIsDigit(line)) {
-            return null;
+            throw new IOException("Not enough digits");
         }
         int numBallots = Integer.parseInt(line);
 
@@ -46,20 +53,22 @@ abstract public class ExtractData {
         // to it
         line = validFile.readLine();
         if (!verifyLineIsDigit(line)) {
-            return null;
+            throw new IOException("Not enough digits");
         }
         int numParties = Integer.parseInt(line);
 
-        // Create two new ArrayList<ArrayList<Object>> to store partyVotes and
-        // candidateVotes
         // Initialize partyCandidates with formatPartyInformation
-        ArrayList<ArrayList<Object>> partyVotes = new ArrayList<>();
-        ArrayList<ArrayList<Object>> candidateVotes = new ArrayList<>();
-        HashMap<String, ArrayList<String>> partyCandidates = formatPartyInformation(numParties, partyVotes,
-                candidateVotes);
+        partyCandidates = formatPartyInformation(numParties, partyVotes, candidateVotes);
 
-        // Values for these get set in formatBallotInformation
-        formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
+        for (int i = 0; i < validFiles.size(); i++) {
+            validFile = validFiles.get(i);
+            if(i != 0){
+                for(int k = 0; k < (4 + numParties); k++){
+                    validFile.readLine(); //Get to votes
+                }
+            }
+            formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
+        }
 
         fileData = new FileData(header, numSeats, numBallots, numParties, partyCandidates, partyVotes, candidateVotes);
         return fileData;
@@ -69,7 +78,7 @@ abstract public class ExtractData {
      * This will look through the given string, if it finds a character that is not
      * a digit a message will
      * be given to the user and the program will close with a system.exit()
-     *
+     * 
      * @param line represents a string of the line from the file. This line should
      *             only be digits
      */
