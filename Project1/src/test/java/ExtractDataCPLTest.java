@@ -63,6 +63,7 @@ public class ExtractDataCPLTest {
         validFile01 = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File(
             "src/test/java/InputFiles/CPLPartyInfo01.txt")))));
         test01 = new ExtractDataCPL(validFile01, "CPL");
+        test01.validFile = validFile01.get(0);
         partyCandidates = test01.formatPartyInformation(6, partyVotes, candidateVotes);
         HashMap<String, ArrayList<String>> expected = new HashMap<String, ArrayList<String>>();
         expected.put("Democratic", new ArrayList<>(Arrays.asList(" Mary", " Jane", " Kim")));
@@ -77,6 +78,7 @@ public class ExtractDataCPLTest {
         // Test 2.b numPatries = 0 which is the wrong number
         validFile01 = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLPartyInfo02.txt")))));
         test01 = new ExtractDataCPL(validFile01, "CPL");
+        test01.validFile = validFile01.get(0);
         partyCandidates = test01.formatPartyInformation(0, partyVotes, candidateVotes);
         expected = new HashMap<String, ArrayList<String>>();
 
@@ -85,6 +87,7 @@ public class ExtractDataCPLTest {
         // Test 2.c Independent has no candidates
         validFile01 = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLPartyInfo03.txt")))));
         test01 = new ExtractDataCPL(validFile01, "CPL");
+        test01.validFile = validFile01.get(0);
         partyCandidates = test01.formatPartyInformation(6, partyVotes, candidateVotes);
         expected = new HashMap<String, ArrayList<String>>();
         expected.put("Democratic", new ArrayList<>(Arrays.asList(" Mary", " Jane", " Kim")));
@@ -106,6 +109,7 @@ public class ExtractDataCPLTest {
         // Test 3.a correct formatting
         validFile01 = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLBallotTest01.txt")))));
         test01 = new ExtractDataCPL(validFile01, "CPL");
+        test01.validFile = validFile01.get(0);
         partyCandidates = test01.formatPartyInformation(3, partyVotes, candidateVotes);
         test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
         ArrayList<ArrayList<Object>> expectedPartyVotes = new ArrayList<>();
@@ -120,6 +124,7 @@ public class ExtractDataCPLTest {
         candidateVotes = new ArrayList<ArrayList<Object>>();
         validFile01 = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLBallotTest02.txt")))));
         test01 = new ExtractDataCPL(validFile01, "CPL");
+        test01.validFile = validFile01.get(0);
         partyCandidates = test01.formatPartyInformation(3, partyVotes, candidateVotes);
 
         assertThrows(IOException.class,
@@ -130,6 +135,7 @@ public class ExtractDataCPLTest {
         candidateVotes = new ArrayList<ArrayList<Object>>();
         validFile01 = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLPartyInfo01.txt")))));
         test01 = new ExtractDataCPL(validFile01, "CPL");
+        test01.validFile = validFile01.get(0);
         partyCandidates = test01.formatPartyInformation(3, partyVotes, candidateVotes);
 
         assertThrows(IOException.class,
@@ -140,6 +146,7 @@ public class ExtractDataCPLTest {
         candidateVotes = new ArrayList<ArrayList<Object>>();
         validFile01 = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLBallotTest03.txt")))));
         test01 = new ExtractDataCPL(validFile01, "CPL");
+        test01.validFile = validFile01.get(0);
         partyCandidates = test01.formatPartyInformation(3, partyVotes, candidateVotes);
         expectedPartyVotes = new ArrayList<>();
         expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Grass", 0)));
@@ -154,6 +161,7 @@ public class ExtractDataCPLTest {
         candidateVotes = new ArrayList<ArrayList<Object>>();
         validFile01 = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLBallotTest04.txt")))));
         test01 = new ExtractDataCPL(validFile01, "CPL");
+        test01.validFile = validFile01.get(0);
         partyCandidates = test01.formatPartyInformation(4, partyVotes, candidateVotes);
         test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
         expectedPartyVotes = new ArrayList<>();
@@ -172,7 +180,7 @@ public class ExtractDataCPLTest {
         partyVotes = new ArrayList<ArrayList<Object>>();
         candidateVotes = new ArrayList<ArrayList<Object>>();
         validFile01 = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLInput01.txt")))));
-        String header = validFile01.get(0).readLine();
+        String header = "CPL";
         test01 = new ExtractDataCPL(validFile01, header);
         FileData test = test01.extractFromFile();
 
@@ -232,7 +240,8 @@ public class ExtractDataCPLTest {
     public void testExtractDataCPLInput02() throws IOException {
         //5.a
         validFile01 = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLInput02.txt")))));
-        String header = validFile01.get(0).readLine();
+        String header = "CPL";
+        test01.validFile = validFile01.get(0);
         test01 = new ExtractDataCPL(validFile01, header);
 
         assertThrows(IOException.class, () -> test01.extractFromFile());
@@ -242,9 +251,79 @@ public class ExtractDataCPLTest {
     public void testExtractDataCPLInput03() throws IOException {
         //6.a
         validFile01 = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLInput03.txt")))));
-        String header = validFile01.get(0).readLine();
+        String header = "CPL";
+        test01.validFile = validFile01.get(0);
         test01 = new ExtractDataCPL(validFile01, header);
 
         assertThrows(IOException.class, () -> test01.extractFromFile());
+    }
+
+    @Test
+    public void testExtractDataCPLMultipleFiles() throws IOException {
+        validFile01 = new ArrayList<BufferedReader>();
+        validFile01.add(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLInputMultiple01.txt"))));
+        validFile01.add(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLInputMultiple02.txt"))));
+        validFile01.add(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLInputMultiple03.txt"))));
+
+        String header = "CPL";
+        test01 = new ExtractDataCPL(validFile01, header);
+        FileData test = test01.extractFromFile();
+
+        // Test 7.a Checks Header
+        assertEquals("CPL", test.getElectionType());
+
+        // Test 7.b Number of Seats
+        assertEquals(4, test.getNumberSeats());
+
+        // Test 7.c Number of Ballots
+        assertEquals(360000, test.getNumberBallots());
+
+        // Test 7.d Number of Parties
+        assertEquals(5, test.getNumberParties());
+
+        // Test 7.e Party Candidates
+        partyCandidates = new HashMap<>();
+        partyCandidates.put("Dem", new ArrayList<>(Arrays.asList("Mary", "Jane", "Kim")));
+        partyCandidates.put("Rep", new ArrayList<>(Arrays.asList("Allen, Joe, Sarah")));
+        partyCandidates.put("Green", new ArrayList<>(Arrays.asList("Ashley", "Mike")));
+        partyCandidates.put("New", new ArrayList<>(Arrays.asList("Nikki", "Laura")));
+        partyCandidates.put("Ind", new ArrayList<>(Arrays.asList("Matt")));
+
+        assertEquals(true, test.getPartyCandidates().containsKey("Dem"));
+        assertEquals(true, test.getPartyCandidates().containsKey("Rep"));
+        assertEquals(true, test.getPartyCandidates().containsKey("Green"));
+        assertEquals(true, test.getPartyCandidates().containsKey("New"));
+        assertEquals(true, test.getPartyCandidates().containsKey("Ind"));
+        assertEquals("[ Mary,  Jane,  Kim]", test.getPartyCandidates().get("Dem").toString());
+        assertEquals("[ Allen,  Joe,  Sarah]", test.getPartyCandidates().get("Rep").toString());
+        assertEquals("[ Ashley,  Mike]", test.getPartyCandidates().get("Green").toString());
+        assertEquals("[ Nikki,  Laura]", test.getPartyCandidates().get("New").toString());
+        assertEquals("[ Matt]", test.getPartyCandidates().get("Ind").toString());
+
+        // Test 7.f Party Votes
+        partyVotes = new ArrayList<>();
+        partyVotes.add(new ArrayList<>(Arrays.asList("Dem", 71941)));
+        partyVotes.add(new ArrayList<>(Arrays.asList("Rep", 71731)));
+        partyVotes.add(new ArrayList<>(Arrays.asList("Green", 72027)));
+        partyVotes.add(new ArrayList<>(Arrays.asList("New", 72238)));
+        partyVotes.add(new ArrayList<>(Arrays.asList("Ind", 72063)));
+
+        assertEquals(partyVotes, test.getPartyVotes());
+
+        // Test 7.g Candidate Votes
+        candidateVotes = new ArrayList<>();
+        candidateVotes.add(new ArrayList<>(Arrays.asList(" Mary", 0)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList(" Jane", 0)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList(" Kim", 0)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList(" Allen", 0)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList(" Joe", 0)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList(" Sarah", 0)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList(" Ashley", 0)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList(" Mike", 0)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList(" Nikki", 0)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList(" Laura", 0)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList(" Matt", 0)));
+
+        assertEquals(candidateVotes, test.getCandidateVotes());
     }
 }

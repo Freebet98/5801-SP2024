@@ -1,6 +1,6 @@
 CPL
 4
-120000
+360000
 5
 Dem, Mary, Jane, Kim
 Rep, Allen, Joe, Sarah
