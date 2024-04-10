@@ -293,12 +293,37 @@ public class ResultsDataOPLTest {
         candidateVotes.add(new ArrayList<>(Arrays.asList("Clyde", 400)));
         candidateVotes.add(new ArrayList<>(Arrays.asList("Klaus", 105)));
 
-        testFile = new FileData("OPL", 3, 1005, 5, partyCandidates, partyVotes, candidateVotes);
+        testFile = new FileData("OPL", 3, 1005, 2, partyCandidates, partyVotes, candidateVotes);
         partyWinOrder = new ArrayList<>(Arrays.asList("Dem", "Rep"));
         finalWinOrder = new ArrayList<>();
         test = new ResultsDataOPL(seatAlloc, remainVotes, partyWinOrder, testFile);
         finalWinOrder.add(new ArrayList<Object>(Arrays.asList("Dem", "Clyde", 1, 300)));
         finalWinOrder.add(new ArrayList<Object>(Arrays.asList("Rep", "Clyde", 2, 400)));
+
+        assertEquals(finalWinOrder, test.getFinalWinOrder()); 
+
+        // Test 5.e partyWinOrder has duplicate names in the same party
+        partyCandidates = new HashMap<>();
+        partyCandidates.put("Dem", new ArrayList<>(Arrays.asList("Clyde", "Clyde", "John")));
+        partyCandidates.put("Rep", new ArrayList<>(Arrays.asList("Clyde", "Klaus")));
+
+        partyVotes = new ArrayList<>();
+        partyVotes.add(new ArrayList<>(Arrays.asList("Dem", 500)));
+        partyVotes.add(new ArrayList<>(Arrays.asList("Rep", 505)));
+
+        candidateVotes = new ArrayList<>();
+        candidateVotes.add(new ArrayList<>(Arrays.asList("Clyde", 300)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList("Clyde", 150)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList("John", 50)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList("Clyde", 400)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList("Klaus", 105)));
+
+        testFile = new FileData("OPL", 3, 1005, 2, partyCandidates, partyVotes, candidateVotes);
+        partyWinOrder = new ArrayList<>(Arrays.asList("Dem", "Dem"));
+        finalWinOrder = new ArrayList<>();
+        test = new ResultsDataOPL(seatAlloc, remainVotes, partyWinOrder, testFile);
+        finalWinOrder.add(new ArrayList<Object>(Arrays.asList("Dem", "Clyde", 1, 300)));
+        finalWinOrder.add(new ArrayList<Object>(Arrays.asList("Dem", "Clyde", 2, 150)));
 
         assertEquals(finalWinOrder, test.getFinalWinOrder()); 
     }
