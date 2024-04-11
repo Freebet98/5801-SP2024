@@ -112,9 +112,9 @@ public class ExtractDataOPL extends ExtractData {
      * @param candidateVotes  this is an ArrayList<ArrayList<Object>> whih contains
      *                        inner mappings of a candidate name and the number of
      *                        corresponding votes
-     * @param partyCandidates
+     * @param partyCandidates this is a mapping of a party name to an ordered list
+     *                        of their candidates
      * @throws IOException
-     * @throws Exception
      */
     @Override
     protected void formatBallotInformation(ArrayList<ArrayList<Object>> partyVotes,
@@ -123,7 +123,16 @@ public class ExtractDataOPL extends ExtractData {
         String line;
         char[] splitLine;
         int index = -1;
+        int curCount = 0;
         int count = 0;
+
+        // tempCount is used to count the number of votes in candidateVotes in the
+        // current file
+        // being read
+        ArrayList<Integer> tempCount = new ArrayList<>();
+        for (int i = 0; i < candidateVotes.size(); i++) {
+            tempCount.add(0);
+        }
 
         // Check for the EOF
         while ((line = validFile.readLine()) != null) {
@@ -138,10 +147,12 @@ public class ExtractDataOPL extends ExtractData {
             for (int i = 0; i < splitLine.length; i++) {
                 if (splitLine[i] == '1') {
                     index = i;
+                    curCount = (int) tempCount.get(index);
+                    curCount += 1;
+                    tempCount.set(index, curCount);
                     count = (int) candidateVotes.get(index).get(1);
                     count += 1;
                     candidateVotes.get(index).set(1, count);
-
                 }
             }
 
@@ -150,7 +161,7 @@ public class ExtractDataOPL extends ExtractData {
         // Gathers the votes from candidateVotes and place in partyVotes
         for (int i = 0; i < candidateVotes.size(); i++) {
             String candidateName = (String) candidateVotes.get(i).get(0);
-            putVotesInPartyVotes(partyVotes, candidateVotes, partyCandidates, candidateName);
+            putVotesInPartyVotes(partyVotes, candidateVotes, partyCandidates, candidateName, tempCount, i);
         }
     }
 
@@ -172,10 +183,14 @@ public class ExtractDataOPL extends ExtractData {
      * @param candidateName   this is the name of the current candidate whose votes
      *                        are
      *                        being added to partyVotes
+     * @param tempCount       this is an ArrayList<Integer> which contains the
+     *                        number of votes in the current file that was read
+     * @param index           this is the index of the current candidate's votes in
+     *                        tempCount
      */
     private void putVotesInPartyVotes(ArrayList<ArrayList<Object>> partyVotes,
             ArrayList<ArrayList<Object>> candidateVotes, HashMap<String, ArrayList<String>> partyCandidates,
-            String candidateName) {
+            String candidateName, ArrayList<Integer> tempCount, int index) {
         String returnKey = "";
         for (String key : partyCandidates.keySet()) {
             ArrayList<String> values = partyCandidates.get(key);
@@ -185,14 +200,7 @@ public class ExtractDataOPL extends ExtractData {
             }
         }
 
-        int votes = 0;
-        for (ArrayList<Object> pairC : candidateVotes) {
-            String candidate = (String) pairC.get(0);
-            if (candidate.equals(candidateName)) {
-                votes = (int) pairC.get(1);
-                break;
-            }
-        }
+        int votes = tempCount.get(index);
 
         for (ArrayList<Object> pairP : partyVotes) {
             String party = (String) pairP.get(0);

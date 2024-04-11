@@ -16,24 +16,24 @@ public class FileData {
     protected final ArrayList<ArrayList<Object>> candidateVotes; // Not utilized within a CPL election
 
     /**
-     *  This creates an object of FileData, this is used to store all the information
-     *  extracted from the file passed
-     *  in by the user
+     * This creates an object of FileData, this is used to store all the information
+     * extracted from the file passed
+     * in by the user
      * 
-     *  @param electionType    this is a string representing what type of election is
+     * @param electionType    this is a string representing what type of election is
      *                        being run on the file
-     *  @param numberSeats     this how many seats are up for election
-     *  @param numberBallots   this is how many ballots are on the file
-     *  @param numberParties   this is how many parties are participating in a CPL
+     * @param numberSeats     this how many seats are up for election
+     * @param numberBallots   this is how many ballots are on the file
+     * @param numberParties   this is how many parties are participating in a CPL
      *                        election or the number of candidates
      *                        in an OPL election
-     *  @param partyCandidates this is a mapping of a party name to an ordered list
+     * @param partyCandidates this is a mapping of a party name to an ordered list
      *                        of their candidates
-     *  @param partyVotes      this is a mapping of the party name to the number of
+     * @param partyVotes      this is a mapping of the party name to the number of
      *                        votes that party has, the actual
      *                        ArrayList will be of type ArrayList<ArrayList<String,
      *                        int>>
-     *  @param candidateVotes  this a mapping of each candidate and the amount of
+     * @param candidateVotes  this a mapping of each candidate and the amount of
      *                        votes they have, not utilized in a CPL
      *                        election, the actual ArrayList will be of type
      *                        ArrayList<ArrayList<String, int>>

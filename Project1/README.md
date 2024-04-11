@@ -40,3 +40,13 @@ CPLInputMultiple03.txt | 5 Parties, properly formatted, Dem - 24019, Rep - 24130
 OPL
 ------------------------
 Name                   | Information
+OPLInput01.txt         | 2 Parties, 5 Candidates, Pluto - Becky: 23971, Mariah: 24136, Green - Jonah: 24014, Radius: 24006, Louis: 23873
+OPLPartyInfo01.txt     | 5 properly formatted candidates only, 2 parties
+OPLPartyInfo02.txt     | Candidates missing from Pluto party, only Green has candidates
+OPLBallotTest01.txt    | 5 candidates, properly formatted Ballots, Pluto - Becky: 20105, Mariah: 19943, Green - Jonah: 19943, Radius: 20020, Louis: 19989
+OPLBallotTest02.txt    | 5 candidates, not properly formatted Ballots
+OPLBallotTest03.txt    | 5 candidates, not properly formatted Ballots
+OPLBallotTest04.txt    | 5 candidates, properly formatted Ballots, Pluto - Becky: 20132, Mariah: 19920, Green - Jonah: 20054, Radius: 19826, Louis: 20068
+OPlInputMultiple01.txt | 5 candidates, 3 parties, Pluto - Becky: 30025, Jonah: 30092, Green - Einstein: 29829, Nasa: 29890, Ind - John: 30164
+OPLInputMultiple02.txt | 5 candidates, 3 parties, Pluto - Becky: 19098, Jonah: 19085, Green - Einstein: 18999, Nasa: 18955, Ind - John: 18863
+OPLInputMultiple03.txt | 5 candidates, 3 parties, Pluto - Becky: 51912, Jonah: 52053, Green - Einstein: 52311, Nasa: 52201, Ind - John: 51523

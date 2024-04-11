@@ -31,7 +31,7 @@ def callCountOnesAtIndex(printBallots, numParties):
         print("Count of '1's at index", index, ":", countOnesAtIndex(printBallots, index))
 
 
-ballotNum = 120000
+ballotNum = 260000
 numParties = 5
 ballots = createBallots(ballotNum, numParties)
 
