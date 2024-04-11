@@ -18,7 +18,8 @@ abstract public class ExtractData {
     private HashMap<String, ArrayList<String>> partyCandidates = null;
 
     /**
-     * This is used to extract data from Multiple Files, assumes all checks done within
+     * This is used to extract data from Multiple Files, assumes all checks done
+     * within
      * functions called work
      * 
      * @return fileData, this is a FileData object containing the information from
@@ -30,8 +31,8 @@ abstract public class ExtractData {
         // represents the string obtained from the BufferedReader while reading a line
         String line;
         validFile = validFiles.get(0);
-        
-        //Read header
+
+        // Read header
         validFile.readLine();
         // Looks at the second line of the file, if it's an integer, numSeats is set to
         // it
@@ -62,9 +63,18 @@ abstract public class ExtractData {
 
         for (int i = 0; i < validFiles.size(); i++) {
             validFile = validFiles.get(i);
-            if(i != 0){
-                for(int k = 0; k < (4 + numParties); k++){
-                    validFile.readLine(); //Get to votes
+            if (i != 0) {
+                for (int k = 0; k < (4 + numParties); k++) {
+                    if (k == 2) {
+                        line = validFile.readLine();
+                        if (!verifyLineIsDigit(line)) {
+                            throw new IOException("Not enough digits");
+                        }
+                        numBallots += Integer.parseInt(line);
+                    }
+                    else{
+                        line = validFile.readLine();
+                    }
                 }
             }
             formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
