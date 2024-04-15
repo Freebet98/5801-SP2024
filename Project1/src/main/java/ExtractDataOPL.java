@@ -13,11 +13,10 @@ public class ExtractDataOPL extends ExtractData {
     /**
      * This creates an object of the ExtractDataOPL class
      *
-     * @param validFile this the bufferedReader used to parse through the given
-     *                  file
-     * @param header    this is the header depicting which type of election it
-     *                  is. This is found in the Main class and passed in
-     * @throws IOException will happen if there is an error in reading the file
+     * @param validFiles this is the Arrayist of bufferedReader objects so an
+     *                   election can have multiple files
+     * @param header     this is the header depicting which type of election it
+     *                   is. This is found in the Main class and passed in
      */
     ExtractDataOPL(ArrayList<BufferedReader> validFiles, String header) {
         this.validFiles = validFiles;

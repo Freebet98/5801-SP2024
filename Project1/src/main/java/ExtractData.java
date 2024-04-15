@@ -18,9 +18,10 @@ abstract public class ExtractData {
     private HashMap<String, ArrayList<String>> partyCandidates = null;
 
     /**
-     * This is used to extract data from Multiple Files, assumes all checks done
-     * within
-     * functions called work
+     * This is used to extract data from Multiple Files- works with CPL and OPL,
+     * assumes all checks done within functions called work
+     * 
+     * This is an overloaded function
      * 
      * @return fileData, this is a FileData object containing the information from
      *         the extracted file
@@ -71,8 +72,7 @@ abstract public class ExtractData {
                             throw new IOException("Not enough digits");
                         }
                         numBallots += Integer.parseInt(line);
-                    }
-                    else{
+                    } else {
                         line = validFile.readLine();
                     }
                 }
@@ -82,6 +82,25 @@ abstract public class ExtractData {
 
         fileData = new FileData(header, numSeats, numBallots, numParties, partyCandidates, partyVotes, candidateVotes);
         return fileData;
+    }
+
+    /**
+     * This is used to extract data from Multiple Files- works with MPO and MV,
+     * assumes all checks done within functions called work
+     * 
+     * this is an overloaded function
+     * 
+     * @param flag represents the boolean flag indicator that you should use the
+     *             extractFromFile for the MPO or MV files
+     * 
+     * @return fileData, this is a FileData object containing the information from
+     *         the extracted file
+     * 
+     * @throws IOException
+     */
+    protected FileData extractFromFile(boolean flag) throws IOException {
+        // TODO
+        return null;
     }
 
     /**
@@ -110,12 +129,12 @@ abstract public class ExtractData {
 
     /**
      * This method will read as many lines as there are number of parties in the
-     * file, the first word
-     * in the line will be used as the key in the HashMap and the rest beyond the
-     * first , will be
-     * added to the Arraylist of string, which represents the list of candidates for
-     * a party
+     * file, the first word in the line will be used as the key in the HashMap and
+     * the rest beyond the first , will be added to the Arraylist of string, which
+     * represents the list of candidates for a party
      *
+     * This is an overloaded function: CPL and OPL files
+     * 
      * @param numParties     this represents the number of parties that are listed
      *                       in
      *                       the given file
@@ -179,6 +198,38 @@ abstract public class ExtractData {
         }
 
         return partyCandidates;
+    }
+
+    /**
+     * This method will read one line in the file, it will seperate that one line
+     * into a formatted string array, where the first of two indecies is the name of
+     * the candidate and the second of the two indicies is the party of the
+     * candidate
+     * 
+     * This is an overloaded function: MPO and MV files
+     * 
+     * @param numParties     this represents the number of parties that are listed
+     *                       in
+     *                       the given file
+     * @param partyVotes     this is an ArrayList<ArrayList<Object>> which contains
+     *                       inner mappings of a party name and the number of
+     *                       corresponding votes
+     * @param candidateVotes this is an ArrayList<ArrayList<Object>> whih contains
+     *                       inner mappings of a candidate name and the number of
+     *                       corresponding votes
+     * @param flag           this is a boolean flag retrieved from extractFromFile
+     *                       to indicate that you are formatting party information
+     *                       from an MPO or an MV file
+     * @return HashMap<String, ArrayList < String>> that represents a key value of a
+     *         party name
+     *         to a list of candidate names
+     * @throws IOException if there is an error while reading the validFile
+     */
+    protected HashMap<String, ArrayList<String>> formatPartyInformation(int numParties,
+            ArrayList<ArrayList<Object>> partyVotes, ArrayList<ArrayList<Object>> candidateVotes, boolean flag)
+            throws IOException {
+        //TODO
+        return null;
     }
 
     /**
