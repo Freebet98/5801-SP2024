@@ -15,7 +15,7 @@ abstract public class ExtractData {
     protected String header;
     protected ArrayList<ArrayList<Object>> partyVotes = new ArrayList<>();
     protected ArrayList<ArrayList<Object>> candidateVotes = new ArrayList<>();
-    private HashMap<String, ArrayList<String>> partyCandidates = null;
+    protected HashMap<String, ArrayList<String>> partyCandidates = null;
 
     /**
      * This is used to extract data from Multiple Files- works with CPL and OPL,
@@ -99,8 +99,56 @@ abstract public class ExtractData {
      * @throws IOException
      */
     protected FileData extractFromFile(boolean flag) throws IOException {
-        // TODO
-        return null;
+        String line;
+        validFile = validFiles.get(0);
+
+        // Get header
+        line = validFile.readLine();
+
+        // Get number of seats
+        line = validFile.readLine();
+        if (!verifyLineIsDigit(line)) {
+            throw new IOException("Not enough digits");
+        }
+        // Line is confirmed to be a digit, after the check
+        int numSeats = Integer.parseInt(line);
+
+        // Get number of candidates
+        line = validFile.readLine();
+        if (!verifyLineIsDigit(line)) {
+            throw new IOException("Not enough digits");
+        }
+        int numCandidates = Integer.parseInt(line);
+
+        partyCandidates = formatPartyInformation(partyVotes, candidateVotes, true);
+
+        // Get number of ballots
+        line = validFile.readLine();
+        if (!verifyLineIsDigit(line)) {
+            throw new IOException("Not enough digits");
+        }
+        int numBallots = Integer.parseInt(line);
+
+        for (int i = 0; i < validFiles.size(); i++) {
+            validFile = validFiles.get(i);
+            if (i != 0) {
+                for (int k = 0; k < 4; k++) {
+                    if (k == 4) {
+                        line = validFile.readLine();
+                        if (!verifyLineIsDigit(line)) {
+                            throw new IOException("Not enough digits");
+                        }
+                        numBallots += Integer.parseInt(line);
+                    } else {
+                        line = validFile.readLine();
+                    }
+                }
+            }
+            formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
+        }
+
+        fileData = new FileData(header, numSeats, numBallots, numCandidates, partyCandidates, partyVotes, candidateVotes);
+        return fileData;
     }
 
     /**
@@ -225,11 +273,106 @@ abstract public class ExtractData {
      *         to a list of candidate names
      * @throws IOException if there is an error while reading the validFile
      */
-    protected HashMap<String, ArrayList<String>> formatPartyInformation(int numParties,
-            ArrayList<ArrayList<Object>> partyVotes, ArrayList<ArrayList<Object>> candidateVotes, boolean flag)
-            throws IOException {
-        //TODO
-        return null;
+    protected HashMap<String, ArrayList<String>> formatPartyInformation(ArrayList<ArrayList<Object>> partyVotes, 
+            ArrayList<ArrayList<Object>> candidateVotes, boolean flag) throws IOException {
+        String line = validFile.readLine();
+        String[] splitLine = line.trim().split(",");
+
+        String temp;
+
+        // Clean the brackets out of the splitString array
+        for (int i = 0; i < splitLine.length; i++) {
+            temp = splitLine[i];
+            if( (i % 2) == 0) {
+                splitLine[i] = temp.substring(1);
+            }
+            else if ( (i % 2) == 1) {
+                splitLine[i] = temp.substring(0, temp.length() - 1);
+            }
+        }
+
+        for (int i = 0; i < splitLine.length - 1; i = i + 2)
+        {
+            String candidate = splitLine[i];
+            String party = splitLine[i + 1];
+
+            if (!partyCandidates.containsKey(party))
+            {
+                ArrayList<Object> partyInner = new ArrayList<>();
+                partyInner.add(party);
+                partyInner.add(0);
+                partyVotes.add(partyInner);
+
+                ArrayList<Object> candidateInner = new ArrayList<>();
+                candidateInner.add(candidate);
+                candidateInner.add(0);
+                candidateVotes.add(candidateInner);
+
+                ArrayList<String> inner = new ArrayList<>();
+                inner.add(candidate);
+                partyCandidates.put(party, inner);
+            }
+            else
+            {
+                ArrayList<Object> candidateInner = new ArrayList<>();
+                candidateInner.add(candidate);
+                candidateInner.add(0);
+                candidateVotes.add(candidateInner);
+
+                ArrayList<String> inner = partyCandidates.get(party);
+                inner.add(candidate);
+                partyCandidates.put(party, inner);
+            }
+        }
+        return partyCandidates;
+    }
+
+    /**
+     * This will get the party associated with the candidate name
+     * It then gets the votes associated with the candidate name
+     * Using this information it places the votes in the location of the party in
+     * partyVotes
+     * 
+     * @param partyVotes      this is an ArrayList<ArrayList<Object>> which contains
+     *                        inner mappings of a party name and the number of
+     *                        corresponding
+     *                        votes
+     * @param candidateVotes  this is an ArrayList<ArrayList<Object>> whih contains
+     *                        inner mappings of a candidate name and the number of
+     *                        corresponding votes
+     * @param partyCandidates this is a mapping of a party name to an ordered list
+     *                        of their candidates
+     * @param candidateName   this is the name of the current candidate whose votes
+     *                        are
+     *                        being added to partyVotes
+     * @param tempCount       this is an ArrayList<Integer> which contains the
+     *                        number of votes in the current file that was read
+     * @param index           this is the index of the current candidate's votes in
+     *                        tempCount
+     */
+    protected void putVotesInPartyVotes(ArrayList<ArrayList<Object>> partyVotes,
+            ArrayList<ArrayList<Object>> candidateVotes, HashMap<String, ArrayList<String>> partyCandidates,
+            String candidateName, ArrayList<Integer> tempCount, int index) {
+        String returnKey = "";
+        for (String key : partyCandidates.keySet()) {
+            ArrayList<String> values = partyCandidates.get(key);
+            if (values.contains(candidateName)) {
+                returnKey = key;
+                break;
+            }
+        }
+
+        int votes = tempCount.get(index);
+
+        for (ArrayList<Object> pairP : partyVotes) {
+            String party = (String) pairP.get(0);
+            if (party.equals(returnKey)) {
+                int currentVotes = (int) pairP.get(1);
+                votes += currentVotes;
+                pairP.set(1, votes);
+                break;
+            }
+        }
     }
 
     /**
