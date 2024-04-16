@@ -11,131 +11,114 @@ import java.util.Scanner;
  * @author Bethany Freeman
  */
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
+        // Relative path to where all ballot files are kept
         String relativePath = "Project1/src/BallotFile/";
         Scanner scan = new Scanner(System.in);
         String fileName = "";
-        String filePath = "";
-        String header;
-        BufferedReader validFile;
-        ExtractData extraction;
-        FileData fileData;
-        Election election;
-        ResultsData results;
-        AuditFile fileCreation;
+        ExtractData extraction = null;
+        // Empty ArrayList of bufferedReader objects for multiple files
         ArrayList<BufferedReader> files = new ArrayList<>();
-        // Ballot files must be placed in a folder named BallotFiles within the
-        // Project1/src
 
-        if (args.length == 0) {
-            System.out.println("Please enter the name of the ballot file: ");
-            fileName = scan.nextLine();
-
-        } else if (args.length > 0) {
-            for(int i = 0; i < args.length; i++){
-                fileName = relativePath + args[i];
-
-                //Create a new file Object
-                File tempFile = new File(fileName);
-                if(!tempFile.exists() || tempFile.isDirectory()){
-                    System.out.println("One of the files entered was incorrect, cannot finish running program");
-                    System.exit(0);
+        // try catch block for user input, will catch all IOExceptions
+        try {
+            if (args.length == 0) { // No arguments given in the command line
+                System.out.println("Please enter the name of the ballot file: ");
+                fileName = scan.nextLine();
+            } else { // Arguments given in the command line
+                for (String arg : args) {
+                    String filePath = relativePath + arg;
+                    File file = new File(filePath);
+                    if (!file.exists() || file.isDirectory()) { // A file given in arguments does not properly exist
+                        System.out.println("One of the files entered was incorrect, cannot finish running program");
+                        System.exit(0);
+                    } else { // A file given in arguments does properly exist
+                        BufferedReader reader = new BufferedReader(new FileReader(file));
+                        files.add(reader);
+                    }
                 }
-                else{
-                    FileReader tempFileR = new FileReader(tempFile);
-                    BufferedReader tempFileB = new BufferedReader(tempFileR);
-                    files.add(tempFileB);
-                }
+                System.out.println("If you have more ballot files to add please add them");
+                System.out.println("Otherwise type \"q\" to quit or \"d\" to indicate you are done entering files");
+                fileName = scan.nextLine();
             }
 
-            System.out.println("If you have more ballot files to add please add them");
-            System.out.println("Otherwise type \"q\" to quit or \"d\" to indicate you are done entering files");
-            fileName = scan.nextLine();
-        } else {
-            System.out.println("Error, cannot run program.");
-            System.exit(0);
-        }
-
-        /*
-         * While the user has not inputted a valid file name, continue to prompt them
-         * for a new
-         * filename, for the letter 'q', the letter 'q' if entered will quit the
-         * entire system, or for the letter 'd', the letter 'd' if entered will let the system know the user has not finished entering fileNames
-         */
-        try {                     
-            while (true) {
-                filePath = relativePath + fileName;
-                File file = new File(filePath);
-
-                if (fileName.equals("q")) {
-                    scan.close();
-                    System.exit(0);
-                } else if(fileName.equals("d")){
+            while (!fileName.equals("q")) { // While the user does not want to quit
+                if (fileName.equals("d")) { // The user no longer has files to add
                     System.out.println("Generating Results...");
+                    if (!files.isEmpty()) { // If there are files to read
+                        BufferedReader firstFile = files.get(0);
+                        String header = firstFile.readLine();
 
-                    if(!files.isEmpty()){
-                        validFile = files.get(0);
-                        header = validFile.readLine();
-
-                        //Check for matching headers
-                        for(int i = 1; i < files.size(); i++){
-                            validFile = files.get(i);
-                            if(!header.equals(validFile.readLine())){
+                        for (BufferedReader file : files) { //Go through every file in the arraylist and check for matching headers
+                            if (!header.equals(file.readLine())) {
                                 throw new IOException("Two or more files given with non-matching headers");
                             }
                         }
 
-                        //Create an object ExtractData of the header type
                         if (header.equals("OPL")) {
                             extraction = new ExtractDataOPL(files, header);
                             break;
                         } else if (header.equals("CPL")) {
                             extraction = new ExtractDataCPL(files, header);
                             break;
-                        }else{
-                            throw new IOException("Header does not correspond to a Election type");
+                        } else if (header.equals("MPO")) {
+                            extraction = new ExtractDataMPO(files, header);
+                            break;
+                        } else {
+                            throw new IOException("Header does not correspond to an Election type");
                         }
-                    }
-                    else{
+                    } else {
                         throw new IOException("Empty files ArrayList, no valid files given");
                     }
-                    
-                }
-                else if (file.exists() && !file.isDirectory()) {
-                    FileReader fileR = new FileReader(file);
-                    validFile = new BufferedReader(fileR);
-                    files.add(validFile);
                 } else {
-                    System.out.println("Error: Invalid file. Input file must be a valid CSV");
-                    System.out.println("Please enter another file name, the letter \"q\" to quit, or the letter \"d\" to indidicate you have no more files to input");
-                    fileName = scan.nextLine();
+                    String filePath = relativePath + fileName;
+                    File file = new File(filePath);
+                    if (file.exists() && !file.isDirectory()) {
+                        BufferedReader reader = new BufferedReader(new FileReader(file));
+                        files.add(reader);
+                    } else {
+                        System.out.println("Error: Invalid file. Input file must be a valid CSV");
+                    }
                 }
+                System.out.println(
+                        "Please enter another file name, the letter \"q\" to quit, or the letter \"d\" to indicate you have no more files to input");
+                fileName = scan.nextLine();
             }
+
             scan.close();
 
-            // Extracts information into fileData
-            fileData = extraction.extractFromFile();
+            if (extraction != null) {
+                FileData fileData = extraction.extractFromFile();
+                Election election;
+                if (extraction.header.equals("OPL")) {
+                    election = new OPL(fileData);
+                } else if (extraction.header.equals("CPL")) {
+                    election = new CPL(fileData);
+                } //else if (extraction.header.equals("MPO")) {
+                    //election = new MPO(fileData);
+                //} 
+                else {
+                    throw new IOException("Header does not correspond to an Election type");
+                }
 
-            // finish creating election depending on which election needs to run
-            if (header.equals("OPL")) {
-                election = new OPL(fileData);
-            } else {
-                election = new CPL(fileData);
+                ResultsData results = election.runElection();
+                AuditFile fileCreation = new AuditFile(results);
+                fileCreation.printToFile();
+
+                System.out.println(results.display());
+                System.out.println("Audit File Saved: " + fileCreation.getFileName());
             }
-
-            results = election.runElection();
-
-            // Finish creating the AuditFile object and print the formatted results to an
-            // audit file
-            fileCreation = new AuditFile(results);
-            fileCreation.printToFile();
-
-            // Display the results to the user
-            System.out.println(results.display());
-            System.out.println("Audit File Saved: " + fileCreation.getFileName());
         } catch (IOException e) {
             System.out.println(e.getMessage());
-            System.exit(0);
+        } finally {
+            // Closing all buffered readers
+            for (BufferedReader br : files) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }
