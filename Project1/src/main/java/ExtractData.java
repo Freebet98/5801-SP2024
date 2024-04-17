@@ -15,7 +15,6 @@ abstract public class ExtractData {
     protected String header;
     protected ArrayList<ArrayList<Object>> partyVotes = new ArrayList<>();
     protected ArrayList<ArrayList<Object>> candidateVotes = new ArrayList<>();
-    protected HashMap<String, ArrayList<String>> partyCandidates = null;
 
     /**
      * This is used to extract data from Multiple Files- works with CPL and OPL,
@@ -60,6 +59,7 @@ abstract public class ExtractData {
         int numParties = Integer.parseInt(line);
 
         // Initialize partyCandidates with formatPartyInformation
+        HashMap<String, ArrayList<String>> partyCandidates;
         partyCandidates = formatPartyInformation(numParties, partyVotes, candidateVotes);
 
         for (int i = 0; i < validFiles.size(); i++) {
@@ -120,6 +120,7 @@ abstract public class ExtractData {
         }
         int numCandidates = Integer.parseInt(line);
 
+        HashMap<String, ArrayList<String>> partyCandidates;
         partyCandidates = formatPartyInformation(partyVotes, candidateVotes, true);
 
         // Get number of ballots
@@ -277,12 +278,13 @@ abstract public class ExtractData {
             ArrayList<ArrayList<Object>> candidateVotes, boolean flag) throws IOException {
         String line = validFile.readLine();
         String[] splitLine = line.trim().split(",");
+        HashMap<String, ArrayList<String>> partyCandidates = new HashMap<>();
 
         String temp;
 
         // Clean the brackets out of the splitString array
         for (int i = 0; i < splitLine.length; i++) {
-            temp = splitLine[i];
+            temp = splitLine[i].trim();
             if( (i % 2) == 0) {
                 splitLine[i] = temp.substring(1);
             }

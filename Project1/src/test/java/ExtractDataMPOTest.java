@@ -54,6 +54,138 @@ public class ExtractDataMPOTest {
         assertEquals(false, test.verifyLineIsDigit(line));
     }
 
-    
+    @Test
+    public void testFormatPartyInformation() throws IOException {
+
+        //test 2.a
+
+        partyVotes = new ArrayList<ArrayList<Object>>();
+        candidateVotes = new ArrayList<ArrayList<Object>>();
+        validFile = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File(
+            "src/test/java/InputFiles/MPOPartyInfo01.txt")))));
+        test = new ExtractDataMPO(validFile, "MPO");
+        test.validFile = validFile.get(0);
+        partyCandidates = test.formatPartyInformation(partyVotes, candidateVotes, true);
+        HashMap<String, ArrayList<String>> expected = new HashMap<String, ArrayList<String>>();
+
+        expected.put("D", new ArrayList<>(Arrays.asList("Shana", "Risako")));
+        expected.put("R", new ArrayList<>(Arrays.asList("Jon")));
+        expected.put("G", new ArrayList<>(Arrays.asList("Chris")));
+        expected.put("I", new ArrayList<>(Arrays.asList("Daniel")));
+
+        assertEquals(expected, partyCandidates);
+
+        // Test 2.b numPatries = 0 which is the wrong number
+        validFile = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/MPOPartyInfo02.txt")))));
+        test = new ExtractDataMPO(validFile, "MPO");
+        test.validFile = validFile.get(0);
+        partyCandidates = test.formatPartyInformation(partyVotes, candidateVotes, true);
+        expected = new HashMap<String, ArrayList<String>>();
+        expected.put("D", new ArrayList<>(Arrays.asList("Shana", "Risako")));
+        expected.put("", new ArrayList<>(Arrays.asList("Jon")));
+        expected.put("G", new ArrayList<>(Arrays.asList("Chris")));
+        expected.put("I", new ArrayList<>(Arrays.asList("Daniel")));
+
+        assertEquals(expected, partyCandidates);
+
+        // test 2.c
+        validFile = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/MPOPartyInfo03.txt")))));
+        test = new ExtractDataMPO(validFile, "MPO");
+        test.validFile = validFile.get(0);
+        partyCandidates = test.formatPartyInformation(partyVotes, candidateVotes, true);
+        expected = new HashMap<String, ArrayList<String>>();
+        expected.put("D", new ArrayList<>(Arrays.asList("Shana", "Risako")));
+        expected.put("R", new ArrayList<>(Arrays.asList("")));
+        expected.put("G", new ArrayList<>(Arrays.asList("Chris")));
+        expected.put("I", new ArrayList<>(Arrays.asList("Daniel")));
+
+        assertEquals(expected, partyCandidates);
+    }
+
+    @Test
+    public void testFormatBallotInformation() throws IOException {
+        partyVotes = new ArrayList<ArrayList<Object>>();
+        candidateVotes = new ArrayList<ArrayList<Object>>();
+
+        // Test 3.a correct formatting
+        validFile = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/MPOBallotTest01.txt")))));
+        test = new ExtractDataMPO(validFile, "MPO");
+        test.validFile = validFile.get(0);
+        partyCandidates = test.formatPartyInformation(partyVotes, candidateVotes, true);
+        test.formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
+        ArrayList<ArrayList<Object>> expectedPartyVotes = new ArrayList<>();
+        ArrayList<ArrayList<Object>> expectedCandidateVotes = new ArrayList<>();
+
+        expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Jon", 150224)));
+        expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Shana", 150437)));
+        expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Risako", 149660)));
+        expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Chris", 150129)));
+        expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Daniel", 149550)));
+
+        expectedPartyVotes.add(new ArrayList<>(Arrays.asList("R", 150224)));
+        expectedPartyVotes.add(new ArrayList<>(Arrays.asList("D", 300097)));
+        expectedPartyVotes.add(new ArrayList<>(Arrays.asList("G", 150129)));
+        expectedPartyVotes.add(new ArrayList<>(Arrays.asList("I", 149550)));
+
+        assertEquals(expectedPartyVotes, partyVotes);
+        assertEquals(expectedCandidateVotes, candidateVotes);
+
+
+        // Test 3.a l instead of 1
+
+        partyVotes = new ArrayList<ArrayList<Object>>();
+        candidateVotes = new ArrayList<ArrayList<Object>>();
+        validFile = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/MPOBallotTest02.txt")))));
+        test = new ExtractDataMPO(validFile, "MPO");
+        test.validFile = validFile.get(0);
+        partyCandidates = test.formatPartyInformation(partyVotes, candidateVotes, true);
+
+        assertThrows(IOException.class,
+                () -> test.formatBallotInformation(partyVotes, candidateVotes, partyCandidates));
+
+        // test 3.c line is null
+        partyVotes = new ArrayList<ArrayList<Object>>();
+        candidateVotes = new ArrayList<ArrayList<Object>>();
+        validFile = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/MPOPartyInfo01.txt")))));
+        test = new ExtractDataMPO(validFile, "MPO");
+        test.validFile = validFile.get(0);
+        partyCandidates = test.formatPartyInformation(partyVotes, candidateVotes, true);
+
+        // 3.d no votes technically
+        partyVotes = new ArrayList<ArrayList<Object>>();
+        candidateVotes = new ArrayList<ArrayList<Object>>();
+        validFile = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/MPOBallotTest03.txt")))));
+        test = new ExtractDataMPO(validFile, "MPO");
+        test.validFile = validFile.get(0);
+        partyCandidates = test.formatPartyInformation(partyVotes, candidateVotes, true);
+        expectedPartyVotes = new ArrayList<>();
+        expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Jon", 0)));
+        expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Shana", 0)));
+        expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Risako", 0)));
+        expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Chris", 0)));
+        expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Daniel", 0)));
+
+        expectedPartyVotes.add(new ArrayList<>(Arrays.asList("R", 0)));
+        expectedPartyVotes.add(new ArrayList<>(Arrays.asList("D", 0)));
+        expectedPartyVotes.add(new ArrayList<>(Arrays.asList("G", 0)));
+        expectedPartyVotes.add(new ArrayList<>(Arrays.asList("I", 0)));
+
+        assertThrows(IOException.class,
+                () -> test.formatBallotInformation(partyVotes, candidateVotes, partyCandidates));
+
+    }
+
+    @Test
+    public void testExtractDataMPOInput01() throws IOException {
+        partyCandidates = new HashMap<String, ArrayList<String>>();
+        partyVotes = new ArrayList<ArrayList<Object>>();
+        candidateVotes = new ArrayList<ArrayList<Object>>();
+        validFile = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/CPLInput01.txt")))));
+        String header = "MPO";
+        test = new ExtractDataMPO(validFile, header);
+        FileData t = test.extractFromFile(true);
+
+
+    }
 
 }

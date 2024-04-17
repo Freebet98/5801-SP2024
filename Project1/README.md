@@ -59,3 +59,5 @@ MPOPartyInfo01.txt     | 4 parties, 5 candidates: properly formatted
 MPOPartyInfo02.txt     | 4 parties, 5 candidates: missing party info for one candidate
 MPOPartyInfo03.txt     | 4 parties, 5 candidates: missing candidate name for one party
 MPOBallotTest01.txt    | 4 parties, 5 candidates: Properly formatted Ballots: Jon - 150224, Shana - 150437, Risako - 149660, Chris - 150129, Daniel - 149550, 750000 votes
+MPOBallotTest02.txt    | not properly formatted, an l instead of a 1 in one vote
+MPOBallotTest03.txt    | no votes
