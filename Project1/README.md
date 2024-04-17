@@ -50,3 +50,8 @@ OPLBallotTest04.txt    | 5 candidates, properly formatted Ballots, Pluto - Becky
 OPlInputMultiple01.txt | 5 candidates, 3 parties, Pluto - Becky: 30025, Jonah: 30092, Green - Einstein: 29829, Nasa: 29890, Ind - John: 30164
 OPLInputMultiple02.txt | 5 candidates, 3 parties, Pluto - Becky: 19098, Jonah: 19085, Green - Einstein: 18999, Nasa: 18955, Ind - John: 18863
 OPLInputMultiple03.txt | 5 candidates, 3 parties, Pluto - Becky: 51912, Jonah: 52053, Green - Einstein: 52311, Nasa: 52201, Ind - John: 51523
+
+MPO
+------------------------
+Name                   | Information
+MPOInput01.txt         | 4 parties, 5 candidates, Jon - 20169, Shana - 20132, Risako - 20108, Chris - 19636, Daniel - 19955
