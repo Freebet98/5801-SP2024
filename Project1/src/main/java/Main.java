@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -49,10 +50,15 @@ public class Main {
                         BufferedReader firstFile = files.get(0);
                         String header = firstFile.readLine();
 
-                        for (BufferedReader file : files) { //Go through every file in the arraylist and check for matching headers
-                            if (!header.equals(file.readLine())) {
-                                throw new IOException("Two or more files given with non-matching headers");
+                        int index = 0;
+                        for (BufferedReader file: files) { //Go through every file in the arraylist and check for matching headers
+                            if(index != 0){
+                                if (!header.equals(file.readLine())) {
+                                    throw new IOException("Two or more files given with non-matching headers");
+                                } 
                             }
+                            
+                            index++;
                         }
 
                         if (header.equals("OPL")) {
