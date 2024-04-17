@@ -227,4 +227,66 @@ public class ExtractDataMPOTest {
         assertEquals(candidateVotes, t.getCandidateVotes());
     }
 
+    @Test
+    public void testExtractDataMPOInput02() throws IOException {
+        //5.a
+        validFile = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/MPOInput02.txt")))));
+        String header = "MPO";
+        test.validFile = validFile.get(0);
+        test = new ExtractDataMPO(validFile, header);
+
+        assertThrows(IOException.class, () -> test.extractFromFile());
+    }
+
+    @Test
+    public void testExtractDataCPLMultipleFiles() throws IOException {
+        validFile = new ArrayList<BufferedReader>();
+        validFile.add(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/MPOInputMulti01.txt"))));
+        validFile.add(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/MPOInputMulti02.txt"))));
+        validFile.add(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/MPOInputMulti03.txt"))));
+
+        String header = "MPO";
+        test = new ExtractDataMPO(validFile, header);
+        FileData t = test.extractFromFile(true);
+
+        // Test 7.a Checks Header
+        assertEquals("MPO", t.getElectionType());
+
+        // Test 7.b Number of Seats
+        assertEquals(4, t.getNumberSeats());
+
+        // Test 7.c Number of Ballots
+        assertEquals(2102000, t.getNumberBallots());
+
+        // Test 7.d Number of Parties
+        assertEquals(6, t.getNumberParties());
+
+        // Test 7.e Party Candidates
+        partyCandidates = new HashMap<>();
+        partyCandidates.put("D", new ArrayList<>(Arrays.asList("Shana", "Risako")));
+        partyCandidates.put("R", new ArrayList<>(Arrays.asList("Jon", "Carl")));
+        partyCandidates.put("G", new ArrayList<>(Arrays.asList("Chris")));
+        partyCandidates.put("I", new ArrayList<>(Arrays.asList("Daniel")));
+
+        assertEquals(true, t.getPartyCandidates().containsKey("D"));
+        assertEquals(true, t.getPartyCandidates().containsKey("R"));
+        assertEquals(true, t.getPartyCandidates().containsKey("G"));
+        assertEquals(true, t.getPartyCandidates().containsKey("I"));
+        assertEquals("[Shana, Risako]", t.getPartyCandidates().get("D").toString());
+        assertEquals("[Jon, Carl]", t.getPartyCandidates().get("R").toString());
+        assertEquals("[Chris]", t.getPartyCandidates().get("G").toString());
+        assertEquals("[Daniel]", t.getPartyCandidates().get("I").toString());
+
+        // Test 7.f Candidate Votes
+        candidateVotes = new ArrayList<>();
+        candidateVotes.add(new ArrayList<>(Arrays.asList("Jon", 350468)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList("Shana", 350413)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList("Risako", 350357)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList("Chris", 349746)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList("Carl", 350539)));
+        candidateVotes.add(new ArrayList<>(Arrays.asList("Daniel", 350265)));
+
+        assertEquals(candidateVotes, t.getCandidateVotes());
+    }
+
 }

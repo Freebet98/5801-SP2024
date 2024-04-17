@@ -64,3 +64,5 @@ MPOBallotTest03.txt    | no votes
 MPOInputMulti01.txt    | 4 parties, 6 candidates: Jon - 166483, Shana - 166680, Risako - 166996, Chris - 166385, Carl - 166630, Daniel - 166826, 1000000 votes
 MPOInputMulti02.txt    | 4 parties, 6 candidates: Jon - 83580, Shana - 83161, Risako - 83237, Chris - 83570, Carl - 83382, Daniel - 83070, 500000 votes
 MPOInputMulti03.txt    | 4 parties, 6 candidates: Jon - 100405, Shana - 100572, Risako - 100124, Chris - 100003, Carl - 100527, Daniel - 100369
+MPOInput001.txt        | 2 parties, 5 candidates: Shana - 23948, Daniel - 24043, Carl - 23722, Risako - 24289, Chris - 23998
+MPOInput02.txt         | missing num parties
