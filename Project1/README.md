@@ -55,3 +55,6 @@ MPO
 ------------------------
 Name                   | Information
 MPOInput01.txt         | 4 parties, 5 candidates, Jon - 20169, Shana - 20132, Risako - 20108, Chris - 19636, Daniel - 19955
+MPOPartyInfo01.txt     | 4 parties, 5 candidates: properly formatted
+MPOPartyInfo02.txt     | 4 parties, 5 candidates: missing party info for one candidate
+MPOPartyInfo03.txt     | 4 parties, 5 candidates: missing candidate name for one party
