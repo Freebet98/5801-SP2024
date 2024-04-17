@@ -320,4 +320,163 @@ public class ResultsDataOPLTest {
         assertEquals(output.toString(), test.toString());
     }
 
+
+
+	@Test
+	public void testGetPercents(){
+   	 
+    	//Test 7.a checking with index 0 on test
+
+    	int index = 0;
+
+    	int[] expectedPercents = {40, 33};
+
+    	int[] actualPercents = test.getPercents(index);
+
+    	assertEquals(expectedPercents[0], actualPercents[0]);
+    	assertEquals(expectedPercents[1], actualPercents[1]);
+
+
+    	//Test 7.b  checking with index 1 on test
+
+    	index = 1;
+
+    	expectedPercents[0] = 60;
+    	expectedPercents[1] = 67;
+
+    	actualPercents = test.getPercents(index);
+
+    	assertEquals(expectedPercents[0], actualPercents[0]);
+    	assertEquals(expectedPercents[1], actualPercents[1]);
+	}
+
+
+	@Test
+	public void testPartySetUp(){
+
+    	// test 8.a
+
+    	String expectedOutput = "  Pluto                    	|  Becky, Mariah\n" +
+    	"  Green                    	|  Jonah, Radius, Louis\n";
+
+    	String actualOutput = test.partySetUp();
+
+    	expectedOutput = expectedOutput.replaceAll("\\s", "");
+    	actualOutput = actualOutput.replaceAll("\\s", "");
+    
+    	assertEquals(expectedOutput.toString(), actualOutput);
+
+    	test.partyVotes.clear();
+    	test.partyVotes.add(new ArrayList<>(Arrays.asList("Dem", 750)));
+    	test.partyCandidates.clear();
+    	test.partyCandidates.put("Dem", new ArrayList<>(Arrays.asList("Sarah", "Bob", "Jon")));
+    
+    	// test 8.b single party multiple candidates
+    	actualOutput = test.partySetUp();
+    
+    	expectedOutput = "  Dem                    	|  Sarah, Bob, Jon\n";
+    
+    	// Normalize whitespace to ignore spacing differences
+    	expectedOutput = expectedOutput.replaceAll("\\s", "");
+    	actualOutput = actualOutput.replaceAll("\\s", "");
+    
+    	// Check if the actual output matches the expected output after removing whitespace
+    	assertEquals(expectedOutput, actualOutput);
+    
+    
+    	// 8.c empty party votes and party candidates
+    	test.partyVotes.clear();
+    	test.partyCandidates.clear();
+
+    	actualOutput = test.partySetUp();
+
+    	assertEquals("", actualOutput);
+
+
+    	// 8.d multiple parties, single candidate
+    	test.partyVotes.clear();
+    	test.partyVotes.add(new ArrayList<>(Arrays.asList("Dem", 750)));
+    	test.partyVotes.add(new ArrayList<>(Arrays.asList("Rep", 250)));
+    	test.partyCandidates.clear();
+    	test.partyCandidates.put("Dem", new ArrayList<>(Arrays.asList("Sarah")));
+    	test.partyCandidates.put("Rep", new ArrayList<>(Arrays.asList("Craig")));
+
+    	actualOutput = test.partySetUp();
+
+    	expectedOutput = "  Dem                    	|  Sarah\n" +
+                        	"  Rep                    	|  Craig\n";
+
+    	expectedOutput = expectedOutput.replaceAll("\\s", "");
+    	actualOutput = actualOutput.replaceAll("\\s", "");
+
+    	assertEquals(expectedOutput, actualOutput);
+	}
+
+	@Test
+	public void testElectionResultsSetUp(){
+    	// test 9.a  empty data
+    	test.partyVotes.clear();
+    	test.seatAllocation.clear();
+    	test.remainingVotes.clear();
+
+    	String actualOutput = test.electionResultsSetUp();
+    	assertEquals("", actualOutput);
+
+    	// test 9.b  single party single seat
+    	test.partyVotes.clear();
+    	test.partyVotes.add(new ArrayList<>(Arrays.asList("Dem", 750)));
+
+    	test.seatAllocation.clear();
+    	test.seatAllocation.add(new ArrayList<>(Arrays.asList("Dem", new int[]{1, 0})));
+
+    	test.remainingVotes.clear();
+    	test.remainingVotes.add(new ArrayList<>(Arrays.asList("Dem", 84)));
+
+    	actualOutput = test.electionResultsSetUp();
+    	String expectedOutput = "  Dem     	|  750  |  1  |  84  |  0  |  1  |  1%/33%\n";
+
+    	expectedOutput = expectedOutput.replaceAll("\\s", "");
+    	actualOutput = actualOutput.replaceAll("\\s", "");
+    	assertEquals(expectedOutput, actualOutput);
+   	 
+	}
+
+	@Test
+	public void testWinnerSetUp(){
+
+    	// Test 10.a: Multiple entries
+    	String expectedOutput = "  Green   	|  Jonah   	|  1 | 19943\n" +
+                            	"  Pluto   	|  Becky   	|  2 | 20105\n" +
+                            	"  Green   	|  Radius  	|  3 | 20020\n";
+
+    	String actualOutput = test.winnerSetUp();
+
+    	expectedOutput = expectedOutput.replaceAll("\\s", "");
+    	actualOutput = actualOutput.replaceAll("\\s", "");
+
+    	assertEquals(expectedOutput, actualOutput);
+
+
+    	// Test 10.b: No entries
+    	test.finalWinOrder.clear();
+    	actualOutput = test.winnerSetUp();
+    	assertEquals("", actualOutput);
+
+    	// Test 10.c: Single entry
+    	test.finalWinOrder.clear();
+    	test.finalWinOrder.add(new ArrayList<>(Arrays.asList("Dem", "Sarah", 1, 19943)));
+
+    	actualOutput = test.winnerSetUp();
+
+    	expectedOutput = "  Dem     	|  Sarah   	|  1 | 19943\n";
+
+    	// Normalize whitespace to ignore spacing differences
+    	expectedOutput = expectedOutput.replaceAll("\\s", "");
+    	actualOutput = actualOutput.replaceAll("\\s", "");
+
+    	// Check if the actual output matches the expected output after removing whitespace
+    	assertEquals(expectedOutput, actualOutput);
+
+	}
+
 }
