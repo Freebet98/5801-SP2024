@@ -50,3 +50,17 @@ OPLBallotTest04.txt    | 5 candidates, properly formatted Ballots, Pluto - Becky
 OPlInputMultiple01.txt | 5 candidates, 3 parties, Pluto - Becky: 30025, Jonah: 30092, Green - Einstein: 29829, Nasa: 29890, Ind - John: 30164
 OPLInputMultiple02.txt | 5 candidates, 3 parties, Pluto - Becky: 19098, Jonah: 19085, Green - Einstein: 18999, Nasa: 18955, Ind - John: 18863
 OPLInputMultiple03.txt | 5 candidates, 3 parties, Pluto - Becky: 51912, Jonah: 52053, Green - Einstein: 52311, Nasa: 52201, Ind - John: 51523
+
+MPO
+------------------------
+Name                   | Information
+MPOInput01.txt         | 4 parties, 5 candidates, Jon - 20169, Shana - 20132, Risako - 20108, Chris - 19636, Daniel - 19955
+MPOPartyInfo01.txt     | 4 parties, 5 candidates: properly formatted
+MPOPartyInfo02.txt     | 4 parties, 5 candidates: missing party info for one candidate
+MPOPartyInfo03.txt     | 4 parties, 5 candidates: missing candidate name for one party
+MPOBallotTest01.txt    | 4 parties, 5 candidates: Properly formatted Ballots: Jon - 150224, Shana - 150437, Risako - 149660, Chris - 150129, Daniel - 149550, 750000 votes
+MPOBallotTest02.txt    | not properly formatted, an l instead of a 1 in one vote
+MPOBallotTest03.txt    | no votes
+MPOInputMulti01.txt    | 4 parties, 6 candidates: Jon - 166483, Shana - 166680, Risako - 166996, Chris - 166385, Carl - 166630, Daniel - 166826, 1000000 votes
+MPOInputMulti02.txt    | 4 parties, 6 candidates: Jon - 83580, Shana - 83161, Risako - 83237, Chris - 83570, Carl - 83382, Daniel - 83070, 500000 votes
+MPOInputMulti03.txt    | 4 parties, 6 candidates: Jon - 100405, Shana - 100572, Risako - 100124, Chris - 100003, Carl - 100527, Daniel - 100369
