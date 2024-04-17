@@ -48,6 +48,7 @@ public class Main {
                     System.out.println("Generating Results...");
                     if (!files.isEmpty()) { // If there are files to read
                         BufferedReader firstFile = files.get(0);
+                        firstFile.mark(10);
                         String header = firstFile.readLine();
 
                         int index = 0;
@@ -60,6 +61,8 @@ public class Main {
                             
                             index++;
                         }
+                        
+                        firstFile.reset();
 
                         if (header.equals("OPL")) {
                             extraction = new ExtractDataOPL(files, header);
