@@ -133,7 +133,7 @@ abstract public class ExtractData {
         for (int i = 0; i < validFiles.size(); i++) {
             validFile = validFiles.get(i);
             if (i != 0) {
-                for (int k = 0; k < 4; k++) {
+                for (int k = 0; k < 5; k++) {
                     if (k == 4) {
                         line = validFile.readLine();
                         if (!verifyLineIsDigit(line)) {
