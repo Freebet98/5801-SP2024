@@ -97,7 +97,16 @@ public class Main {
             scan.close();
 
             if (extraction != null) {
-                FileData fileData = extraction.extractFromFile();
+                FileData fileData;
+                if(extraction.header.equals("MPO") || extraction.header.equals("MV")) {
+                    fileData = extraction.extractFromFile(true);
+                }
+                else if(extraction.header.equals("OPL") || extraction.header.equals("CPL")){
+                    fileData = extraction.extractFromFile();
+                }
+                else {
+                    throw new IOException("Header does not correspond to an Election type");
+                }
                 Election election;
                 if (extraction.header.equals("OPL")) {
                     election = new OPL(fileData);
@@ -105,7 +114,9 @@ public class Main {
                     election = new CPL(fileData);
                 } //else if (extraction.header.equals("MPO")) {
                     //election = new MPO(fileData);
-                //} 
+                //} else if (extraction.header.equals("MV")) {
+                    //election = new MV(fileData);
+                //}
                 else {
                     throw new IOException("Header does not correspond to an Election type");
                 }
