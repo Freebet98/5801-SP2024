@@ -86,79 +86,8 @@ public class CPL extends Election {
     public ResultsData runElection() throws IOException {
         firstAllocation();
         secondAllocation();
-        candidateRankings(fileData.getPartyCandidates(), fileData.getCandidateVotes());
         this.results = new ResultsDataCPL(this.seatAllocation, this.remainingVotes, this.winOrder, this.fileData);
         return results;
     }
 
-    /**
-     *  Ranks the candidates in their respective parties based on the number of 
-     *  votes received
-     *  
-     *  Uses sortCandidates() helper function
-     *  
-     *  @param partyCandidates  The list of party candidate pairings in a HashMap
-     *  
-     *  @param candidateVotes   An arrayList of arraylists storing candidate names and
-     *                          the number of votes they recieved
-     */ 
-    private void candidateRankings(HashMap<String, ArrayList<String>> partyCandidates,
-            ArrayList<ArrayList<Object>> candidateVotes) {
-        for (String party : partyCandidates.keySet()) {
-            ArrayList<String> candidates = partyCandidates.get(party);
-            sortCandidates(candidates, candidateVotes);
-            partyCandidates.put(party, candidates);
-        }
-        return;
-    }
-
-    /**
-     *  Sorts the candidates using a custom comparator to order them based on the
-     *  number of votes they recieved
-     *  
-     *  Uses java.util.Comparator and java.util.Collections and getVotes helper
-     *  function to do so
-     *  
-     *  @param candidates       The list of candidates to be sorted by the helper
-     *                          function
-     *  
-     *  @param candidateVotes   The list of votes corresponding to each candidate
-     *                          that the candidates list will be sorted by
-     */ 
-    private void sortCandidates(ArrayList<String> candidates, ArrayList<ArrayList<Object>> candidateVotes) {
-        // Define custom comparator function to sort candidates based on number of votes
-        Comparator<String> comparator = new Comparator<String>() {
-            @Override
-            public int compare(String candidate1, String candidate2) {
-                int votesCandidate1 = getVotes(candidateVotes, candidate1);
-                int votesCandidate2 = getVotes(candidateVotes, candidate2);
-                return votesCandidate2 - votesCandidate1;
-            }
-        };
-
-        // Call custom comparator with sort
-        Collections.sort(candidates, comparator);
-    }
-
-    /**
-     *  Helper funtion to get the number of votes tied to a specific candidate 
-     *  in candidateVotes
-     *  
-     *  @param candidateVotes The list of name vote pairings
-     * 
-     *  @param candidate      The name of the given candidate as a String
-     * 
-     *  @return an int representing the number of votes, or -1 if 
-     *          the candidate is not found
-     */
-    private int getVotes(ArrayList<ArrayList<Object>> candidateVotes, String candidate) {
-        for (ArrayList<Object> entry : candidateVotes) { // loop through entrys to compare to candidate name
-            if (entry.get(0).equals(candidate)) {
-                return (int) entry.get(1); // return the first index of the inner Arraylist as its the number of votes
-                                           // for that candidate
-            }
-        }
-        return -1; // if nothing is found then return a default value, -1 in this case since you
-                   // can never have negative votes
-    }
 }
