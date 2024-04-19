@@ -75,7 +75,7 @@ public class ExtractDataMPOTest {
 
         assertEquals(expected, partyCandidates);
 
-        // Test 2.b numPatries = 0 which is the wrong number
+        // Test 2.b
         validFile = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/MPOPartyInfo02.txt")))));
         test = new ExtractDataMPO(validFile, "MPO");
         test.validFile = validFile.get(0);
@@ -131,7 +131,7 @@ public class ExtractDataMPOTest {
         assertEquals(expectedCandidateVotes, candidateVotes);
 
 
-        // Test 3.a l instead of 1
+        // Test 3.b l instead of 1
 
         partyVotes = new ArrayList<ArrayList<Object>>();
         candidateVotes = new ArrayList<ArrayList<Object>>();
@@ -208,7 +208,7 @@ public class ExtractDataMPOTest {
         assertEquals("[Carl, Risako, Chris]", t.getPartyCandidates().get("R").toString());
 
 
-        // Test 4.f partyVotes
+        // Test 4.f p
         partyVotes = new ArrayList<>();
         partyVotes.add(new ArrayList<>(Arrays.asList("D", 47991)));
         partyVotes.add(new ArrayList<>(Arrays.asList("R", 72009)));
