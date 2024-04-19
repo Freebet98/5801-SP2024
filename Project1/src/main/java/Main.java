@@ -112,9 +112,9 @@ public class Main {
                     election = new OPL(fileData);
                 } else if (extraction.header.equals("CPL")) {
                     election = new CPL(fileData);
-                } //else if (extraction.header.equals("MPO")) {
-                    //election = new MPO(fileData);
-                //} else if (extraction.header.equals("MV")) {
+                } else if (extraction.header.equals("MPO")) {
+                    election = new MPO(fileData);
+                } //else if (extraction.header.equals("MV")) {
                     //election = new MV(fileData);
                 //}
                 else {
