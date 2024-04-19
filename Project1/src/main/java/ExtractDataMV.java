@@ -42,6 +42,27 @@ public class ExtractDataMV extends ExtractData {
     protected void formatBallotInformation(ArrayList<ArrayList<Object>> partyVotes,
             ArrayList<ArrayList<Object>> candidateVotes, HashMap<String, ArrayList<String>> partyCandidates)
             throws IOException {
-        // TODO
+        // TODO: pseudo code
+        //String line
+        //while(!EOF):
+        //line = validFile.readLine();
+        //int count = StringUtils.countMatchs(line, '1');
+        //if(count > numSeats || count < 1):
+        //    throw new exception
+
+        //String[] splitLine = line.trim().split(,)
+        //int tempCount = 0
+        //for splitLine.length() to 0:
+        //    if i != splitLine.length() -1: 
+        //        if previousIndex == '1'
+        //            continue
+        //        else:
+        //            if index == '1':
+        //                Allocate votes properly
+        //                add one to tempCount, break from the for loop if tempCount = count 
+        //    else if i == '1':
+        //        allocate last index votes
+
+        //follow steps from MPO ExtractData or OPL ExtractData for the rest
     }
 }
