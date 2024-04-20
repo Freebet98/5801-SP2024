@@ -1,0 +1,8 @@
+CPL
+4
+Democratic, Mary, Jane, Kim
+Republican, Allen, Joe, Sarah
+Green, Sally, Nikki
+Independant
+Grass, Mars, Jacob
+Pluto, Space, Stars
