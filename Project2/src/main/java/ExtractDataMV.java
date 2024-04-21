@@ -2,6 +2,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Arrays;
+import java.io.IOException;
+import java.io.File;
+import java.io.FileReader;
 
 /**
  * This class is used to extract data from the file for the MV election
@@ -58,11 +62,10 @@ public class ExtractDataMV extends ExtractData {
         }
 
         while((line = validFile.readLine()) != null) {
-            count = 0;
-            line = validFile.readLine();
             onesCount = line.toCharArray();
 
             // Find how many times '1' occures in the line
+            count = 0;
             for (int i = 0; i < onesCount.length; i++) {
                 if (onesCount[i] == '1') {
                     count++;
@@ -74,6 +77,7 @@ public class ExtractDataMV extends ExtractData {
             }
 
             splitLine = line.trim().split(",", -1);
+            System.out.println(Arrays.toString(splitLine));
             for (int i = 0; i < splitLine.length; i++) {
                 if (splitLine[i].equals("1")) {
                     curCount = (int) tempCount.get(i);
@@ -82,6 +86,11 @@ public class ExtractDataMV extends ExtractData {
                     count = (int) candidateVotes.get(i).get(1);
                     count++;
                     candidateVotes.get(i).set(1, count);
+                }
+                // If splitLine[i] is not an empty string, that means an invalid
+                // file was passed in
+                else if (!splitLine[i].equals("")) {
+                    throw new IOException("Invalid file format");
                 }
             }
         }
@@ -92,4 +101,34 @@ public class ExtractDataMV extends ExtractData {
             putVotesInPartyVotes(partyVotes, candidateVotes, partyCandidates, candidateName, tempCount, i);
         }
     }
+
+    // public static void main(String[] args) throws IOException {
+    //     ExtractDataMV test;
+    //     ArrayList<ArrayList<Object>> partyVotes = new ArrayList<>();
+    //     ArrayList<ArrayList<Object>> candidateVotes = new ArrayList<>();
+    //     ArrayList<BufferedReader> validFile;
+    //     HashMap<String, ArrayList<String>> partyCandidates;
+    //     partyVotes = new ArrayList<ArrayList<Object>>();
+    //     candidateVotes = new ArrayList<ArrayList<Object>>();
+
+    //     // Test 3.a correct formatting
+    //     validFile = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/MVBallotTest01.txt")))));
+    //     test = new ExtractDataMV(validFile, "MV");
+    //     test.validFile = validFile.get(0);
+    //     partyCandidates = test.formatPartyInformation(partyVotes, candidateVotes, false);
+    //     test.formatBallotInformation(partyVotes, candidateVotes, partyCandidates, 3);
+    //     ArrayList<ArrayList<Object>> expectedPartyVotes = new ArrayList<>();
+    //     ArrayList<ArrayList<Object>> expectedCandidateVotes = new ArrayList<>();
+
+    //     expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Pike", 4)));
+    //     expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Foster", 3)));
+    //     expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Deutsch", 4)));
+    //     expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Borg", 4)));
+    //     expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Jones", 4)));
+    //     expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Smith", 2)));
+
+    //     expectedPartyVotes.add(new ArrayList<>(Arrays.asList("D", 7)));
+    //     expectedPartyVotes.add(new ArrayList<>(Arrays.asList("R", 12)));
+    //     expectedPartyVotes.add(new ArrayList<>(Arrays.asList("I", 2)));
+    // }
 }

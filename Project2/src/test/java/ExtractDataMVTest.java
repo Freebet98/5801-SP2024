@@ -100,4 +100,77 @@ public class ExtractDataMVTest {
         assertEquals(expected, partyCandidates);
     }
 
+
+    @Test
+    public void testFormatBallotInformation() throws IOException {
+        partyVotes = new ArrayList<ArrayList<Object>>();
+        candidateVotes = new ArrayList<ArrayList<Object>>();
+
+        // Test 3.a correct formatting
+        validFile = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/MVBallotTest01.txt")))));
+        test = new ExtractDataMV(validFile, "MV");
+        test.validFile = validFile.get(0);
+        partyCandidates = test.formatPartyInformation(partyVotes, candidateVotes, false);
+        test.formatBallotInformation(partyVotes, candidateVotes, partyCandidates, 3);
+        ArrayList<ArrayList<Object>> expectedPartyVotes = new ArrayList<>();
+        ArrayList<ArrayList<Object>> expectedCandidateVotes = new ArrayList<>();
+
+        expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Pike", 4)));
+        expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Foster", 3)));
+        expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Deutsch", 4)));
+        expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Borg", 4)));
+        expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Jones", 4)));
+        expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Smith", 3)));
+
+        expectedPartyVotes.add(new ArrayList<>(Arrays.asList("D", 7)));
+        expectedPartyVotes.add(new ArrayList<>(Arrays.asList("R", 12)));
+        expectedPartyVotes.add(new ArrayList<>(Arrays.asList("I", 3)));
+
+        assertEquals(expectedPartyVotes, partyVotes);
+        assertEquals(expectedCandidateVotes, candidateVotes);
+
+
+        // Test 3.b l instead of 1
+
+        partyVotes = new ArrayList<ArrayList<Object>>();
+        candidateVotes = new ArrayList<ArrayList<Object>>();
+        validFile = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/MVBallotTest02.txt")))));
+        test = new ExtractDataMV(validFile, "MV");
+        test.validFile = validFile.get(0);
+        partyCandidates = test.formatPartyInformation(partyVotes, candidateVotes, false);
+
+        assertThrows(IOException.class,
+                () -> test.formatBallotInformation(partyVotes, candidateVotes, partyCandidates, 3));
+
+        // // test 3.c line is null
+        partyVotes = new ArrayList<ArrayList<Object>>();
+        candidateVotes = new ArrayList<ArrayList<Object>>();
+        validFile = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/MVPartyInfo01.txt")))));
+        test = new ExtractDataMV(validFile, "MV");
+        test.validFile = validFile.get(0);
+        partyCandidates = test.formatPartyInformation(partyVotes, candidateVotes, false);
+
+        // 3.d no votes technically
+        partyVotes = new ArrayList<ArrayList<Object>>();
+        candidateVotes = new ArrayList<ArrayList<Object>>();
+        validFile = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/MVBallotTest03.txt")))));
+        test = new ExtractDataMV(validFile, "MV");
+        test.validFile = validFile.get(0);
+        partyCandidates = test.formatPartyInformation(partyVotes, candidateVotes, true);
+        expectedPartyVotes = new ArrayList<>();
+        expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Pike", 0)));
+        expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Foster", 0)));
+        expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Deutsch", 0)));
+        expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Borg", 0)));
+        expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Jones", 0)));
+        expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Smith", 0)));
+
+        expectedPartyVotes.add(new ArrayList<>(Arrays.asList("D", 0)));
+        expectedPartyVotes.add(new ArrayList<>(Arrays.asList("R", 0)));
+        expectedPartyVotes.add(new ArrayList<>(Arrays.asList("I", 0)));
+
+        assertThrows(IOException.class,
+                () -> test.formatBallotInformation(partyVotes, candidateVotes, partyCandidates, 3));
+    }
+
 }

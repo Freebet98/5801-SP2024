@@ -172,7 +172,6 @@ public class ExtractDataMPOTest {
 
         assertThrows(IOException.class,
                 () -> test.formatBallotInformation(partyVotes, candidateVotes, partyCandidates, 0));
-
     }
 
     @Test
