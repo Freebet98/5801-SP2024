@@ -41,7 +41,8 @@ public class ExtractDataCPL extends ExtractData {
      */
     @Override
     protected void formatBallotInformation(ArrayList<ArrayList<Object>> partyVotes,
-            ArrayList<ArrayList<Object>> candidateVotes, HashMap<String, ArrayList<String>> partyCandidates)
+            ArrayList<ArrayList<Object>> candidateVotes, HashMap<String, ArrayList<String>> partyCandidates,
+            int numSeats)
             throws IOException {
         String line;
         char[] splitLine;

@@ -77,7 +77,7 @@ abstract public class ExtractData {
                     }
                 }
             }
-            formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
+            formatBallotInformation(partyVotes, candidateVotes, partyCandidates, numSeats);
         }
 
         fileData = new FileData(header, numSeats, numBallots, numParties, partyCandidates, partyVotes, candidateVotes);
@@ -145,7 +145,7 @@ abstract public class ExtractData {
                     }
                 }
             }
-            formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
+            formatBallotInformation(partyVotes, candidateVotes, partyCandidates, numSeats);
         }
 
         fileData = new FileData(header, numSeats, numBallots, numCandidates, partyCandidates, partyVotes, candidateVotes);
@@ -378,10 +378,10 @@ abstract public class ExtractData {
     }
 
     /**
-     * This is an abstract method that will be initialized in ExtractDataOPL and
-     * ExtractDataCPL. When initialized, this method will format the ballots to
-     * update the number of votes in partyVotes and in OPL will also update the
-     * number of votes in candidateVotes
+     * This is an abstract method that will be initialized in ExtractDataOPL,
+     * ExtractDataCPL, and ExtractDataMPO. When initialized, this method will 
+     * format the ballots to update the number of votes in partyVotes and in 
+     * OPL will also update the number of votes in candidateVotes
      *
      * @param partyVotes      is a mapping of multiple party names to their
      *                        corresponding
@@ -392,7 +392,8 @@ abstract public class ExtractData {
      * @throws Exception
      */
     abstract protected void formatBallotInformation(ArrayList<ArrayList<Object>> partyVotes,
-            ArrayList<ArrayList<Object>> candidateVotes, HashMap<String, ArrayList<String>> partyCandidates)
+            ArrayList<ArrayList<Object>> candidateVotes, HashMap<String, ArrayList<String>> partyCandidates,
+            int numSeats)
             throws IOException;
 
 }
