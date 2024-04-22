@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         // Relative path to where all ballot files are kept
-        String relativePath = "Project1/src/BallotFile/";
+        String relativePath = "Project2/src/BallotFile/";
         Scanner scan = new Scanner(System.in);
         String fileName = "";
         ExtractData extraction = null;
