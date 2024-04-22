@@ -35,34 +35,39 @@ abstract public class Election {
      * returns void
      * 
      * @param index
-     * @throws IOException 
+     * @throws IOException
      */
     protected void adjustRemainingVotes(int index) throws IOException {
+        // Check if index is valid
         if (index < 0 || index >= this.remainingVotes.size()) {
             throw new IOException("invalid index passed into adjustRemainingVotes");
         }
+
+        // Adjust remaining votes
         int val = (int) this.remainingVotes.get(index).get(1);
         val -= this.largestRemainder;
         this.remainingVotes.get(index).set(1, val);
     }
 
     /**
-     *  Creates a deep copy of a votes ArrayList to create a modifiable version
-     *  sed to set remainingVotes
-     *  
-     *  @param votes the ArrayList<ArrayList<Object>> to be copied
-     *  
-     *  @return returns the deep copied ArrayList<ArrayList<Object>>
+     * Creates a deep copy of a votes ArrayList to create a modifiable version
+     * sed to set remainingVotes
+     * 
+     * @param votes the ArrayList<ArrayList<Object>> to be copied
+     * 
+     * @return returns the deep copied ArrayList<ArrayList<Object>>
      */
 
-    protected ArrayList<ArrayList<Object>> deepCopyVotes(ArrayList<ArrayList<Object>> votes){
+    protected ArrayList<ArrayList<Object>> deepCopyVotes(ArrayList<ArrayList<Object>> votes) {
         ArrayList<ArrayList<Object>> copy = new ArrayList<ArrayList<Object>>(votes.size());
+
         for (ArrayList<Object> innerList : votes) {
             ArrayList<Object> innerListCopy = new ArrayList<Object>(2);
             innerListCopy.add(new String((String) innerList.get(0))); // this is the string containing the party name
             innerListCopy.add(new Integer((Integer) innerList.get(1))); // this is the int representing num votes
             copy.add(innerListCopy);
         }
+
         return copy;
     }
 
@@ -74,6 +79,8 @@ abstract public class Election {
 
     protected ArrayList<ArrayList<Object>> initializeSeatAllocation() {
         ArrayList<ArrayList<Object>> initialized = new ArrayList<ArrayList<Object>>();
+
+        // for each party, add a new ArrayList<Object> with the party name and [0, 0]
         for (int i = 0; i < this.fileData.getPartyVotes().size(); i++) {
             ArrayList<Object> innerList = new ArrayList<Object>();
             String partyName = (String) this.fileData.getPartyVotes().get(i).get(0);
@@ -81,6 +88,7 @@ abstract public class Election {
             innerList.add(new int[2]);
             initialized.add(innerList);
         }
+
         return initialized;
     }
 
@@ -94,11 +102,14 @@ abstract public class Election {
      * @throws IOException
      */
     protected void adjustSeatAllocation(int index, boolean firstRound) throws IOException {
+        // Check if index is valid
         if (index < 0 || index >= this.seatAllocation.size()) {
             throw new IOException("Index less than 0");
         }
+
         int[] val = (int[]) this.seatAllocation.get(index).get(1);
 
+        // Adjust seat allocation
         if (firstRound) {
             val[0]++;
         } else {
@@ -113,13 +124,16 @@ abstract public class Election {
      * at the given index to finalWinOrder
      * returns void
      * 
-     * @param index index to determine which party to check in seatAllocation 
+     * @param index index to determine which party to check in seatAllocation
      * @throws IOException
      */
     protected void addWinner(int index) throws IOException {
+        // Check if index is valid
         if (index < 0 || index >= this.seatAllocation.size()) {
             throw new IOException("Index less than 0");
         }
+
+        // Add winner
         String winner = (String) this.seatAllocation.get(index).get(0);
         this.winOrder.add(winner);
     }
@@ -128,10 +142,11 @@ abstract public class Election {
      * Checks whether there are no candidates in a party given an index
      * Adds them to the noCandidates hashset if true
      * 
-     * @param index index to determine which party to check in seatAllocation 
+     * @param index index to determine which party to check in seatAllocation
      * 
      */
     protected void checkNoCandidates(int index) throws IOException {
+        // Check if index is valid
         if (index < 0 || index >= this.seatAllocation.size()) {
             throw new IOException("Index less than 0");
         }
@@ -140,6 +155,7 @@ abstract public class Election {
         String party = (String) this.seatAllocation.get(index).get(0);
         ArrayList<String> inner = this.fileData.getPartyCandidates().get(party);
 
+        // Check if party has no candidates available
         if (currentAmt[0] == inner.size()) {
             noCandidates.add(party);
         }
@@ -157,24 +173,28 @@ abstract public class Election {
     protected void firstAllocation() throws IOException {
         int i = 0;
         int underRemain = 0;
+
         // run until there are no more seats to allocate or all parties are under the
         // remainder
         while (true) {
             int votes = (int) this.remainingVotes.get(i).get(1);
             String party = (String) this.remainingVotes.get(i).get(0);
+            // Check if party has no candidates
             if (noCandidates.contains(party)) {
                 underRemain++;
+            // Check if a parties votes are greater than or equal to the largest remainder
             } else if (votes >= largestRemainder) {
                 adjustRemainingVotes(i);
                 adjustSeatAllocation(i, true);
                 addWinner(i);
                 checkNoCandidates(i);
                 availableSeats--; // a winner was added so a seat should be removed
-
+            // increment the number under the remainder
             } else {
                 underRemain++; // underRemain is a number that indicates how many parties are currently under
                                // the largest remainder
             }
+
             i++;
             if (availableSeats <= 0) { // there are no seats, break from loop
                 break;
@@ -200,13 +220,18 @@ abstract public class Election {
     protected void secondAllocation() throws IOException {
         // creates a new ArrayList<ArrayList<Object>> which is a copy of remainingVote
         ArrayList<ArrayList<Object>> remainVotesNew = deepCopyVotes(remainingVotes);
+        
+        // run until there are no more seats to allocate
         while (availableSeats > 0) {
             int max = (int) remainVotesNew.get(0).get(1);
             int index = 0;
             String party = (String) remainVotesNew.get(0).get(0);
+            
+            // Check if party has no candidates
             if (noCandidates.contains(party)) {
                 max = -1;
             }
+
             // finds the candidate with the highest number of votes
             for (int i = 1; i < remainingVotes.size(); i++) {
                 int current = (int) remainVotesNew.get(i).get(1);
@@ -216,6 +241,7 @@ abstract public class Election {
                     index = i;
                 }
             }
+
             // check to see if there are any ties
             ArrayList<Integer> indexTie = new ArrayList<>();
             for (int i = 0; i < remainingVotes.size(); i++) {
@@ -254,11 +280,13 @@ abstract public class Election {
      */
     protected float generateRandom() {
         Random rand = new Random();
-        // generates 100 random floats before the retval is calculated to eliminate some
+        
+        // generates 1000 random floats before the retval is calculated to eliminate some
         // psuedo randomness
         for (int i = 0; i <= 1000; i++) {
             rand.nextFloat();
         }
+
         // calculates a random float and makes in a range of
         float retVal = rand.nextFloat() * 10;
         return retVal;
@@ -277,22 +305,24 @@ abstract public class Election {
      * @return returns the index of the winner
      */
     protected int breakTie(int numTie) {
+        // if numTie is less than or equal to 0 or greater than the number of parties, return -1
         if (numTie <= 0 || numTie > this.fileData.getNumberParties()) {
             return -1;
         }
-        if(numTie<=0 || numTie>this.fileData.getNumberParties()){
-            return -1;
-        }
+
         // the number used to determine the winner
         float compval = generateRandom();
+
         // an array
         float[] ties = new float[numTie];
         for (int i = 0; i < ties.length; i++) {
             ties[i] = generateRandom();
         }
+
         float curSmallest = Math.abs(compval - ties[0]);
         int index = 0;
         boolean isSame = false;
+
         // compares to find the index of the number closest to the compVal
         for (int i = 1; i < ties.length; i++) {
             if (Math.abs(compval - ties[i]) < curSmallest) {
@@ -303,10 +333,12 @@ abstract public class Election {
                 isSame = true;
             }
         }
+
         // if there are 2 of the same, run breakTie again
         if (isSame) {
             return breakTie(numTie);
         }
+        
         return index;
     }
 }

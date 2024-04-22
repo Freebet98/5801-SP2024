@@ -61,6 +61,7 @@ public class ExtractDataMPO extends ExtractData{
             line.trim();
             splitLine = line.toCharArray();
 
+            // Check for correct file format
             if (line.indexOf('1') == -1 || line.indexOf(',') == -1) {
                 throw new IOException("File format is not in the correct format");
             }

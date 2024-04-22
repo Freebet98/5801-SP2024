@@ -112,7 +112,7 @@ public class ExtractDataMPOTest {
         test = new ExtractDataMPO(validFile, "MPO");
         test.validFile = validFile.get(0);
         partyCandidates = test.formatPartyInformation(partyVotes, candidateVotes, true);
-        test.formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
+        test.formatBallotInformation(partyVotes, candidateVotes, partyCandidates, 0);
         ArrayList<ArrayList<Object>> expectedPartyVotes = new ArrayList<>();
         ArrayList<ArrayList<Object>> expectedCandidateVotes = new ArrayList<>();
 
@@ -141,7 +141,7 @@ public class ExtractDataMPOTest {
         partyCandidates = test.formatPartyInformation(partyVotes, candidateVotes, true);
 
         assertThrows(IOException.class,
-                () -> test.formatBallotInformation(partyVotes, candidateVotes, partyCandidates));
+                () -> test.formatBallotInformation(partyVotes, candidateVotes, partyCandidates, 0));
 
         // test 3.c line is null
         partyVotes = new ArrayList<ArrayList<Object>>();
@@ -171,8 +171,7 @@ public class ExtractDataMPOTest {
         expectedPartyVotes.add(new ArrayList<>(Arrays.asList("I", 0)));
 
         assertThrows(IOException.class,
-                () -> test.formatBallotInformation(partyVotes, candidateVotes, partyCandidates));
-
+                () -> test.formatBallotInformation(partyVotes, candidateVotes, partyCandidates, 0));
     }
 
     @Test

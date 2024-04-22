@@ -109,8 +109,8 @@ public class ResultsDataCPL extends ResultsData {
     }
 
     /**
-     * This will take the ArrayList<String> winOrder that contains just partyNames
-     * and format it to an ArrayList<ArrayList<Object>> with the partyName,
+     * This will take the ArrayList winOrder that contains just partyNames
+     * and format it to an ArrayList with the partyName,
      * candidateName, and which seat they won
      * 
      * This can handle duplicate names in both opposing parties and the same party

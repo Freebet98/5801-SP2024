@@ -4,37 +4,37 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- *  This class is used to print all the information obtained after running the
- *  election to a file
- *  
- *  @author Bethany Freeman
- */ 
+ * This class is used to print all the information obtained after running the
+ * election to a file
+ * 
+ * @author Bethany Freeman
+ */
 public class AuditFile {
     private final ResultsData results;
     private File file;
 
     /**
-     *  This creates a new AuditFile object
-     *  
-     *  @param results   ResultsData object which contains all of the 
-     *                  information from extraction and the results of 
-     *                  the election
+     * This creates a new AuditFile object
+     * 
+     * @param results ResultsData object which contains all of the
+     *                information from extraction and the results of
+     *                the election
      */
     AuditFile(ResultsData results) {
         this.results = results;
     }
 
-    public String getFileName(){
+    public String getFileName() {
         return file.getAbsolutePath();
     }
 
     /**
-     *  Print the results of an election to a newly generated file
-     *  
-     *  The file will be saved in a directory called 'AuditFiles'
-     *  
-     *  @throws IOException If an error occurs anywhere. This would
-     *                      be handled in Main.java
+     * Print the results of an election to a newly generated file
+     * 
+     * The file will be saved in a directory called 'AuditFiles'
+     * 
+     * @throws IOException If an error occurs anywhere. This would
+     *                     be handled in Main.java
      */
     public void printToFile() throws IOException {
         // Directory stuff
@@ -58,14 +58,16 @@ public class AuditFile {
         // electionType_Election_Results_Systime.ext
         String filename = results.getElectionType() + "_Election_Results_" + currentTimeMillis + ".txt";
         file = new File(auditFileDir, filename);
-        
-        if(!file.exists()){
+
+        // If the file doesn't exist, create it
+        if (!file.exists()) {
             file.createNewFile();
         }
 
+        // Write to the file
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             writer.write(results.toString());
-           // BufferedWrite is automatically closed at the end of the try-block
+            // BufferedWrite is automatically closed at the end of the try-block
         } catch (IOException e) {
             throw new IOException("Something went wrong while trying to write to the file");
         }
@@ -73,11 +75,11 @@ public class AuditFile {
     }
 
     /**
-     *  Checks to see if a directory path exists
-     *  
-     *  @param directory File object representing the directory for audit files
-     *  
-     *  @return a boolean to indicate if it was successful or unneccesary
+     * Checks to see if a directory path exists
+     * 
+     * @param directory File object representing the directory for audit files
+     * 
+     * @return a boolean to indicate if it was successful or unneccesary
      */
     private boolean checkDirectory(File directory) {
         if (!directory.exists()) { // If the directory doesn't exist
@@ -94,5 +96,3 @@ public class AuditFile {
     }
 
 }
-
-       

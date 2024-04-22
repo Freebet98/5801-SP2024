@@ -2,7 +2,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -94,8 +93,6 @@ public class Main {
                 fileName = scan.nextLine();
             }
 
-            scan.close();
-
             if (extraction != null) {
                 FileData fileData;
                 if(extraction.header.equals("MPO") || extraction.header.equals("MV")) {
@@ -139,6 +136,9 @@ public class Main {
                     e.printStackTrace();
                 }
             }
+
+            // Closing scanner
+            scan.close();
         }
     }
 }

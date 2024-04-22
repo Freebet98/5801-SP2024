@@ -52,28 +52,28 @@ abstract public class ResultsData extends FileData {
     }
 
     /**
-     * @return an ArrayList<ArrayList<Object>>
+     * @return an ArrayList
      */
     public ArrayList<ArrayList<Object>> getSeatAllocation() {
         return seatAllocation;
     }
 
     /**
-     * @return an ArrayList<ArrayList<Object>>
+     * @return an ArrayList
      */
     public ArrayList<ArrayList<Object>> getRemainingVotes() {
         return remainingVotes;
     }
 
     /**
-     * @return an ArrayList<ArrayList<Object>>
+     * @return an ArrayList
      */
     public ArrayList<ArrayList<Object>> getFinalWinOrder() {
         return finalWinOrder;
     }
 
     /**
-     * @return an ArrayList<String>
+     * @return an ArrayList
      */
     public ArrayList<String> getPartyWinOrder() {
         return partyWinOrder;

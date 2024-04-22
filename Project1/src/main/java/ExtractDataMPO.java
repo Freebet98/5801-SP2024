@@ -41,7 +41,7 @@ public class ExtractDataMPO extends ExtractData{
      */
     @Override
     protected void formatBallotInformation(ArrayList<ArrayList<Object>> partyVotes,
-            ArrayList<ArrayList<Object>> candidateVotes, HashMap<String, ArrayList<String>> partyCandidates)
+            ArrayList<ArrayList<Object>> candidateVotes, HashMap<String, ArrayList<String>> partyCandidates, int numSeats)
             throws IOException {
         String line;
         char[] splitLine;
@@ -61,6 +61,7 @@ public class ExtractDataMPO extends ExtractData{
             line.trim();
             splitLine = line.toCharArray();
 
+            // Check for correct file format
             if (line.indexOf('1') == -1 || line.indexOf(',') == -1) {
                 throw new IOException("File format is not in the correct format");
             }

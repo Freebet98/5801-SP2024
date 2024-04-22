@@ -34,14 +34,13 @@ public class ExtractDataOPL extends ExtractData {
      * @param numParties     this represents the number of parties that are listed
      *                       in
      *                       the given file
-     * @param partyVotes     this is an ArrayList<ArrayList<Object>> which contains
+     * @param partyVotes     this is an ArrayList which contains
      *                       inner mappings of a party name and the number of
      *                       corresponding votes
-     * @param candidateVotes this is an ArrayList<ArrayList<Object>> whih contains
+     * @param candidateVotes this is an ArrayList whih contains
      *                       inner mappings of a candidate name and the number of
      *                       corresponding votes
-     * @return HashMap<String, ArrayList < String>> that represents a key value of a
-     *         party name
+     * @return HashMap that represents a key value of a party name
      *         to a list of candidate names
      * @throws IOException if there is an error while reading the validFile
      */
@@ -104,11 +103,11 @@ public class ExtractDataOPL extends ExtractData {
      * this will format the ballots to update the number of votes in partyVotes, and
      * candidateVotes in the OPL election
      *
-     * @param partyVotes      this is an ArrayList<ArrayList<Object>> which contains
+     * @param partyVotes      this is an ArrayList which contains
      *                        inner mappings of a party name and the number of
      *                        corresponding
      *                        votes
-     * @param candidateVotes  this is an ArrayList<ArrayList<Object>> whih contains
+     * @param candidateVotes  this is an ArrayList whih contains
      *                        inner mappings of a candidate name and the number of
      *                        corresponding votes
      * @param partyCandidates this is a mapping of a party name to an ordered list
@@ -117,7 +116,8 @@ public class ExtractDataOPL extends ExtractData {
      */
     @Override
     protected void formatBallotInformation(ArrayList<ArrayList<Object>> partyVotes,
-            ArrayList<ArrayList<Object>> candidateVotes, HashMap<String, ArrayList<String>> partyCandidates)
+            ArrayList<ArrayList<Object>> candidateVotes, HashMap<String, ArrayList<String>> partyCandidates,
+            int numSeats)
             throws IOException {
         String line;
         char[] splitLine;

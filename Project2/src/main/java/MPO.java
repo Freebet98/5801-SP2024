@@ -106,7 +106,7 @@ public class MPO extends Election {
      * initializes the seat allocation array to have default values of 0
      * puts candidate names in the array rather than party names as parties do not matter form MPO seat allocation
      * 
-     * @return returns initialized ArrayList<ArrayList<Object>>
+     * @return returns initialized ArrayList
      */
 
     @Override
