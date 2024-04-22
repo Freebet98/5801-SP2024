@@ -1,10 +1,7 @@
-# repo-Team2
-We are using out 1 time extension for this portion of the project (Unit Testing and Implementation)
-(Derrick Dischinger, Bethany Freeman, and Rock Zgutowicz)
 
 ---Instructions to Run Program Through Terminal---
 1. Open the repo-Team2 directory
-2. Navigate to the java folder, this is located within repo-Team2/Project1/src/main
+2. Navigate to the java folder, this is located within repo-Team2/Project2/src/main
 3. Compile the main class with the command javac Main.java
 4. Use the command cd ../../../.. to get back to the repo-Team2 directory base folder
 5. run the command java -classpath Project1/src/main/java Main fileName.csv
@@ -65,4 +62,19 @@ MPOInputMulti01.txt    | 4 parties, 6 candidates: Jon - 166483, Shana - 166680, 
 MPOInputMulti02.txt    | 4 parties, 6 candidates: Jon - 83580, Shana - 83161, Risako - 83237, Chris - 83570, Carl - 83382, Daniel - 83070, 500000 votes
 MPOInputMulti03.txt    | 4 parties, 6 candidates: Jon - 100405, Shana - 100572, Risako - 100124, Chris - 100003, Carl - 100527, Daniel - 100369
 MPOInput001.txt        | 2 parties, 5 candidates: Shana - 23948, Daniel - 24043, Carl - 23722, Risako - 24289, Chris - 23998
+MPOInput02.txt         | missing num parties
+
+MV
+------------------------
+Name                   | Information
+MVInput01.txt          | 3 parties, 6 candidates, Pike - 4, Foster - 3, Deutsch - 4, Borg - 4, Jones - 4, Smith - 3
+MVPartyInfo01.txt      | 3 parties, 6 candidates: properly formatted
+MVPartyInfo02.txt      | 3 parties, 6 candidates: missing party info for one candidate
+MVPartyInfo03.txt      | 3 parties, 6 candidates: missing candidate name for one party
+MVBallotTest01.txt     | 3 parties, 6 candidates: Properly formatted Ballots: 3 parties, 6 candidates, Pike - 4, Foster - 3, Deutsch - 4, Borg - 4, Jones - 4, Smith - 3
+MVBallotTest02.txt     | not properly formatted, an l instead of a 1 in one vote
+MVBallotTest03.txt     | no votes
+MVInputMulti01.txt     | 3 parties, 6 candidates, Pike - 4, Foster - 3, Deutsch - 4, Borg - 4, Jones - 4, Smith - 3
+MPOInputMulti02.txt    | 3 parties, 6 candidates, Pike - 4, Foster - 3, Deutsch - 4, Borg - 4, Jones - 4, Smith - 3
+MPOInputMulti03.txt    | 3 parties, 6 candidates, Pike - 4, Foster - 3, Deutsch - 4, Borg - 4, Jones - 4, Smith - 3
 MPOInput02.txt         | missing num parties
