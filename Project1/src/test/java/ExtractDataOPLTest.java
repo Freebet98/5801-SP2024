@@ -108,7 +108,7 @@ public class ExtractDataOPLTest {
                 test01.validFile = validFile.get(0);
                 partyCandidates = test01.formatPartyInformation(5, partyVotes,
                                 candidateVotes);
-                test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
+                test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates, 0);
                 ArrayList<ArrayList<Object>> expectedPartyVotes = new ArrayList<>();
                 expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Pluto", 40048)));
                 expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Green", 59952)));
@@ -134,7 +134,7 @@ public class ExtractDataOPLTest {
 
                 assertThrows(IOException.class,
                                 () -> test01.formatBallotInformation(partyVotes, candidateVotes,
-                                                partyCandidates));
+                                                partyCandidates, 0));
 
                 // Test 3.c no votes technically
                 partyVotes = new ArrayList<ArrayList<Object>>();
@@ -148,7 +148,7 @@ public class ExtractDataOPLTest {
 
                 assertThrows(IOException.class,
                                 () -> test01.formatBallotInformation(partyVotes, candidateVotes,
-                                                partyCandidates));
+                                                partyCandidates, 0));
 
                 // Test 3.d correct formatting two
                 partyVotes = new ArrayList<ArrayList<Object>>();
@@ -159,7 +159,7 @@ public class ExtractDataOPLTest {
                 test01.validFile = validFile.get(0);
                 partyCandidates = test01.formatPartyInformation(5, partyVotes,
                                 candidateVotes);
-                test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
+                test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates, 0);
                 expectedPartyVotes = new ArrayList<>();
                 expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Pluto", 40052)));
                 expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Green", 59948)));

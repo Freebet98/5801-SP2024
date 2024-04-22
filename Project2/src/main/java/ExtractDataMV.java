@@ -43,7 +43,6 @@ public class ExtractDataMV extends ExtractData {
     protected void formatBallotInformation(ArrayList<ArrayList<Object>> partyVotes,
             ArrayList<ArrayList<Object>> candidateVotes, HashMap<String, ArrayList<String>> partyCandidates,
             int numSeats) throws IOException {
-        // TODO: pseudo code
         String line;
         char[] onesCount;
         String[] splitLine;

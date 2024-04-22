@@ -1,8 +1,5 @@
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
 
 /**
@@ -74,6 +71,7 @@ public class CPL extends Election {
 
         // largestRemainder calculation
         int ballots = fileData.getNumberBallots();
+        
         // assuming this does not need to be error checked as it was stated in class
         // there will never be an election run if no seats are availabke
         try {

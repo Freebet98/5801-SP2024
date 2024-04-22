@@ -111,7 +111,7 @@ public class ExtractDataCPLTest {
         test01 = new ExtractDataCPL(validFile01, "CPL");
         test01.validFile = validFile01.get(0);
         partyCandidates = test01.formatPartyInformation(3, partyVotes, candidateVotes);
-        test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
+        test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates, 0);
         ArrayList<ArrayList<Object>> expectedPartyVotes = new ArrayList<>();
         expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Grass", 26646)));
         expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Pluto", 26742)));
@@ -128,7 +128,7 @@ public class ExtractDataCPLTest {
         partyCandidates = test01.formatPartyInformation(3, partyVotes, candidateVotes);
 
         assertThrows(IOException.class,
-                () -> test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates));
+                () -> test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates, 0));
 
         // 3.c line is null
         partyVotes = new ArrayList<ArrayList<Object>>();
@@ -139,7 +139,7 @@ public class ExtractDataCPLTest {
         partyCandidates = test01.formatPartyInformation(3, partyVotes, candidateVotes);
 
         assertThrows(IOException.class,
-                () -> test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates));
+                () -> test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates, 0));
 
         // 3.d no votes technically
         partyVotes = new ArrayList<ArrayList<Object>>();
@@ -154,7 +154,7 @@ public class ExtractDataCPLTest {
         expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Republican", 0)));
 
         assertThrows(IOException.class,
-                () -> test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates));
+                () -> test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates, 0));
 
         // 3.e correct formatting two
         partyVotes = new ArrayList<ArrayList<Object>>();
@@ -163,7 +163,7 @@ public class ExtractDataCPLTest {
         test01 = new ExtractDataCPL(validFile01, "CPL");
         test01.validFile = validFile01.get(0);
         partyCandidates = test01.formatPartyInformation(4, partyVotes, candidateVotes);
-        test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
+        test01.formatBallotInformation(partyVotes, candidateVotes, partyCandidates, 0);
         expectedPartyVotes = new ArrayList<>();
         expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Green", 22648)));
         expectedPartyVotes.add(new ArrayList<>(Arrays.asList("Independant", 22613)));

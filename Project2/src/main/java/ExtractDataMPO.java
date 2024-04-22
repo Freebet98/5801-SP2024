@@ -25,24 +25,23 @@ public class ExtractDataMPO extends ExtractData{
     }
     
     /**
-         * this will format the ballots to update the number of votes in partyVotes, and
-         * candidateVotes in the MPO election
-         *
-         * @param partyVotes      this is an ArrayList which contains
-         *                        inner mappings of a party name and the number of
-         *                        corresponding
-         *                        votes
-         * @param candidateVotes  this is an ArrayList whih contains
-         *                        inner mappings of a candidate name and the number of
-         *                        corresponding votes
-         * @param partyCandidates this is a mapping of a party name to an ordered list
-         *                        of their candidates
-         * @throws IOException
+     * this will format the ballots to update the number of votes in partyVotes, and
+     * candidateVotes in the MPO election
+     *
+     * @param partyVotes      this is an ArrayList<ArrayList<Object>> which contains
+     *                        inner mappings of a party name and the number of
+     *                        corresponding
+     *                        votes
+     * @param candidateVotes  this is an ArrayList<ArrayList<Object>> whih contains
+     *                        inner mappings of a candidate name and the number of
+     *                        corresponding votes
+     * @param partyCandidates this is a mapping of a party name to an ordered list
+     *                        of their candidates
+     * @throws IOException
      */
     @Override
     protected void formatBallotInformation(ArrayList<ArrayList<Object>> partyVotes,
-            ArrayList<ArrayList<Object>> candidateVotes, HashMap<String, ArrayList<String>> partyCandidates,
-            int numSeats)
+            ArrayList<ArrayList<Object>> candidateVotes, HashMap<String, ArrayList<String>> partyCandidates)
             throws IOException {
         String line;
         char[] splitLine;
@@ -62,6 +61,7 @@ public class ExtractDataMPO extends ExtractData{
             line.trim();
             splitLine = line.toCharArray();
 
+            // Check for correct file format
             if (line.indexOf('1') == -1 || line.indexOf(',') == -1) {
                 throw new IOException("File format is not in the correct format");
             }

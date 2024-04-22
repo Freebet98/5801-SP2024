@@ -29,32 +29,36 @@ public class ExtractDataCPL extends ExtractData {
      * candidateVotes in the CPL election type does not get updated since all
      * candidates will have 0 votes personally
      *
-     * @param partyVotes     this is an ArrayList which contains
+     * @param partyVotes     this is an ArrayList<ArrayList<Object>> which contains
      *                       inner mappings of a party name and the number of
      *                       corresponding
      *                       votes
-     * @param candidateVotes this is an ArrayList whih contains
+     * @param candidateVotes this is an ArrayList<ArrayList<Object>> whih contains
      *                       inner mappings of a candidate name and the number of
      *                       corresponding votes
      * @throws IOException
+     * @throws Exception
      */
     @Override
     protected void formatBallotInformation(ArrayList<ArrayList<Object>> partyVotes,
-            ArrayList<ArrayList<Object>> candidateVotes, HashMap<String, ArrayList<String>> partyCandidates,
-            int numSeats)
+            ArrayList<ArrayList<Object>> candidateVotes, HashMap<String, ArrayList<String>> partyCandidates)
             throws IOException {
         String line;
         char[] splitLine;
         int index = -1;
         int count = 0;
 
+        // Runs while there are still ballots to be read
         while ((line = validFile.readLine()) != null) {
             line.trim();
             splitLine = line.toCharArray();
+
+            // Checks if the file is in the correct format
             if (line.indexOf('1') == -1 || line.indexOf(',') == -1) {
                 throw new IOException("File format is not in the correct format");
             }
 
+            // Updates the number of votes in partyVotes
             for (int i = 0; i < splitLine.length; i++) {
                 if (splitLine[i] == '1') {
                     index = i;

@@ -1,13 +1,13 @@
-
-/**
- * This class is used to extract data from the file
- * @author Bethany Freeman
- */
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * This class is used to extract data from the file
+ * 
+ * @author Bethany Freeman
+ */
 abstract public class ExtractData {
     protected ArrayList<BufferedReader> validFiles;
     protected BufferedReader validFile;
@@ -34,6 +34,7 @@ abstract public class ExtractData {
 
         // Read header
         validFile.readLine();
+
         // Looks at the second line of the file, if it's an integer, numSeats is set to
         // it
         line = validFile.readLine();
@@ -62,6 +63,7 @@ abstract public class ExtractData {
         HashMap<String, ArrayList<String>> partyCandidates;
         partyCandidates = formatPartyInformation(numParties, partyVotes, candidateVotes);
 
+        // Deals with multiple files
         for (int i = 0; i < validFiles.size(); i++) {
             validFile = validFiles.get(i);
             if (i != 0) {
@@ -77,7 +79,7 @@ abstract public class ExtractData {
                     }
                 }
             }
-            formatBallotInformation(partyVotes, candidateVotes, partyCandidates, numSeats);
+            formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
         }
 
         fileData = new FileData(header, numSeats, numBallots, numParties, partyCandidates, partyVotes, candidateVotes);
@@ -110,6 +112,7 @@ abstract public class ExtractData {
         if (!verifyLineIsDigit(line)) {
             throw new IOException("Not enough digits");
         }
+
         // Line is confirmed to be a digit, after the check
         int numSeats = Integer.parseInt(line);
 
@@ -130,6 +133,7 @@ abstract public class ExtractData {
         }
         int numBallots = Integer.parseInt(line);
 
+        // Deals with multiple files
         for (int i = 0; i < validFiles.size(); i++) {
             validFile = validFiles.get(i);
             if (i != 0) {
@@ -145,10 +149,11 @@ abstract public class ExtractData {
                     }
                 }
             }
-            formatBallotInformation(partyVotes, candidateVotes, partyCandidates, numSeats);
+            formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
         }
 
-        fileData = new FileData(header, numSeats, numBallots, numCandidates, partyCandidates, partyVotes, candidateVotes);
+        fileData = new FileData(header, numSeats, numBallots, numCandidates, partyCandidates, partyVotes,
+                candidateVotes);
         return fileData;
     }
 
@@ -161,6 +166,7 @@ abstract public class ExtractData {
      *             only be digits
      */
     protected boolean verifyLineIsDigit(String line) {
+        // If line is empty or null, return false
         if (line == "" || line == null) {
             return false;
         }
@@ -187,13 +193,14 @@ abstract public class ExtractData {
      * @param numParties     this represents the number of parties that are listed
      *                       in
      *                       the given file
-     * @param partyVotes     this is an ArrayList which contains
+     * @param partyVotes     this is an ArrayList<ArrayList<Object>> which contains
      *                       inner mappings of a party name and the number of
      *                       corresponding votes
-     * @param candidateVotes this is an ArrayList which contains
+     * @param candidateVotes this is an ArrayList<ArrayList<Object>> whih contains
      *                       inner mappings of a candidate name and the number of
      *                       corresponding votes
-     * @return HashMap that represents a key value of a party name
+     * @return HashMap<String, ArrayList < String>> that represents a key value of a
+     *         party name
      *         to a list of candidate names
      * @throws IOException if there is an error while reading the validFile
      */
@@ -256,20 +263,24 @@ abstract public class ExtractData {
      * 
      * This is an overloaded function: MPO and MV files
      * 
-     * @param partyVotes     this is an ArrayList which contains
+     * @param numParties     this represents the number of parties that are listed
+     *                       in
+     *                       the given file
+     * @param partyVotes     this is an ArrayList<ArrayList<Object>> which contains
      *                       inner mappings of a party name and the number of
      *                       corresponding votes
-     * @param candidateVotes this is an ArrayList which contains
+     * @param candidateVotes this is an ArrayList<ArrayList<Object>> whih contains
      *                       inner mappings of a candidate name and the number of
      *                       corresponding votes
      * @param flag           this is a boolean flag retrieved from extractFromFile
      *                       to indicate that you are formatting party information
      *                       from an MPO or an MV file
-     * @return HashMap that represents a key value of a party name
+     * @return HashMap<String, ArrayList < String>> that represents a key value of a
+     *         party name
      *         to a list of candidate names
      * @throws IOException if there is an error while reading the validFile
      */
-    protected HashMap<String, ArrayList<String>> formatPartyInformation(ArrayList<ArrayList<Object>> partyVotes, 
+    protected HashMap<String, ArrayList<String>> formatPartyInformation(ArrayList<ArrayList<Object>> partyVotes,
             ArrayList<ArrayList<Object>> candidateVotes, boolean flag) throws IOException {
         String line = validFile.readLine();
         String[] splitLine = line.trim().split(",");
@@ -280,21 +291,23 @@ abstract public class ExtractData {
         // Clean the brackets out of the splitString array
         for (int i = 0; i < splitLine.length; i++) {
             temp = splitLine[i].trim();
-            if( (i % 2) == 0) {
+            if ((i % 2) == 0) {
                 splitLine[i] = temp.substring(1);
-            }
-            else if ( (i % 2) == 1) {
+            } else if ((i % 2) == 1) {
                 splitLine[i] = temp.substring(0, temp.length() - 1);
             }
         }
 
-        for (int i = 0; i < splitLine.length - 1; i = i + 2)
-        {
+        /*
+         * This for loop looks at two indexes of splitLine and adds them to
+         * partyCandidates and partyVotes as well as candidateVotes.
+         */
+        for (int i = 0; i < splitLine.length - 1; i = i + 2) {
             String candidate = splitLine[i];
             String party = splitLine[i + 1];
 
-            if (!partyCandidates.containsKey(party))
-            {
+            // Check if partyCandidates contains party. If not, add it.
+            if (!partyCandidates.containsKey(party)) {
                 ArrayList<Object> partyInner = new ArrayList<>();
                 partyInner.add(party);
                 partyInner.add(0);
@@ -308,9 +321,7 @@ abstract public class ExtractData {
                 ArrayList<String> inner = new ArrayList<>();
                 inner.add(candidate);
                 partyCandidates.put(party, inner);
-            }
-            else
-            {
+            } else {
                 ArrayList<Object> candidateInner = new ArrayList<>();
                 candidateInner.add(candidate);
                 candidateInner.add(0);
@@ -330,11 +341,13 @@ abstract public class ExtractData {
      * Using this information it places the votes in the location of the party in
      * partyVotes
      * 
-     * @param partyVotes      this is an ArrayList which contains
+     * Used in OPL, MPO and MV Elections
+     * 
+     * @param partyVotes      this is an ArrayList<ArrayList<Object>> which contains
      *                        inner mappings of a party name and the number of
      *                        corresponding
      *                        votes
-     * @param candidateVotes  this is an ArrayList whih contains
+     * @param candidateVotes  this is an ArrayList<ArrayList<Object>> whih contains
      *                        inner mappings of a candidate name and the number of
      *                        corresponding votes
      * @param partyCandidates this is a mapping of a party name to an ordered list
@@ -342,7 +355,7 @@ abstract public class ExtractData {
      * @param candidateName   this is the name of the current candidate whose votes
      *                        are
      *                        being added to partyVotes
-     * @param tempCount       this is an ArrayList which contains the
+     * @param tempCount       this is an ArrayList<Integer> which contains the
      *                        number of votes in the current file that was read
      * @param index           this is the index of the current candidate's votes in
      *                        tempCount
@@ -351,6 +364,7 @@ abstract public class ExtractData {
             ArrayList<ArrayList<Object>> candidateVotes, HashMap<String, ArrayList<String>> partyCandidates,
             String candidateName, ArrayList<Integer> tempCount, int index) {
         String returnKey = "";
+        // get the party associated with the candidate
         for (String key : partyCandidates.keySet()) {
             ArrayList<String> values = partyCandidates.get(key);
             if (values.contains(candidateName)) {
@@ -361,6 +375,7 @@ abstract public class ExtractData {
 
         int votes = tempCount.get(index);
 
+        // update the number of votes in partyVotes
         for (ArrayList<Object> pairP : partyVotes) {
             String party = (String) pairP.get(0);
             if (party.equals(returnKey)) {
@@ -373,10 +388,10 @@ abstract public class ExtractData {
     }
 
     /**
-     * This is an abstract method that will be initialized in ExtractDataOPL,
-     * ExtractDataCPL, and ExtractDataMPO. When initialized, this method will 
-     * format the ballots to update the number of votes in partyVotes and in 
-     * OPL will also update the number of votes in candidateVotes
+     * This is an abstract method that will be initialized in ExtractDataOPL and
+     * ExtractDataCPL. When initialized, this method will format the ballots to
+     * update the number of votes in partyVotes and in OPL will also update the
+     * number of votes in candidateVotes
      *
      * @param partyVotes      is a mapping of multiple party names to their
      *                        corresponding
@@ -384,11 +399,10 @@ abstract public class ExtractData {
      * @param candidateVotes  is a mapping of multiple candidate names to their
      *                        corresponing number of votes
      * @param partyCandidates
-     * @throws IOException
+     * @throws Exception
      */
     abstract protected void formatBallotInformation(ArrayList<ArrayList<Object>> partyVotes,
-            ArrayList<ArrayList<Object>> candidateVotes, HashMap<String, ArrayList<String>> partyCandidates,
-            int numSeats)
+            ArrayList<ArrayList<Object>> candidateVotes, HashMap<String, ArrayList<String>> partyCandidates)
             throws IOException;
 
 }
