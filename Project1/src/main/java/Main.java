@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * Runs the program
+ * @brief Runs the program
  * 
  * @author Bethany Freeman
  */

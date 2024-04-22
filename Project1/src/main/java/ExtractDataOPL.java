@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * This class is used to extract data from the file for the OPL election
+ * @brief This class is used to extract data from the file for the OPL election
  * 
  * @author Bethany Freeman
  */

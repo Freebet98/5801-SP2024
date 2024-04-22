@@ -2,7 +2,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * This class is used to store all the information obtained after running the
+ * @brief This class is used to store all the information obtained after running the
  * election
  * 
  * @author Bethany Freeman
@@ -52,28 +52,28 @@ abstract public class ResultsData extends FileData {
     }
 
     /**
-     * @return an ArrayList
+     * @return an ArrayList<ArrayList<Object>>
      */
     public ArrayList<ArrayList<Object>> getSeatAllocation() {
         return seatAllocation;
     }
 
     /**
-     * @return an ArrayList
+     * @return an ArrayList<ArrayList<Object>>
      */
     public ArrayList<ArrayList<Object>> getRemainingVotes() {
         return remainingVotes;
     }
 
     /**
-     * @return an ArrayList
+     * @return an ArrayList<ArrayList<Object>>
      */
     public ArrayList<ArrayList<Object>> getFinalWinOrder() {
         return finalWinOrder;
     }
 
     /**
-     * @return an ArrayList
+     * @return an ArrayList<String>
      */
     public ArrayList<String> getPartyWinOrder() {
         return partyWinOrder;

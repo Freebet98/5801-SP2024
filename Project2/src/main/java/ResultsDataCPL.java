@@ -1,12 +1,11 @@
-
-/**
- * This class is used to store all the information obtained after running the election in a CPL election
- * @author Bethany Freeman
- */
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+/**
+ * @brief This class is used to store all the information obtained after running the election in a CPL election
+ * @author Bethany Freeman
+ */
 public class ResultsDataCPL extends ResultsData {
     /**
      * * This creates an object of ResultsDataCPL which is used to store the
@@ -109,8 +108,8 @@ public class ResultsDataCPL extends ResultsData {
     }
 
     /**
-     * This will take the ArrayList winOrder that contains just partyNames
-     * and format it to an ArrayList with the partyName,
+     * This will take the ArrayList<String> winOrder that contains just partyNames
+     * and format it to an ArrayList<ArrayList<Object>> with the partyName,
      * candidateName, and which seat they won
      * 
      * This can handle duplicate names in both opposing parties and the same party

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * This class is used to extract data from the file for the MPO election
+ * @brief This class is used to extract data from the file for the MPO election
  * 
  * @author Rock Zgutowicz
  * @author Bethany Freeman

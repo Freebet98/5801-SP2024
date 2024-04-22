@@ -1,7 +1,12 @@
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class ResultsDataMPO extends ResultsData{
+/**
+ * @brief This class is used to store all the information obtained after running
+ *        the election
+ * @author Bethany Freeman
+ */
+public class ResultsDataMPO extends ResultsData {
 
     /**
      * * This creates an object of ResultsDataCPL which is used to store the
@@ -15,7 +20,7 @@ public class ResultsDataMPO extends ResultsData{
      *                       allocation [1]. the actual
      *                       ArrayList will be of type ArrayList<ArrayList<String,
      *                       int[2]>>
-     *  
+     * 
      * @param remainingVotes This is a mapping of the name of each party to an int
      *                       that represents how many votes the
      *                       party has, this is only representative of how many
@@ -35,6 +40,12 @@ public class ResultsDataMPO extends ResultsData{
             ArrayList<String> partyWinOrder, FileData fileData) throws IOException {
         super(seatAllocation, remainingVotes, partyWinOrder, fileData);
     }
+
+    /**
+     * Creates a String output based on the OPL ResultsData information
+     * 
+     * @return a String
+     */
     @Override
     public String toString() {
         return "";
@@ -48,5 +59,5 @@ public class ResultsDataMPO extends ResultsData{
     @Override
     protected void computeWinOrder() throws IOException {
     }
-    
+
 }

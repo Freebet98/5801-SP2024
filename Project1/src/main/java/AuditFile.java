@@ -4,7 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- * This class is used to print all the information obtained after running the
+ * @brief This class is used to print all the information obtained after running the
  * election to a file
  * 
  * @author Bethany Freeman

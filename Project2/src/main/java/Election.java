@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Random;
 
 /**
- * This is the abstract class for Elections opl and cpl to inherit
+ * @brief This is the abstract class for Elections opl and cpl to inherit
  * 
  * @author Rock Zgutowicz
  * @author Derrick Dischinger

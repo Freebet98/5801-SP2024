@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Arrays;
 
 /**
- * This class is used to extract data from the file for the MV election
+ * @brief This class is used to extract data from the file for the MV election
  * 
  * @author Rock Zgutowicz
  * @author Bethany Freeman
