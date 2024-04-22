@@ -187,14 +187,13 @@ abstract public class ExtractData {
      * @param numParties     this represents the number of parties that are listed
      *                       in
      *                       the given file
-     * @param partyVotes     this is an ArrayList<ArrayList<Object>> which contains
+     * @param partyVotes     this is an ArrayList which contains
      *                       inner mappings of a party name and the number of
      *                       corresponding votes
-     * @param candidateVotes this is an ArrayList<ArrayList<Object>> whih contains
+     * @param candidateVotes this is an ArrayList which contains
      *                       inner mappings of a candidate name and the number of
      *                       corresponding votes
-     * @return HashMap<String, ArrayList < String>> that represents a key value of a
-     *         party name
+     * @return HashMap that represents a key value of a party name
      *         to a list of candidate names
      * @throws IOException if there is an error while reading the validFile
      */
@@ -257,20 +256,16 @@ abstract public class ExtractData {
      * 
      * This is an overloaded function: MPO and MV files
      * 
-     * @param numParties     this represents the number of parties that are listed
-     *                       in
-     *                       the given file
-     * @param partyVotes     this is an ArrayList<ArrayList<Object>> which contains
+     * @param partyVotes     this is an ArrayList which contains
      *                       inner mappings of a party name and the number of
      *                       corresponding votes
-     * @param candidateVotes this is an ArrayList<ArrayList<Object>> whih contains
+     * @param candidateVotes this is an ArrayList which contains
      *                       inner mappings of a candidate name and the number of
      *                       corresponding votes
      * @param flag           this is a boolean flag retrieved from extractFromFile
      *                       to indicate that you are formatting party information
      *                       from an MPO or an MV file
-     * @return HashMap<String, ArrayList < String>> that represents a key value of a
-     *         party name
+     * @return HashMap that represents a key value of a party name
      *         to a list of candidate names
      * @throws IOException if there is an error while reading the validFile
      */
@@ -335,11 +330,11 @@ abstract public class ExtractData {
      * Using this information it places the votes in the location of the party in
      * partyVotes
      * 
-     * @param partyVotes      this is an ArrayList<ArrayList<Object>> which contains
+     * @param partyVotes      this is an ArrayList which contains
      *                        inner mappings of a party name and the number of
      *                        corresponding
      *                        votes
-     * @param candidateVotes  this is an ArrayList<ArrayList<Object>> whih contains
+     * @param candidateVotes  this is an ArrayList whih contains
      *                        inner mappings of a candidate name and the number of
      *                        corresponding votes
      * @param partyCandidates this is a mapping of a party name to an ordered list
@@ -347,7 +342,7 @@ abstract public class ExtractData {
      * @param candidateName   this is the name of the current candidate whose votes
      *                        are
      *                        being added to partyVotes
-     * @param tempCount       this is an ArrayList<Integer> which contains the
+     * @param tempCount       this is an ArrayList which contains the
      *                        number of votes in the current file that was read
      * @param index           this is the index of the current candidate's votes in
      *                        tempCount
@@ -389,7 +384,7 @@ abstract public class ExtractData {
      * @param candidateVotes  is a mapping of multiple candidate names to their
      *                        corresponing number of votes
      * @param partyCandidates
-     * @throws Exception
+     * @throws IOException
      */
     abstract protected void formatBallotInformation(ArrayList<ArrayList<Object>> partyVotes,
             ArrayList<ArrayList<Object>> candidateVotes, HashMap<String, ArrayList<String>> partyCandidates,

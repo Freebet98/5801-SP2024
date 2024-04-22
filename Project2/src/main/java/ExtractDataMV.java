@@ -3,9 +3,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Arrays;
-import java.io.IOException;
-import java.io.File;
-import java.io.FileReader;
 
 /**
  * This class is used to extract data from the file for the MV election
@@ -31,11 +28,11 @@ public class ExtractDataMV extends ExtractData {
      * this will format the ballots to update the number of votes in partyVotes, and
      * candidateVotes in the MV election
      *
-     * @param partyVotes      this is an ArrayList<ArrayList<Object>> which contains
+     * @param partyVotes      this is an ArrayList which contains
      *                        inner mappings of a party name and the number of
      *                        corresponding
      *                        votes
-     * @param candidateVotes  this is an ArrayList<ArrayList<Object>> whih contains
+     * @param candidateVotes  this is an ArrayList whih contains
      *                        inner mappings of a candidate name and the number of
      *                        corresponding votes
      * @param partyCandidates this is a mapping of a party name to an ordered list
@@ -101,34 +98,4 @@ public class ExtractDataMV extends ExtractData {
             putVotesInPartyVotes(partyVotes, candidateVotes, partyCandidates, candidateName, tempCount, i);
         }
     }
-
-    // public static void main(String[] args) throws IOException {
-    //     ExtractDataMV test;
-    //     ArrayList<ArrayList<Object>> partyVotes = new ArrayList<>();
-    //     ArrayList<ArrayList<Object>> candidateVotes = new ArrayList<>();
-    //     ArrayList<BufferedReader> validFile;
-    //     HashMap<String, ArrayList<String>> partyCandidates;
-    //     partyVotes = new ArrayList<ArrayList<Object>>();
-    //     candidateVotes = new ArrayList<ArrayList<Object>>();
-
-    //     // Test 3.a correct formatting
-    //     validFile = new ArrayList<BufferedReader>(Arrays.asList(new BufferedReader(new FileReader(new File("src/test/java/InputFiles/MVBallotTest01.txt")))));
-    //     test = new ExtractDataMV(validFile, "MV");
-    //     test.validFile = validFile.get(0);
-    //     partyCandidates = test.formatPartyInformation(partyVotes, candidateVotes, false);
-    //     test.formatBallotInformation(partyVotes, candidateVotes, partyCandidates, 3);
-    //     ArrayList<ArrayList<Object>> expectedPartyVotes = new ArrayList<>();
-    //     ArrayList<ArrayList<Object>> expectedCandidateVotes = new ArrayList<>();
-
-    //     expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Pike", 4)));
-    //     expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Foster", 3)));
-    //     expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Deutsch", 4)));
-    //     expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Borg", 4)));
-    //     expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Jones", 4)));
-    //     expectedCandidateVotes.add(new ArrayList<>(Arrays.asList("Smith", 2)));
-
-    //     expectedPartyVotes.add(new ArrayList<>(Arrays.asList("D", 7)));
-    //     expectedPartyVotes.add(new ArrayList<>(Arrays.asList("R", 12)));
-    //     expectedPartyVotes.add(new ArrayList<>(Arrays.asList("I", 2)));
-    // }
 }

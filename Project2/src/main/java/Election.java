@@ -34,8 +34,9 @@ abstract public class Election {
      * and subtract largestRemainder from it
      * returns void
      * 
-     * @param index
-     * @throws IOException 
+     * @param index             The index at which the votes will be adjusted
+     * @throws IOException      Throws an exeption when an invalid index is 
+     *                          received
      */
     protected void adjustRemainingVotes(int index) throws IOException {
         if (index < 0 || index >= this.remainingVotes.size()) {
@@ -50,9 +51,9 @@ abstract public class Election {
      *  Creates a deep copy of a votes ArrayList to create a modifiable version
      *  sed to set remainingVotes
      *  
-     *  @param votes the ArrayList<ArrayList<Object>> to be copied
+     *  @param votes The ArrayList to be copied
      *  
-     *  @return returns the deep copied ArrayList<ArrayList<Object>>
+     *  @return returns the deep copied ArrayList
      */
 
     protected ArrayList<ArrayList<Object>> deepCopyVotes(ArrayList<ArrayList<Object>> votes){
@@ -69,7 +70,7 @@ abstract public class Election {
     /**
      * initializes the seat allocation array to have default values of 0
      * 
-     * @return returns initialized ArrayList<ArrayList<Object>>
+     * @return returns initialized ArrayList
      */
 
     protected ArrayList<ArrayList<Object>> initializeSeatAllocation() {
@@ -89,9 +90,9 @@ abstract public class Election {
      * seatAllocation and add 1 to the seat total
      * returns void
      * 
-     * @param index      which index this references in seatAllocation
-     * @param firstRound true if allocating for the firstRound, false otherwise
-     * @throws IOException
+     * @param index         which index this references in seatAllocation
+     * @param firstRound    true if allocating for the firstRound, false otherwise
+     * @throws IOException  Throws an IOException if an invalid index is received
      */
     protected void adjustSeatAllocation(int index, boolean firstRound) throws IOException {
         if (index < 0 || index >= this.seatAllocation.size()) {
@@ -113,8 +114,8 @@ abstract public class Election {
      * at the given index to finalWinOrder
      * returns void
      * 
-     * @param index index to determine which party to check in seatAllocation 
-     * @throws IOException
+     * @param index         index to determine which party to check in seatAllocation 
+     * @throws IOException  Throws an IOException if an invalid index is received
      */
     protected void addWinner(int index) throws IOException {
         if (index < 0 || index >= this.seatAllocation.size()) {
@@ -129,7 +130,7 @@ abstract public class Election {
      * Adds them to the noCandidates hashset if true
      * 
      * @param index index to determine which party to check in seatAllocation 
-     * 
+     * @throws IOException  Throws an IOException if an invalid index is received
      */
     protected void checkNoCandidates(int index) throws IOException {
         if (index < 0 || index >= this.seatAllocation.size()) {
@@ -152,7 +153,8 @@ abstract public class Election {
      * Adds winners if votes>=largestRemainder otherwise increments the number under
      * the remainder
      * 
-     * @throws IOException
+     * @throws IOException  Throws an IOException if an error with adjusting remaining votes,
+     *                      adjusting seat allocation, adding the winner, or check no candidates
      */
     protected void firstAllocation() throws IOException {
         int i = 0;
@@ -195,7 +197,8 @@ abstract public class Election {
      * based on the votes associated with each candidate.
      * Resolves ties if multiple candidates have the same highest score.
      * 
-     * @throws IOException
+     * @throws IOException  Throws an IOException if an error occurs when adjusting
+     *                      the seat allocation or when adding a winner
      */
     protected void secondAllocation() throws IOException {
         // creates a new ArrayList<ArrayList<Object>> which is a copy of remainingVote

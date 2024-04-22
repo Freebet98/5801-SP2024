@@ -29,15 +29,14 @@ public class ExtractDataCPL extends ExtractData {
      * candidateVotes in the CPL election type does not get updated since all
      * candidates will have 0 votes personally
      *
-     * @param partyVotes     this is an ArrayList<ArrayList<Object>> which contains
+     * @param partyVotes     this is an ArrayList which contains
      *                       inner mappings of a party name and the number of
      *                       corresponding
      *                       votes
-     * @param candidateVotes this is an ArrayList<ArrayList<Object>> whih contains
+     * @param candidateVotes this is an ArrayList whih contains
      *                       inner mappings of a candidate name and the number of
      *                       corresponding votes
      * @throws IOException
-     * @throws Exception
      */
     @Override
     protected void formatBallotInformation(ArrayList<ArrayList<Object>> partyVotes,
