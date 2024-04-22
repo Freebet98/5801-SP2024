@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * This class is used to store all the information extracted from the file
+ * @brief This class is used to store all the information extracted from the file
  * 
  * @author Bethany Freeman
  */

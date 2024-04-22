@@ -2,7 +2,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * This class is used to store all the information obtained after running the
+ * @brief This class is used to store all the information obtained after running the
  * election
  * 
  * @author Bethany Freeman

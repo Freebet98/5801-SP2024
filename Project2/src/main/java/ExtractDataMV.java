@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Arrays;
 
 /**
- * This class is used to extract data from the file for the MV election
+ * @brief This class is used to extract data from the file for the MV election
  * 
  * @author Rock Zgutowicz
  * @author Bethany Freeman
@@ -68,6 +68,7 @@ public class ExtractDataMV extends ExtractData {
                 }
             }
 
+            // If count is not between 1 and numSeats, throw an error
             if (count > numSeats || count < 1) {
                 throw new IOException("Invalid file format");
             }

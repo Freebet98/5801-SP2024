@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * This class is used to extract data from the file
+ * @brief This class is used to extract data from the file
  * 
  * @author Bethany Freeman
  */

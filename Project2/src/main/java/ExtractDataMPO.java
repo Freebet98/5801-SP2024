@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * This class is used to extract data from the file for the MPO election
+ * @brief This class is used to extract data from the file for the MPO election
  * 
  * @author Rock Zgutowicz
  * @author Bethany Freeman
@@ -41,7 +41,7 @@ public class ExtractDataMPO extends ExtractData{
      */
     @Override
     protected void formatBallotInformation(ArrayList<ArrayList<Object>> partyVotes,
-            ArrayList<ArrayList<Object>> candidateVotes, HashMap<String, ArrayList<String>> partyCandidates)
+            ArrayList<ArrayList<Object>> candidateVotes, HashMap<String, ArrayList<String>> partyCandidates, int numSeats)
             throws IOException {
         String line;
         char[] splitLine;

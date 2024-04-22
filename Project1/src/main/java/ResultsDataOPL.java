@@ -1,10 +1,9 @@
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
- * This class is used to store all the information obtained after running the
+ * @brief This class is used to store all the information obtained after running the
  * election in an OPL election
  * 
  * @author Bethany Freeman

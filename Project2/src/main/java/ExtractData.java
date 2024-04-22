@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * This class is used to extract data from the file
+ * @brief This class is used to extract data from the file
  * 
  * @author Bethany Freeman
  */
@@ -79,7 +79,7 @@ abstract public class ExtractData {
                     }
                 }
             }
-            formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
+            formatBallotInformation(partyVotes, candidateVotes, partyCandidates, numSeats);
         }
 
         fileData = new FileData(header, numSeats, numBallots, numParties, partyCandidates, partyVotes, candidateVotes);
@@ -149,7 +149,7 @@ abstract public class ExtractData {
                     }
                 }
             }
-            formatBallotInformation(partyVotes, candidateVotes, partyCandidates);
+            formatBallotInformation(partyVotes, candidateVotes, partyCandidates, numSeats);
         }
 
         fileData = new FileData(header, numSeats, numBallots, numCandidates, partyCandidates, partyVotes,
@@ -402,7 +402,7 @@ abstract public class ExtractData {
      * @throws Exception
      */
     abstract protected void formatBallotInformation(ArrayList<ArrayList<Object>> partyVotes,
-            ArrayList<ArrayList<Object>> candidateVotes, HashMap<String, ArrayList<String>> partyCandidates)
+            ArrayList<ArrayList<Object>> candidateVotes, HashMap<String, ArrayList<String>> partyCandidates, int numSeats)
             throws IOException;
 
 }

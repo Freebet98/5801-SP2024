@@ -1,12 +1,9 @@
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
 
 /**
- * Performs computations specific to MPO elections. Inherits from Election
+ * @brief Performs computations specific to MPO elections. Inherits from Election
  * to provide base information which is carried through each type of election. 
  * Main interacts with this class in order to pass a FileData object into it 
  * for it to perform calculations on in order to produce election results.
@@ -106,7 +103,7 @@ public class MPO extends Election {
      * initializes the seat allocation array to have default values of 0
      * puts candidate names in the array rather than party names as parties do not matter form MPO seat allocation
      * 
-     * @return returns initialized ArrayList
+     * @return returns initialized ArrayList<ArrayList<Object>>
      */
 
     @Override

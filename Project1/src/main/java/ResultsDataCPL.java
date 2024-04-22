@@ -1,12 +1,11 @@
-
-/**
- * This class is used to store all the information obtained after running the election in a CPL election
- * @author Bethany Freeman
- */
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+/**
+ * @brief This class is used to store all the information obtained after running the election in a CPL election
+ * @author Bethany Freeman
+ */
 public class ResultsDataCPL extends ResultsData {
     /**
      * * This creates an object of ResultsDataCPL which is used to store the
